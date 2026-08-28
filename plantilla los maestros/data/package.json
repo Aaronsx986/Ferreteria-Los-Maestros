@@ -1,0 +1,9 @@
+{
+  "name": "masterbikes-ecommerce",
+  "version": "1.0.0",
+  "description": "Sistema de e-commerce para tienda de bicicletas MasterBikes",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server .",
+    "build": "echo 'Build complete'",
+    "test": "echo

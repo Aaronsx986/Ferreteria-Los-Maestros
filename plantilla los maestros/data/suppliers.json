@@ -1,0 +1,74 @@
+{
+  "suppliers": [
+    {
+      "id": 1,
+      "name": "Bicicletas Andinas S.A.",
+      "contact": {
+        "name": "Carlos Mendoza",
+        "email": "ventas@andinasbikes.cl",
+        "phone": "+56 2 2345 6789",
+        "position": "Gerente de Ventas"
+      },
+      "address": {
+        "street": "Av. Principal 123",
+        "city": "Santiago",
+        "region": "Región Metropolitana",
+        "country": "Chile"
+      },
+      "products": ["bicicletas-montaña", "bicicletas-urbanas", "accesorios"],
+      "paymentTerms": "30 días",
+      "deliveryTime": "3-5 días hábiles",
+      "rating": 4.7,
+      "status": "active",
+      "since": "2024-01-15",
+      "lastOrder": "2025-11-05",
+      "notes": "Proveedor confiable, excelente calidad en bicicletas de montaña"
+    },
+    {
+      "id": 2,
+      "name": "Repuestos Veloz Ltda.",
+      "contact": {
+        "name": "Ana López",
+        "email": "contacto@repuestosveloz.cl",
+        "phone": "+56 9 8765 4321",
+        "position": "Directora Comercial"
+      },
+      "address": {
+        "street": "Calle Industrial 456",
+        "city": "Valparaíso",
+        "region": "Región de Valparaíso",
+        "country": "Chile"
+      },
+      "products": ["frenos", "cambios", "llantas", "cadena", "sillines"],
+      "paymentTerms": "15 días",
+      "deliveryTime": "2-3 días hábiles",
+      "rating": 4.5,
+      "status": "active",
+      "since": "2024-02-20",
+      "lastOrder": "2025-11-08",
+      "notes": "Especialistas en repuestos de alta gama"
+    }
+  ],
+  "productCategories": [
+    {
+      "id": "bicicletas-montaña",
+      "name": "Bicicletas de Montaña",
+      "suppliers": [1]
+    },
+    {
+      "id": "bicicletas-urbanas",
+      "name": "Bicicletas Urbanas",
+      "suppliers": [1]
+    },
+    {
+      "id": "frenos",
+      "name": "Sistemas de Frenos",
+      "suppliers": [2]
+    },
+    {
+      "id": "cambios",
+      "name": "Sistemas de Cambios",
+      "suppliers": [2]
+    }
+  ]
+}

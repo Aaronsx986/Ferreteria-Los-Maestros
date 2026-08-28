@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterBikes - Gestión de Ventas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2f1a 0%, #2d5a2d 50%, #4a7c4a 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .mountain-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #2c5530 0%, #3a7d44 30%, #4fa564 60%, #87c990 100%);
+            z-index: -2;
+        }
+
+        .mountain-range {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(180deg, transparent 0%, #1a3b1a 20%, #2d4a2d 100%);
+            clip-path: polygon(0% 100%, 10% 70%, 20% 80%, 30% 60%, 40% 75%, 50% 50%, 60% 65%, 70% 45%, 80% 60%, 90% 40%, 100% 55%, 100% 100%);
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #2e7d32;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1000;
+            border-bottom: 2px solid #4caf50;
+        }
+
+        .navbar h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: rgba(76, 175, 80, 0.1);
+            color: #2e7d32;
+            border: 2px solid #4caf50;
+        }
+
+        .btn-primary:hover {
+            background: #4caf50;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .section-title {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .stat-card h4 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-collapse: collapse;
+        }
+
+        table th {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .status-delivered {
+            background: #27ae60;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .status-pending {
+            background: #f39c12;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .status-cancelled {
+            background: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 8px 15px;
+            border: 2px solid #c8e6c9;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .nature-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .nature-element {
+            position: absolute;
+            font-size: 16px;
+            opacity: 0.6;
+            animation: floatNature linear infinite;
+        }
+
+        @keyframes floatNature {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mountain-background">
+        <div class="mountain-range"></div>
+    </div>
+
+    <div class="nature-elements" id="natureElements"></div>
+
+    <div class="navbar">
+        <h2>🚴 MasterBikes - Ventas</h2>
+        <div class="nav-buttons">
+            <a href="index.html" class="btn btn-primary">🏠 Inicio</a>
+            <a href="dashboard.html" class="btn btn-primary">📊 Dashboard</a>
+            <a href="reportes.html" class="btn btn-primary">📈 Reportes</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="section-title">💰 Gestión de Ventas</h1>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Ventas del Día</h4>
+                <div class="number">$2.5M</div>
+            </div>
+            <div class="stat-card">
+                <h4>Ventas del Mes</h4>
+                <div class="number">$45M</div>
+            </div>
+            <div class="stat-card">
+                <h4>Total Ventas</h4>
+                <div class="number">347</div>
+            </div>
+            <div class="stat-card">
+                <h4>Ticket Promedio</h4>
+                <div class="number">$129K</div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <select class="filter-select" id="statusFilter">
+                <option value="">Todos los estados</option>
+                <option value="delivered">Entregado</option>
+                <option value="pending">Pendiente</option>
+                <option value="cancelled">Cancelado</option>
+            </select>
+            <select class="filter-select" id="dateFilter">
+                <option value="">Todo el período</option>
+                <option value="today">Hoy</option>
+                <option value="week">Esta semana</option>
+                <option value="month">Este mes</option>
+            </select>
+            <input type="text" class="filter-select" placeholder="Buscar cliente..." id="searchFilter">
+        </div>
+
+        <div class="card">
+            <h3>Últimas Ventas</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Venta</th>
+                        <th>Cliente</th>
+                        <th>Productos</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="salesTable">
+                    <!-- Las ventas se cargan dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3>Registrar Nueva Venta</h3>
+            <div style="text-align: center; padding: 20px;">
+                <button class="btn btn-secondary" onclick="newSale()">
+                    ➕ Nueva Venta Manual
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const salesData = [
+            { id: 'VTA-1001', customer: 'Carlos Ruiz', products: 'Bicicleta de Montaña', date: '2025-11-11', total: 450000, status: 'delivered' },
+            { id: 'VTA-1002', customer: 'Ana Torres', products: 'Bicicleta de Paseo', date: '2025-11-11', total: 280000, status: 'pending' },
+            { id: 'VTA-1003', customer: 'Miguel Sánchez', products: 'Casco + Luces LED', date: '2025-11-10', total: 70000, status: 'delivered' },
+            { id: 'VTA-1004', customer: 'Laura Mendoza', products: 'Bicicleta Infantil', date: '2025-11-10', total: 120000, status: 'delivered' },
+            { id: 'VTA-1005', customer: 'Roberto Castro', products: 'Kit Herramientas', date: '2025-11-09', total: 35000, status: 'cancelled' }
+        ];
+
+        function createNatureElements() {
+            const container = document.getElementById('natureElements');
+            const elements = ['🍃', '🌿', '🍂', '💰'];
+            
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.className = 'nature-element';
+                element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.animationDuration = (Math.random() * 20 + 20) + 's';
+                element.style.animationDelay = Math.random() * 12 + 's';
+                element.style.fontSize = (Math.random() * 14 + 14) + 'px';
+                container.appendChild(element);
+            }
+        }
+
+        function loadSales() {
+            const salesTable = document.getElementById('salesTable');
+            
+            salesTable.innerHTML = salesData.map(sale => `
+                <tr>
+                    <td>${sale.id}</td>
+                    <td>${sale.customer}</td>
+                    <td>${sale.products}</td>
+                    <td>${formatDate(sale.date)}</td>
+                    <td>$${sale.total.toLocaleString()}</td>
+                    <td><span class="status-${sale.status}">${getStatusText(sale.status)}</span></td>
+                    <td>
+                        <button class="btn btn-primary" style="padding: 5px 10px; font-size: 12px;" onclick="viewSale('${sale.id}')">
+                            Ver
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES');
+        }
+
+        function getStatusText(status) {
+            const statusText = {
+                delivered: 'Entregado',
+                pending: 'Pendiente',
+                cancelled: 'Cancelado'
+            };
+            return statusText[status];
+        }
+
+        function viewSale(saleId) {
+            alert(`Ver detalles de venta: ${saleId}\n\nEsta funcionalidad estará disponible en la próxima versión.`);
+        }
+
+        function newSale() {
+            alert('Abriendo interfaz para nueva venta manual...\n\nEsta funcionalidad estará disponible en la próxima versión.');
+        }
+
+        function checkAuth() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            if (!['admin', 'seller'].includes(currentUser.role)) {
+                alert('No tienes permisos para acceder a esta sección');
+                window.location.href = 'index.html';
+                return;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            createNatureElements();
+            loadSales();
+        });
+    </script>
+</body>
+</html>

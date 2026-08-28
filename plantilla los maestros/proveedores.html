@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterBikes - Gestión de Proveedores</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2f1a 0%, #2d5a2d 50%, #4a7c4a 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .mountain-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #2c5530 0%, #3a7d44 30%, #4fa564 60%, #87c990 100%);
+            z-index: -2;
+        }
+
+        .mountain-range {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(180deg, transparent 0%, #1a3b1a 20%, #2d4a2d 100%);
+            clip-path: polygon(0% 100%, 10% 70%, 20% 80%, 30% 60%, 40% 75%, 50% 50%, 60% 65%, 70% 45%, 80% 60%, 90% 40%, 100% 55%, 100% 100%);
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #2e7d32;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1000;
+            border-bottom: 2px solid #4caf50;
+        }
+
+        .navbar h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: rgba(76, 175, 80, 0.1);
+            color: #2e7d32;
+            border: 2px solid #4caf50;
+        }
+
+        .btn-primary:hover {
+            background: #4caf50;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .section-title {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .stat-card h4 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-collapse: collapse;
+        }
+
+        table th {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .supplier-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .status-active {
+            background: #27ae60;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .status-inactive {
+            background: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2e7d32;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #c8e6c9;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #c8e6c9;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #4caf50;
+        }
+
+        .nature-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .nature-element {
+            position: absolute;
+            font-size: 16px;
+            opacity: 0.6;
+            animation: floatNature linear infinite;
+        }
+
+        @keyframes floatNature {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .supplier-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mountain-background">
+        <div class="mountain-range"></div>
+    </div>
+
+    <div class="nature-elements" id="natureElements"></div>
+
+    <div class="navbar">
+        <h2>🚴 MasterBikes - Proveedores</h2>
+        <div class="nav-buttons">
+            <a href="index.html" class="btn btn-primary">🏠 Inicio</a>
+            <a href="dashboard.html" class="btn btn-primary">📊 Dashboard</a>
+            <a href="inventario.html" class="btn btn-primary">📋 Inventario</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="section-title">🏢 Gestión de Proveedores</h1>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Total Proveedores</h4>
+                <div class="number" id="totalSuppliers">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>Proveedores Activos</h4>
+                <div class="number" id="activeSuppliers">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>Productos Suministrados</h4>
+                <div class="number" id="suppliedProducts">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>Pedidos Pendientes</h4>
+                <div class="number" id="pendingOrders">0</div>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="🔍 Buscar proveedores..." id="searchInput">
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>Lista de Proveedores</h3>
+                <button class="btn btn-secondary" onclick="showAddSupplierForm()">➕ Agregar Proveedor</button>
+            </div>
+            
+            <div id="suppliersTable">
+                <!-- La tabla de proveedores se carga dinámicamente -->
+            </div>
+        </div>
+
+        <!-- Formulario para agregar proveedor -->
+        <div class="card" id="addSupplierForm" style="display: none;">
+            <h3>Agregar Nuevo Proveedor</h3>
+            <form class="form-grid" id="supplierForm">
+                <div class="form-group">
+                    <label>Nombre del Proveedor *</label>
+                    <input type="text" class="form-input" id="supplierName" placeholder="Ej: Bicicletas Andinas S.A." required>
+                </div>
+                <div class="form-group">
+                    <label>Contacto *</label>
+                    <input type="text" class="form-input" id="supplierContact" placeholder="Ej: Juan Pérez" required>
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" class="form-input" id="supplierEmail" placeholder="ejemplo@proveedor.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Teléfono *</label>
+                    <input type="tel" class="form-input" id="supplierPhone" placeholder="+56 9 1234 5678" required>
+                </div>
+                <div class="form-group">
+                    <label>Productos que Suministra *</label>
+                    <input type="text" class="form-input" id="supplierProducts" placeholder="Ej: Bicicletas, repuestos, accesorios" required>
+                </div>
+                <div class="form-group">
+                    <label>Dirección</label>
+                    <textarea class="form-input" id="supplierAddress" rows="3" placeholder="Dirección completa del proveedor"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select class="form-input" id="supplierStatus">
+                        <option value="active">Activo</option>
+                        <option value="inactive">Inactivo</option>
+                    </select>
+                </div>
+
+                <div style="grid-column: 1 / -1; display: flex; gap: 15px;">
+                    <button type="submit" class="btn btn-secondary" style="flex: 1;">Guardar Proveedor</button>
+                    <button type="button" class="btn btn-danger" onclick="hideAddSupplierForm()" style="flex: 1;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const initialSuppliers = [
+            {
+                id: 1,
+                name: "Bicicletas Andinas S.A.",
+                contact: "Carlos Mendoza",
+                email: "ventas@andinasbikes.cl",
+                phone: "+56 2 2345 6789",
+                products: "Bicicletas de montaña, accesorios",
+                address: "Av. Principal 123, Santiago",
+                status: "active",
+                since: "2024-01-15"
+            },
+            {
+                id: 2,
+                name: "Repuestos Veloz Ltda.",
+                contact: "Ana López",
+                email: "contacto@repuestosveloz.cl",
+                phone: "+56 9 8765 4321",
+                products: "Frenos, cambios, llantas",
+                address: "Calle Industrial 456, Valparaíso",
+                status: "active",
+                since: "2024-02-20"
+            },
+            {
+                id: 3,
+                name: "Accesorios BikePro",
+                contact: "Roberto Silva",
+                email: "info@bikepro.cl",
+                phone: "+56 2 3456 7890",
+                products: "Cascos, luces, sillines",
+                address: "Plaza Central 789, Concepción",
+                status: "active",
+                since: "2024-03-10"
+            }
+        ];
+
+        function createNatureElements() {
+            const container = document.getElementById('natureElements');
+            const elements = ['🍃', '🌿', '🍂', '🏢'];
+            
+            for (let i = 0; i < 12; i++) {
+                const element = document.createElement('div');
+                element.className = 'nature-element';
+                element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.animationDuration = (Math.random() * 18 + 18) + 's';
+                element.style.animationDelay = Math.random() * 10 + 's';
+                element.style.fontSize = (Math.random() * 12 + 12) + 'px';
+                container.appendChild(element);
+            }
+        }
+
+        function loadSuppliers() {
+            let storedSuppliers = JSON.parse(localStorage.getItem('masterbikes_suppliers')) || [];
+            const allSuppliers = [...initialSuppliers, ...storedSuppliers];
+            
+            document.getElementById('totalSuppliers').textContent = allSuppliers.length;
+            document.getElementById('activeSuppliers').textContent = allSuppliers.filter(s => s.status === 'active').length;
+            document.getElementById('suppliedProducts').textContent = allSuppliers.reduce((acc, supplier) => acc + supplier.products.split(',').length, 0);
+            document.getElementById('pendingOrders').textContent = allSuppliers.length * 2; // Simulado
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredSuppliers = allSuppliers.filter(supplier => 
+                supplier.name.toLowerCase().includes(searchTerm) ||
+                supplier.contact.toLowerCase().includes(searchTerm) ||
+                supplier.products.toLowerCase().includes(searchTerm)
+            );
+
+            const suppliersTable = document.getElementById('suppliersTable');
+            suppliersTable.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Proveedor</th>
+                            <th>Contacto</th>
+                            <th>Email</th>
+                            <th>Productos</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${filteredSuppliers.map(supplier => `
+                            <tr>
+                                <td>
+                                    <strong>${supplier.name}</strong><br>
+                                    <small>${supplier.phone}</small>
+                                </td>
+                                <td>${supplier.contact}</td>
+                                <td>${supplier.email}</td>
+                                <td>${supplier.products}</td>
+                                <td><span class="status-${supplier.status}">${supplier.status === 'active' ? 'Activo' : 'Inactivo'}</span></td>
+                                <td class="supplier-actions">
+                                    <button class="btn btn-primary" onclick="viewSupplier(${supplier.id})">👁️ Ver</button>
+                                    <button class="btn btn-primary" onclick="editSupplier(${supplier.id})">✏️ Editar</button>
+                                    <button class="btn btn-danger" onclick="deleteSupplier(${supplier.id})">🗑️ Eliminar</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function showAddSupplierForm() {
+            document.getElementById('addSupplierForm').style.display = 'block';
+        }
+
+        function hideAddSupplierForm() {
+            document.getElementById('addSupplierForm').style.display = 'none';
+            document.getElementById('supplierForm').reset();
+        }
+
+        function viewSupplier(supplierId) {
+            alert(`Ver detalles del proveedor ID: ${supplierId}\n\nEsta funcionalidad estará disponible en la próxima versión.`);
+        }
+
+        function editSupplier(supplierId) {
+            alert(`Editando proveedor ID: ${supplierId}\n\nEsta funcionalidad estará disponible en la próxima versión.`);
+        }
+
+        function deleteSupplier(supplierId) {
+            if (confirm('¿Estás seguro de que quieres eliminar este proveedor?')) {
+                let storedSuppliers = JSON.parse(localStorage.getItem('masterbikes_suppliers')) || [];
+                storedSuppliers = storedSuppliers.filter(supplier => supplier.id !== supplierId);
+                localStorage.setItem('masterbikes_suppliers', JSON.stringify(storedSuppliers));
+                loadSuppliers();
+                alert('Proveedor eliminado correctamente');
+            }
+        }
+
+        function initializeSupplierForm() {
+            document.getElementById('supplierForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const newSupplier = {
+                    id: Date.now(),
+                    name: document.getElementById('supplierName').value,
+                    contact: document.getElementById('supplierContact').value,
+                    email: document.getElementById('supplierEmail').value,
+                    phone: document.getElementById('supplierPhone').value,
+                    products: document.getElementById('supplierProducts').value,
+                    address: document.getElementById('supplierAddress').value,
+                    status: document.getElementById('supplierStatus').value,
+                    since: new Date().toISOString().split('T')[0]
+                };
+
+                let storedSuppliers = JSON.parse(localStorage.getItem('masterbikes_suppliers')) || [];
+                storedSuppliers.push(newSupplier);
+                localStorage.setItem('masterbikes_suppliers', JSON.stringify(storedSuppliers));
+
+                alert('✅ Proveedor agregado exitosamente');
+                hideAddSupplierForm();
+                loadSuppliers();
+            });
+        }
+
+        function checkAuth() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            if (currentUser.role !== 'admin') {
+                alert('No tienes permisos para acceder a esta sección');
+                window.location.href = 'index.html';
+                return;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            createNatureElements();
+            loadSuppliers();
+            initializeSupplierForm();
+            
+            document.getElementById('searchInput').addEventListener('input', loadSuppliers);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterBikes - Catálogo de Bicicletas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2f1a 0%, #2d5a2d 50%, #4a7c4a 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo de montañas y bosque */
+        .mountain-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #2c5530 0%, #3a7d44 30%, #4fa564 60%, #87c990 100%);
+            z-index: -2;
+        }
+
+        .mountain-range {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(180deg, transparent 0%, #1a3b1a 20%, #2d4a2d 100%);
+            clip-path: polygon(0% 100%, 10% 70%, 20% 80%, 30% 60%, 40% 75%, 50% 50%, 60% 65%, 70% 45%, 80% 60%, 90% 40%, 100% 55%, 100% 100%);
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #2e7d32;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1000;
+            border-bottom: 2px solid #4caf50;
+        }
+
+        .navbar h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: rgba(76, 175, 80, 0.1);
+            color: #2e7d32;
+            border: 2px solid #4caf50;
+        }
+
+        .btn-primary:hover {
+            background: #4caf50;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .section-title {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Filtros */
+        .filters {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-select {
+            padding: 10px 15px;
+            border: 2px solid #c8e6c9;
+            border-radius: 8px;
+            background: white;
+            font-family: inherit;
+            min-width: 150px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #4caf50;
+        }
+
+        /* Grid de productos */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: #4caf50;
+            box-shadow: 0 15px 35px rgba(76, 175, 80, 0.3);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .product-info p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .product-features {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .feature-tag {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .btn-add-cart {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-add-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        /* Animaciones de naturaleza */
+        .nature-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .nature-element {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.6;
+            animation: floatNature linear infinite;
+        }
+
+        @keyframes floatNature {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Carrito flotante */
+        .cart-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            z-index: 1000;
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .filter-select {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fondo animado -->
+    <div class="mountain-background">
+        <div class="mountain-range"></div>
+    </div>
+
+    <!-- Elementos de naturaleza -->
+    <div class="nature-elements" id="natureElements"></div>
+
+    <!-- Indicador de carrito -->
+    <div class="cart-indicator" id="cartIndicator">
+        🛒 <span id="cartCount">0</span> productos
+    </div>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2>🚴 MasterBikes - Catálogo</h2>
+        <div class="nav-buttons">
+            <a href="index.html" class="btn btn-primary">🏠 Inicio</a>
+            <a href="carrito.html" class="btn btn-primary">🛒 Carrito</a>
+            <a href="dashboard.html" class="btn btn-primary">📊 Dashboard</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="section-title">📦 Catálogo de Bicicletas</h1>
+        
+        <!-- Filtros -->
+        <div class="filters">
+            <select class="filter-select" id="categoryFilter">
+                <option value="">Todas las categorías</option>
+                <option value="mountain">Montaña</option>
+                <option value="urban">Urbana</option>
+                <option value="race">Carrera</option>
+                <option value="electric">Eléctrica</option>
+            </select>
+
+            <select class="filter-select" id="priceFilter">
+                <option value="">Todos los precios</option>
+                <option value="0-200000">Hasta $200.000</option>
+                <option value="200000-400000">$200.000 - $400.000</option>
+                <option value="400000-600000">$400.000 - $600.000</option>
+                <option value="600000+">Más de $600.000</option>
+            </select>
+
+            <select class="filter-select" id="brandFilter">
+                <option value="">Todas las marcas</option>
+                <option value="trek">Trek</option>
+                <option value="specialized">Specialized</option>
+                <option value="giant">Giant</option>
+                <option value="cannondale">Cannondale</option>
+            </select>
+
+            <button class="btn btn-secondary" onclick="applyFilters()">🔍 Aplicar Filtros</button>
+        </div>
+
+        <!-- Grid de productos -->
+        <div class="product-grid" id="productGrid">
+            <!-- Los productos se cargan dinámicamente -->
+        </div>
+    </div>
+
+    <script>
+        // Base de datos de productos
+        const products = [
+            { 
+                id: 1, 
+                name: 'Bicicleta de Montaña Profesional', 
+                price: 450000, 
+                desc: 'Ideal para terrenos difíciles y aventuras extremas. Suspensión completa de alta gama.', 
+                icon: '🚴',
+                category: 'mountain',
+                brand: 'trek',
+                features: ['Suspensión completa', '21 velocidades', 'Frenos de disco'],
+                badge: 'Popular'
+            },
+            { 
+                id: 2, 
+                name: 'Bicicleta Urbana Elegante', 
+                price: 280000, 
+                desc: 'Perfecta para recorridos urbanos cómodos. Diseño ergonómico y estilo moderno.', 
+                icon: '🚲',
+                category: 'urban',
+                brand: 'giant',
+                features: ['Diseño plegable', 'Canasta incluida', 'Luces LED'],
+                badge: 'Nuevo'
+            },
+            { 
+                id: 3, 
+                name: 'Bicicleta de Carrera Aero', 
+                price: 650000, 
+                desc: 'Diseño aerodinámico para alta velocidad y competencia. Materiales ultralivianos.', 
+                icon: '🏁',
+                category: 'race',
+                brand: 'specialized',
+                features: ['Cuadro de carbono', '11 velocidades', 'Manubrio aerodinámico']
+            },
+            { 
+                id: 4, 
+                name: 'Bicicleta Eléctrica Premium', 
+                price: 820000, 
+                desc: 'Potencia eléctrica para recorridos sin esfuerzo. Autonomía de 80km por carga.', 
+                icon: '⚡',
+                category: 'electric',
+                brand: 'cannondale',
+                features: ['Motor 250W', 'Batería 500Wh', 'Display LCD'],
+                badge: 'Oferta'
+            },
+            { 
+                id: 5, 
+                name: 'Bicicleta Infantil Aventurera', 
+                price: 120000, 
+                desc: 'Segura y divertida para los más pequeños. Ruedas de entrenamiento extraíbles.', 
+                icon: '👶',
+                category: 'urban',
+                brand: 'trek',
+                features: ['Ruedas 20"', 'Frenos seguros', 'Diseño colorido']
+            },
+            { 
+                id: 6, 
+                name: 'Bicicleta Montaña Intermedia', 
+                price: 320000, 
+                desc: 'Excelente relación calidad-precio para principiantes y ciclistas ocasionales.', 
+                icon: '🚵‍♂️',
+                category: 'mountain',
+                brand: 'giant',
+                features: ['Suspensión delantera', '18 velocidades', 'Frenos V-Brake']
+            },
+            { 
+                id: 7, 
+                name: 'Bicicleta Paseo Clásica', 
+                price: 190000, 
+                desc: 'Estilo vintage para paseos relajados. Perfecta para ciudad y parques.', 
+                icon: '🌿',
+                category: 'urban',
+                brand: 'specialized',
+                features: ['Cuadro acero', 'Canasta frontal', 'Asiento cómodo']
+            },
+            { 
+                id: 8, 
+                name: 'Bicicleta Eléctrica Urbana', 
+                price: 550000, 
+                desc: 'Combinación perfecta entre estilo urbano y tecnología eléctrica.', 
+                icon: '🔋',
+                category: 'electric',
+                brand: 'cannondale',
+                features: ['Autonomía 60km', '3 modos potencia', 'Carga rápida']
+            }
+        ];
+
+        // Crear elementos de naturaleza
+        function createNatureElements() {
+            const container = document.getElementById('natureElements');
+            const elements = ['🍃', '🌿', '🍂', '🌲', '🎋', '🌱'];
+            
+            for (let i = 0; i < 20; i++) {
+                const element = document.createElement('div');
+                element.className = 'nature-element';
+                element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.animationDuration = (Math.random() * 25 + 25) + 's';
+                element.style.animationDelay = Math.random() * 15 + 's';
+                element.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                container.appendChild(element);
+            }
+        }
+
+        // Cargar productos
+        function loadProducts(filteredProducts = products) {
+            const productGrid = document.getElementById('productGrid');
+            
+            productGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        ${product.icon}
+                        ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <h4>${product.name}</h4>
+                        <p>${product.desc}</p>
+                        
+                        <div class="product-features">
+                            ${product.features.map(feature => 
+                                `<span class="feature-tag">${feature}</span>`
+                            ).join('')}
+                        </div>
+                        
+                        <div class="product-price">$${product.price.toLocaleString()}</div>
+                        <button class="btn-add-cart" onclick="addToCart(${product.id})">
+                            Agregar al Carrito
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Aplicar filtros
+        function applyFilters() {
+            const category = document.getElementById('categoryFilter').value;
+            const priceRange = document.getElementById('priceFilter').value;
+            const brand = document.getElementById('brandFilter').value;
+            
+            let filtered = products;
+            
+            if (category) {
+                filtered = filtered.filter(product => product.category === category);
+            }
+            
+            if (brand) {
+                filtered = filtered.filter(product => product.brand === brand);
+            }
+            
+            if (priceRange) {
+                const [min, max] = priceRange.split('-').map(val => 
+                    val.endsWith('+') ? parseInt(val) * 1000 : parseInt(val)
+                );
+                
+                filtered = filtered.filter(product => {
+                    if (priceRange.endsWith('+')) {
+                        return product.price >= min;
+                    }
+                    return product.price >= min && product.price <= max;
+                });
+            }
+            
+            loadProducts(filtered);
+        }
+
+        // Agregar al carrito
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            let cart = JSON.parse(localStorage.getItem('masterbikes_cart')) || [];
+            cart.push(product);
+            localStorage.setItem('masterbikes_cart', JSON.stringify(cart));
+            
+            updateCartIndicator();
+            
+            // Efecto visual
+            const cartIndicator = document.getElementById('cartIndicator');
+            cartIndicator.style.display = 'flex';
+            setTimeout(() => {
+                cartIndicator.style.animation = 'bounce 0.5s';
+            }, 100);
+        }
+
+        // Actualizar indicador del carrito
+        function updateCartIndicator() {
+            const cart = JSON.parse(localStorage.getItem('masterbikes_cart')) || [];
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+
+        // Verificar autenticación
+        function checkAuth() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            createNatureElements();
+            loadProducts();
+            updateCartIndicator();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterBikes - Tienda Online de Bicicletas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Fondo animado de tienda */
+        .shop-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -2;
+        }
+
+        .bike-showroom {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(0deg, #2c3e50 0%, transparent 100%);
+            opacity: 0.1;
+        }
+
+        /* Animación de bicicletas */
+        .bike-animation {
+            position: fixed;
+            top: 50%;
+            left: -100px;
+            transform: translateY(-50%);
+            animation: bikeRide 15s linear infinite;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        @keyframes bikeRide {
+            0% {
+                left: -100px;
+                transform: translateY(-50%) scale(0.8);
+            }
+            50% {
+                transform: translateY(-50%) scale(1);
+            }
+            100% {
+                left: 100%;
+                transform: translateY(-50%) scale(0.8);
+            }
+        }
+
+        .bike {
+            font-size: 60px;
+            filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.3));
+        }
+
+        /* Contenedor del login */
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 450px;
+            margin: 50px auto;
+            position: relative;
+            z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #2c3e50;
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            color: #7f8c8d;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .logo .tagline {
+            color: #3498db;
+            font-style: italic;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        /* Selector de rol */
+        .role-selector {
+            margin-bottom: 30px;
+        }
+
+        .role-selector h3 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .role-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .role-button {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #bdc3c7;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .role-button:hover {
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+        }
+
+        .role-button.selected {
+            border-color: #2980b9;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .role-button .icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .role-button .label {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        /* Formularios */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Sección de registro */
+        .register-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .register-toggle {
+            background: none;
+            border: none;
+            color: #3498db;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+
+        .register-form {
+            display: none;
+            margin-top: 15px;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mensajes */
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .success-message {
+            color: #27ae60;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+            font-weight: 500;
+        }
+
+        .credentials-info {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #2c3e50;
+            border-left: 4px solid #3498db;
+        }
+
+        .credentials-info h4 {
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-size: 13px;
+        }
+
+        .credential-item {
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+            background: rgba(255,255,255,0.7);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        /* Bicicletas flotantes */
+        .floating-bikes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-bike {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.3;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fondo animado -->
+    <div class="shop-background">
+        <div class="bike-showroom"></div>
+    </div>
+
+    <!-- Animación de bicicleta principal -->
+    <div class="bike-animation">
+        <div class="bike">🚴‍♂️</div>
+    </div>
+
+    <!-- Bicicletas flotantes -->
+    <div class="floating-bikes" id="floatingBikes"></div>
+
+    <!-- Contenedor principal -->
+    <div class="login-container" id="loginScreen">
+        <div class="logo">
+            <h1>🚴 MasterBikes</h1>
+            <p>Tu Tienda Online de Bicicletas</p>
+            <p class="tagline">Calidad, variedad y el mejor servicio</p>
+        </div>
+        
+        <div class="role-selector">
+            <h3>Selecciona tu tipo de cuenta:</h3>
+            <div class="role-buttons">
+                <div class="role-button" onclick="selectRole('user')" id="userBtn">
+                    <div class="icon">👤</div>
+                    <div class="label">Cliente</div>
+                </div>
+                <div class="role-button" onclick="selectRole('admin')" id="adminBtn">
+                    <div class="icon">⚙️</div>
+                    <div class="label">Administrador</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de Login -->
+        <div id="loginForm">
+            <div class="form-group">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" class="form-input" placeholder="Ingresa tu usuario">
+                <div class="error-message" id="usernameError">Por favor ingresa un usuario válido</div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" class="form-input" placeholder="Ingresa tu contraseña">
+                <div class="error-message" id="passwordError">Por favor ingresa una contraseña válida</div>
+            </div>
+
+            <button class="btn-login" id="btnLogin" onclick="login()" disabled>Ingresar a la Tienda</button>
+        </div>
+
+        <!-- Formulario de Registro -->
+        <div class="register-section">
+            <button class="register-toggle" onclick="toggleRegister()">¿Nuevo cliente? Regístrate aquí</button>
+            
+            <div class="register-form" id="registerForm">
+                <div class="form-group">
+                    <label for="regEmail">Correo Electrónico:</label>
+                    <input type="email" id="regEmail" class="form-input" placeholder="ejemplo@correo.com">
+                    <div class="error-message" id="emailError">Por favor ingresa un correo válido</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="regUsername">Usuario:</label>
+                    <input type="text" id="regUsername" class="form-input" placeholder="Elige tu nombre de usuario">
+                    <div class="error-message" id="regUserError">El usuario es requerido</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword">Contraseña:</label>
+                    <input type="password" id="regPassword" class="form-input" placeholder="Crea una contraseña segura">
+                    <div class="error-message" id="regPassError">Mínimo 8 caracteres</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="regConfirmPassword">Confirmar Contraseña:</label>
+                    <input type="password" id="regConfirmPassword" class="form-input" placeholder="Repite tu contraseña">
+                    <div class="error-message" id="regConfirmError">Las contraseñas no coinciden</div>
+                </div>
+
+                <button class="btn-login" onclick="register()">Crear Cuenta</button>
+            </div>
+        </div>
+        
+        <div class="success-message" id="loginSuccess">¡Acceso correcto! Redirigiendo a la tienda...</div>
+
+        <div class="credentials-info">
+            <h4>🔐 Credenciales de Prueba:</h4>
+            <div class="credential-item"><strong>Administrador:</strong> admin / admin123</div>
+            <div class="credential-item"><strong>Cliente:</strong> usuario / user123</div>
+        </div>
+    </div>
+
+    <script>
+        // Base de datos de usuarios
+        const users = {
+            'admin': { 
+                password: 'admin123', 
+                role: 'admin', 
+                name: 'Administrador Principal',
+                email: 'admin@masterbikes.cl'
+            },
+            'usuario': { 
+                password: 'user123', 
+                role: 'user', 
+                name: 'Cliente Ejemplo',
+                email: 'usuario@masterbikes.cl'
+            }
+        };
+
+        let selectedRole = null;
+        let isRegistering = false;
+
+        // Crear bicicletas flotantes
+        function createFloatingBikes() {
+            const container = document.getElementById('floatingBikes');
+            const bikeIcons = ['🚲', '🚴', '🚴‍♂️', '🚴‍♀️'];
+            
+            for (let i = 0; i < 8; i++) {
+                const bike = document.createElement('div');
+                bike.className = 'floating-bike';
+                bike.textContent = bikeIcons[Math.floor(Math.random() * bikeIcons.length)];
+                bike.style.left = Math.random() * 100 + 'vw';
+                bike.style.animationDuration = (Math.random() * 20 + 20) + 's';
+                bike.style.animationDelay = Math.random() * 10 + 's';
+                bike.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                container.appendChild(bike);
+            }
+        }
+
+        function selectRole(role) {
+            selectedRole = role;
+            
+            document.querySelectorAll('.role-button').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            if (role === 'user') {
+                document.getElementById('userBtn').classList.add('selected');
+                if (!isRegistering) {
+                    document.getElementById('username').value = 'usuario';
+                    document.getElementById('password').value = 'user123';
+                }
+            } else {
+                document.getElementById('adminBtn').classList.add('selected');
+                if (!isRegistering) {
+                    document.getElementById('username').value = 'admin';
+                    document.getElementById('password').value = 'admin123';
+                }
+            }
+            
+            validateForm();
+        }
+
+        function toggleRegister() {
+            isRegistering = !isRegistering;
+            const registerForm = document.getElementById('registerForm');
+            const loginForm = document.getElementById('loginForm');
+            const toggleBtn = document.querySelector('.register-toggle');
+            
+            if (isRegistering) {
+                registerForm.style.display = 'block';
+                loginForm.style.display = 'none';
+                toggleBtn.textContent = '← Volver al inicio de sesión';
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            } else {
+                registerForm.style.display = 'none';
+                loginForm.style.display = 'block';
+                toggleBtn.textContent = '¿Nuevo cliente? Regístrate aquí';
+            }
+            
+            validateForm();
+        }
+
+        function validateForm() {
+            const btnLogin = document.getElementById('btnLogin');
+            
+            if (isRegistering) {
+                const email = document.getElementById('regEmail').value.trim();
+                const username = document.getElementById('regUsername').value.trim();
+                const password = document.getElementById('regPassword').value;
+                const confirmPassword = document.getElementById('regConfirmPassword').value;
+                
+                btnLogin.disabled = !(email && username && password && confirmPassword && selectedRole);
+            } else {
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                
+                btnLogin.disabled = !(username && password && selectedRole);
+            }
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function showError(elementId, message) {
+            const errorDiv = document.getElementById(elementId);
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideError(elementId) {
+            const errorDiv = document.getElementById(elementId);
+            errorDiv.style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('loginSuccess');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+        }
+
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            hideError('usernameError');
+            hideError('passwordError');
+            
+            if (!username || !password) {
+                showError('usernameError', 'Por favor completa todos los campos');
+                return;
+            }
+            
+            if (users[username] && users[username].password === password) {
+                const currentUser = {
+                    username: username,
+                    ...users[username]
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                showSuccess('¡Acceso correcto! Redirigiendo a la tienda...');
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+                
+            } else {
+                showError('usernameError', 'Credenciales incorrectas. Usa las credenciales de prueba.');
+            }
+        }
+
+        function register() {
+            const email = document.getElementById('regEmail').value.trim();
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            
+            hideError('emailError');
+            hideError('regUserError');
+            hideError('regPassError');
+            hideError('regConfirmError');
+            
+            let isValid = true;
+            
+            if (!validateEmail(email)) {
+                showError('emailError', 'Por favor ingresa un correo válido');
+                isValid = false;
+            }
+            
+            if (!username) {
+                showError('regUserError', 'El usuario es requerido');
+                isValid = false;
+            }
+            
+            if (password.length < 8) {
+                showError('regPassError', 'La contraseña debe tener al menos 8 caracteres');
+                isValid = false;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('regConfirmError', 'Las contraseñas no coinciden');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            if (users[username]) {
+                showError('regUserError', 'Este usuario ya está registrado');
+                return;
+            }
+            
+            users[username] = {
+                password: password,
+                role: selectedRole,
+                name: username,
+                email: email
+            };
+            
+            simulateEmailWelcome(email, username);
+            
+            showSuccess(`¡Cuenta creada exitosamente! Bienvenido/a ${username}`);
+            
+            setTimeout(() => {
+                toggleRegister();
+                document.getElementById('username').value = username;
+                document.getElementById('password').value = password;
+            }, 2000);
+        }
+
+        function simulateEmailWelcome(email, username) {
+            console.log(`📧 Email de bienvenida enviado a: ${email}`);
+            console.log(`Asunto: ¡Bienvenido a MasterBikes!`);
+            console.log(`Contenido: Hola ${username}, gracias por registrarte en MasterBikes. Disfruta de nuestra tienda online de bicicletas.`);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingBikes();
+            
+            document.getElementById('username').addEventListener('input', validateForm);
+            document.getElementById('password').addEventListener('input', validateForm);
+            document.getElementById('regEmail').addEventListener('input', validateForm);
+            document.getElementById('regUsername').addEventListener('input', validateForm);
+            document.getElementById('regPassword').addEventListener('input', validateForm);
+            document.getElementById('regConfirmPassword').addEventListener('input', validateForm);
+            
+            setTimeout(() => {
+                selectRole('user');
+            }, 500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterBikes - Mi Historial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2f1a 0%, #2d5a2d 50%, #4a7c4a 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .mountain-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #2c5530 0%, #3a7d44 30%, #4fa564 60%, #87c990 100%);
+            z-index: -2;
+        }
+
+        .mountain-range {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(180deg, transparent 0%, #1a3b1a 20%, #2d4a2d 100%);
+            clip-path: polygon(0% 100%, 10% 70%, 20% 80%, 30% 60%, 40% 75%, 50% 50%, 60% 65%, 70% 45%, 80% 60%, 90% 40%, 100% 55%, 100% 100%);
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #2e7d32;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1000;
+            border-bottom: 2px solid #4caf50;
+        }
+
+        .navbar h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: rgba(76, 175, 80, 0.1);
+            color: #2e7d32;
+            border: 2px solid #4caf50;
+        }
+
+        .btn-primary:hover {
+            background: #4caf50;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .section-title {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-collapse: collapse;
+        }
+
+        table th {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .status-completed {
+            background: #27ae60;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .status-pending {
+            background: #f39c12;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .status-cancelled {
+            background: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .history-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            background: white;
+            border: 2px solid #c8e6c9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .history-section {
+            display: none;
+        }
+
+        .history-section.active {
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .nature-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .nature-element {
+            position: absolute;
+            font-size: 16px;
+            opacity: 0.6;
+            animation: floatNature linear infinite;
+        }
+
+        @keyframes floatNature {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .history-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mountain-background">
+        <div class="mountain-range"></div>
+    </div>
+
+    <div class="nature-elements" id="natureElements"></div>
+
+    <div class="navbar">
+        <h2>🚴 MasterBikes - Historial</h2>
+        <div class="nav-buttons">
+            <a href="index.html" class="btn btn-primary">🏠 Inicio</a>
+            <a href="arriendo.html" class="btn btn-primary">🚲 Arriendo</a>
+            <a href="reparacion.html" class="btn btn-primary">🔧 Reparación</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="section-title">📋 Mi Historial</h1>
+        
+        <div class="history-tabs">
+            <div class="tab active" onclick="showTab('purchases')">🛒 Compras</div>
+            <div class="tab" onclick="showTab('rentals')">🚲 Arriendos</div>
+            <div class="tab" onclick="showTab('repairs')">🔧 Reparaciones</div>
+        </div>
+
+        <div class="history-section active" id="purchasesSection">
+            <div class="card">
+                <h3>Historial de Compras</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Compra</th>
+                            <th>Producto</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="purchasesTable">
+                        <!-- Las compras se cargan dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="history-section" id="rentalsSection">
+            <div class="card">
+                <h3>Historial de Arriendos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Arriendo</th>
+                            <th>Bicicleta</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rentalsTable">
+                        <!-- Los arriendos se cargan dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="history-section" id="repairsSection">
+            <div class="card">
+                <h3>Historial de Reparaciones</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Servicio</th>
+                            <th>Servicio</th>
+                            <th>Fecha Solicitud</th>
+                            <th>Fecha Completado</th>
+                            <th>Costo</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="repairsTable">
+                        <!-- Las reparaciones se cargan dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createNatureElements() {
+            const container = document.getElementById('natureElements');
+            const elements = ['🍃', '🌿', '🍂', '📋'];
+            
+            for (let i = 0; i < 12; i++) {
+                const element = document.createElement('div');
+                element.className = 'nature-element';
+                element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.animationDuration = (Math.random() * 18 + 18) + 's';
+                element.style.animationDelay = Math.random() * 10 + 's';
+                element.style.fontSize = (Math.random() * 12 + 12) + 'px';
+                container.appendChild(element);
+            }
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.history-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(tabName + 'Section').classList.add('active');
+            event.target.classList.add('active');
+            
+            loadTabData(tabName);
+        }
+
+        function loadTabData(tabName) {
+            let data = [];
+            let tableBody = document.getElementById(tabName + 'Table');
+            
+            if (tabName === 'purchases') {
+                data = JSON.parse(localStorage.getItem('purchaseHistory')) || [];
+            } else if (tabName === 'rentals') {
+                data = JSON.parse(localStorage.getItem('rentalHistory')) || [];
+            } else if (tabName === 'repairs') {
+                data = JSON.parse(localStorage.getItem('repairHistory')) || [];
+            }
+
+            if (data.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <div class="icon">📝</div>
+                            <h3>No hay registros</h3>
+                            <p>No tienes ${getTabTitle(tabName)} registrados</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = data.map((item, index) => `
+                <tr>
+                    <td>${getItemId(tabName, index)}</td>
+                    <td>${getItemName(tabName, item)}</td>
+                    <td>${formatDate(item.date || item.request)}</td>
+                    <td>${getItemDate(tabName, item)}</td>
+                    <td>$${getItemPrice(tabName, item)?.toLocaleString()}</td>
+                    <td><span class="status-${item.status || 'completed'}">${getStatusText(item.status)}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function getTabTitle(tabName) {
+            const titles = {
+                purchases: 'compras',
+                rentals: 'arriendos', 
+                repairs: 'reparaciones'
+            };
+            return titles[tabName];
+        }
+
+        function getItemId(tabName, index) {
+            const prefixes = {
+                purchases: 'CMP',
+                rentals: 'ARN',
+                repairs: 'REP'
+            };
+            return `${prefixes[tabName]}-${1000 + index}`;
+        }
+
+        function getItemName(tabName, item) {
+            if (tabName === 'purchases') {
+                return item.products?.[0]?.name || 'Productos varios';
+            } else if (tabName === 'rentals') {
+                return `Bicicleta ${item.type}`;
+            } else if (tabName === 'repairs') {
+                return item.service;
+            }
+            return 'Item';
+        }
+
+        function getItemDate(tabName, item) {
+            if (tabName === 'rentals') {
+                return item.end || '-';
+            } else if (tabName === 'repairs') {
+                return item.completed || '-';
+            }
+            return '-';
+        }
+
+        function getItemPrice(tabName, item) {
+            return item.total || item.cost || 0;
+        }
+
+        function getStatusText(status) {
+            const statusText = {
+                completed: 'Completado',
+                pending: 'Pendiente',
+                cancelled: 'Cancelado'
+            };
+            return statusText[status] || 'Completado';
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '-';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES');
+        }
+
+        function checkAuth() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            createNatureElements();
+            loadTabData('purchases');
+        });
+    </script>
+</body>
+</html>

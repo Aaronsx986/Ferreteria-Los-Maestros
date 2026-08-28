@@ -1,0 +1,94 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Bicicleta de Montaña Profesional",
+      "price": 450000,
+      "category": "bicicletas",
+      "subcategory": "montaña",
+      "brand": "Trek",
+      "description": "Bicicleta de montaña profesional con suspensión completa, ideal para terrenos difíciles y aventuras extremas.",
+      "features": ["Suspensión completa", "21 velocidades", "Frenos de disco hidráulicos", "Cuadro de aluminio"],
+      "specs": {
+        "material": "Aluminio 6061",
+        "peso": "13.5 kg",
+        "tallas": ["S", "M", "L", "XL"],
+        "colores": ["Negro mate", "Rojo racing", "Azul eléctrico"]
+      },
+      "stock": 15,
+      "minStock": 5,
+      "images": ["bike-mountain-1.jpg", "bike-mountain-2.jpg"],
+      "tags": ["profesional", "montaña", "suspension-completa"],
+      "rating": 4.8,
+      "reviews": 47,
+      "created": "2024-10-15",
+      "updated": "2025-11-10"
+    },
+    {
+      "id": 2,
+      "name": "Bicicleta Urbana Elegante",
+      "price": 280000,
+      "category": "bicicletas",
+      "subcategory": "urbana",
+      "brand": "Giant",
+      "description": "Bicicleta urbana con diseño elegante y cómodo, perfecta para desplazamientos diarios en la ciudad.",
+      "features": ["Diseño plegable", "Canasta incluida", "Luces LED integradas", "Guardabarros"],
+      "specs": {
+        "material": "Acero reforzado",
+        "peso": "11.2 kg",
+        "tallas": ["Única"],
+        "colores": ["Blanco perla", "Negro elegante", "Verde menta"]
+      },
+      "stock": 8,
+      "minStock": 3,
+      "images": ["bike-urban-1.jpg", "bike-urban-2.jpg"],
+      "tags": ["urbana", "plegable", "ciudad"],
+      "rating": 4.5,
+      "reviews": 32,
+      "created": "2024-11-20",
+      "updated": "2025-11-11"
+    },
+    {
+      "id": 3,
+      "name": "Casco Deportivo Profesional",
+      "price": 45000,
+      "category": "accesorios",
+      "subcategory": "seguridad",
+      "brand": "Bell",
+      "description": "Casco deportivo de alta calidad con ventilación avanzada y sistema de ajuste preciso.",
+      "features": ["Ventilación avanzada", "Sistema de ajuste dial", "Visera desmontable", "Peso ligero"],
+      "specs": {
+        "material": "Policarbonato",
+        "peso": "320 g",
+        "tallas": ["S", "M", "L"],
+        "colores": ["Negro", "Rojo", "Azul", "Amarillo"]
+      },
+      "stock": 25,
+      "minStock": 10,
+      "images": ["helmet-1.jpg", "helmet-2.jpg"],
+      "tags": ["casco", "seguridad", "deportivo"],
+      "rating": 4.7,
+      "reviews": 89,
+      "created": "2024-09-10",
+      "updated": "2025-11-09"
+    }
+  ],
+  "categories": [
+    {
+      "id": "bicicletas",
+      "name": "Bicicletas",
+      "subcategories": ["montaña", "urbana", "carrera", "eléctrica", "infantil"]
+    },
+    {
+      "id": "accesorios",
+      "name": "Accesorios",
+      "subcategories": ["seguridad", "iluminación", "portaequipajes", "vestimenta"]
+    },
+    {
+      "id": "repuestos",
+      "name": "Repuestos",
+      "subcategories": ["frenos", "transmisión", "ruedas", "sillines"]
+    }
+  ],
+  "brands": ["Trek", "Giant", "Specialized", "Cannondale", "Scott", "Bell", "Giro", "Shimano"]
+}
