@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferretería Los Maestros - Inventario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="d-flex flm-admin-shell">
+<div class="flm-sidebar d-flex flex-column">
+  <div class="sidebar-brand"><i class="bi bi-hammer text-flm-orange"></i> Los Maestros <span class="accent">Admin</span></div>
+  <ul class="nav flex-column py-2">
+<li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+<li class="nav-item"><a class="nav-link" href="ventas.html"><i class="bi bi-cash-coin"></i> Ventas</a></li>
+<li class="nav-item"><a class="nav-link active" href="inventario.html"><i class="bi bi-boxes"></i> Inventario</a></li>
+<li class="nav-item"><a class="nav-link" href="proveedores.html"><i class="bi bi-truck"></i> Proveedores</a></li>
+<li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-people"></i> Usuarios</a></li>
+<li class="nav-item"><a class="nav-link" href="crear-usuario.html"><i class="bi bi-person-plus"></i> Crear Usuario</a></li>
+<li class="nav-item"><a class="nav-link" href="reportes.html"><i class="bi bi-graph-up-arrow"></i> Reportes</a></li>
+  </ul>
+  <hr class="mt-auto">
+  <ul class="nav flex-column pb-3">
+    <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-shop"></i> Volver a la tienda</a></li>
+    <li class="nav-item"><a class="nav-link" href="#" data-flm-logout><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+  </ul>
+</div>
+  <div class="flex-grow-1 d-flex flex-column">
+<div class="flm-admin-topbar d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center gap-2">
+    <button class="btn btn-sm btn-outline-secondary d-lg-none" data-flm-sidebar-toggle><i class="bi bi-list"></i></button>
+    <h5 class="mb-0 fw-bold">Control de Inventario</h5>
+  </div>
+  <div class="d-flex align-items-center gap-2">
+    <span class="text-muted small">Hola, <strong id="flmNavUserName">—</strong></span>
+    <a href="index.html" class="btn btn-sm btn-outline-flm"><i class="bi bi-shop"></i> Tienda</a>
+  </div>
+</div>
+    <div class="flm-admin-content bg-flm-gray flex-grow-1">
+<div class="row g-3 mb-4">
+<div class="col-6 col-lg-3">
+  <div class="flm-stat-card ">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <div class="stat-value" id="totalProducts">85</div>
+        <div class="stat-label">Productos totales</div>
+      </div>
+      <i class="bi bi-boxes"></i>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-lg-3">
+  <div class="flm-stat-card border-warning">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <div class="stat-value" id="lowStockCount">0</div>
+        <div class="stat-label">Stock bajo</div>
+      </div>
+      <i class="bi bi-exclamation-triangle"></i>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-lg-3">
+  <div class="flm-stat-card border-danger">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <div class="stat-value" id="outStockCount">0</div>
+        <div class="stat-label">Agotados</div>
+      </div>
+      <i class="bi bi-x-circle"></i>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-lg-3">
+  <div class="flm-stat-card ">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <div class="stat-value" id="inventoryValue">$0</div>
+        <div class="stat-label">Valor de inventario</div>
+      </div>
+      <i class="bi bi-cash-stack"></i>
+    </div>
+  </div>
+</div>
+</div>
+<div class="flm-filter-box mb-3 d-flex flex-wrap gap-2 align-items-center">
+  <select class="form-select form-select-sm" id="invCatFilter" style="width:auto;">
+    <option value="">Todas las categorías</option>
+<option value="construccion">Materiales de Construcción</option>
+<option value="pinturas">Pinturas y Recubrimientos</option>
+<option value="herramientas">Herramientas</option>
+<option value="gasfiteria">Gasfitería</option>
+<option value="electricidad">Electricidad</option>
+<option value="tornilleria">Tornillería y Fijaciones</option>
+<option value="madera">Madera y Tableros</option>
+<option value="seguridad">Seguridad y EPP</option>
+<option value="jardin">Jardín y Exterior</option>
+  </select>
+  <input type="text" class="form-control form-control-sm" id="invSearch" placeholder="Buscar por código o nombre..." style="width:240px;">
+  <div class="form-check ms-auto">
+    <input class="form-check-input" type="checkbox" id="onlyLowStock">
+    <label class="form-check-label small" for="onlyLowStock">Solo stock bajo / agotado</label>
+  </div>
+</div>
+<div class="flm-card p-3">
+  <div class="table-responsive"><table class="table flm-table align-middle mb-0">
+    <thead><tr><th>Código</th><th>Producto</th><th>Categoría</th><th>Marca</th><th>Precio venta</th><th>Stock</th><th>Estado</th></tr></thead>
+    <tbody id="inventoryTable"></tbody>
+  </table></div>
+</div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/common.js"></script>
+
+<script>
+  const INVENTORY = [{"id": 1, "code": "MC001", "category": "construccion", "categoryLabel": "Mat. Construcción", "subcategory": "Cementos", "name": "Cemento Polpaico gris 25 kg", "brand": "Polpaico", "unit": "Saco", "buyPrice": 3200, "price": 5990, "stock": 80, "minStock": 20, "icon": "bi-bricks"}, {"id": 2, "code": "MC002", "category": "construccion", "categoryLabel": "Mat. Construcción", "subcategory": "Cementos", "name": "Cemento Melón blanco 25 kg", "brand": "Melón", "unit": "Saco", "buyPrice": 4100, "price": 7490, "stock": 40, "minStock": 10, "icon": "bi-bricks"}, {"id": 3, "code": "MC003", "category": "construccion", "categoryLabel": "Mat. Construcción", "subcategory": "Morteros", "name": "Mortero cola cerámica 25 kg", "brand": "Volcán", "unit": "Saco", "buyPrice": 2800, "price": 5200, "stock": 50, "minStock": 15, "icon": "bi-bricks"}, {"id": 4, "code": "MC004", "category": "construccion", "categoryLabel": "Mat. Construcción", "subcategory": "Morteros", "name": "Mortero nivelador piso 25 kg", "brand": "Weber", "unit": "Saco", "buyPrice": 3500, "price": 6490, "stock": 30, "minStock": 10, "icon": "bi-bricks"}, {"id": 5, "code": "MC005", "category": "construccion", "categoryLabel": "Mat. Construcción", "subcategory": "Áridos", "name": "Arena fina construcción 25 kg", "brand": "Granel", "unit": "Saco", "buyPrice": 800, "price": 1800, "stock": 60, "minStock": 20, "icon": "bi-bricks"}, {"id": 6, "code": "MC006", "category": "construccion", "categoryLabel": "Mat. Construcción", "subcategory": "Áridos", "name": "Ripio 25 kg", "brand": "Granel", "unit": "Saco", "buyPrice": 700, "price": 1500, "stock": 60, "minStock": 20, "icon": "bi-bricks"}, {"id": 7, "code": "MC007", "category": "construccion", "categoryLabel": "Mat. Construcción", "subcategory": "Ladrillos", "name": "Ladrillo fiscal N°5", "brand": "Local", "unit": "Unidad", "buyPrice": 190, "price": 380, "stock": 500, "minStock": 100, "icon": "bi-bricks"}, {"id": 8, "code": "MC008", "category": "construccion", "categoryLabel": "Mat. Construcción", "subcategory": "Ladrillos", "name": "Ladrillo prensado 6x14x29 cm", "brand": "Melón", "unit": "Unidad", "buyPrice": 280, "price": 550, "stock": 300, "minStock": 80, "icon": "bi-bricks"}, {"id": 9, "code": "MC009", "category": "construccion", "categoryLabel": "Mat. Construcción", "subcategory": "Bloques", "name": "Bloque de hormigón 19x19x39 cm", "brand": "Volcán", "unit": "Unidad", "buyPrice": 620, "price": 1200, "stock": 200, "minStock": 50, "icon": "bi-bricks"}, {"id": 10, "code": "MC010", "category": "construccion", "categoryLabel": "Mat. Construcción", "subcategory": "Bloques", "name": "Bloque liviano 10x20x40 cm", "brand": "Ytong", "unit": "Unidad", "buyPrice": 890, "price": 1690, "stock": 100, "minStock": 30, "icon": "bi-bricks"}, {"id": 11, "code": "PT001", "category": "pinturas", "categoryLabel": "Pinturas", "subcategory": "Látex", "name": "Pintura látex interior 1 galón blanco", "brand": "Sipa", "unit": "Galón", "buyPrice": 5200, "price": 9990, "stock": 40, "minStock": 10, "icon": "bi-paint-bucket"}, {"id": 12, "code": "PT002", "category": "pinturas", "categoryLabel": "Pinturas", "subcategory": "Látex", "name": "Pintura látex interior 4 litros (varios col.)", "brand": "Sipa", "unit": "Envase 4L", "buyPrice": 6800, "price": 12990, "stock": 30, "minStock": 8, "icon": "bi-paint-bucket"}, {"id": 13, "code": "PT003", "category": "pinturas", "categoryLabel": "Pinturas", "subcategory": "Látex", "name": "Pintura látex exterior 1 galón blanco", "brand": "Kömex", "unit": "Galón", "buyPrice": 7200, "price": 13990, "stock": 25, "minStock": 8, "icon": "bi-paint-bucket"}, {"id": 14, "code": "PT004", "category": "pinturas", "categoryLabel": "Pinturas", "subcategory": "Esmalte", "name": "Esmalte sintético 1/4 litro (varios col.)", "brand": "Sipa", "unit": "1/4 L", "buyPrice": 2100, "price": 4290, "stock": 50, "minStock": 15, "icon": "bi-paint-bucket"}, {"id": 15, "code": "PT005", "category": "pinturas", "categoryLabel": "Pinturas", "subcategory": "Esmalte", "name": "Esmalte sintético 1 litro (varios col.)", "brand": "Sipa", "unit": "1 litro", "buyPrice": 4800, "price": 9490, "stock": 30, "minStock": 10, "icon": "bi-paint-bucket"}, {"id": 16, "code": "PT006", "category": "pinturas", "categoryLabel": "Pinturas", "subcategory": "Antihumedad", "name": "Pintura antihumedad 1 galón blanco", "brand": "Kömex", "unit": "Galón", "buyPrice": 9500, "price": 17990, "stock": 15, "minStock": 5, "icon": "bi-paint-bucket"}, {"id": 17, "code": "PT007", "category": "pinturas", "categoryLabel": "Pinturas", "subcategory": "Accesorios", "name": "Rodillo lana 23 cm con mango", "brand": "Wurth", "unit": "Unidad", "buyPrice": 1900, "price": 3990, "stock": 30, "minStock": 10, "icon": "bi-paint-bucket"}, {"id": 18, "code": "PT008", "category": "pinturas", "categoryLabel": "Pinturas", "subcategory": "Accesorios", "name": "Brocha cerda natural 3\"", "brand": "Sipa", "unit": "Unidad", "buyPrice": 800, "price": 1690, "stock": 40, "minStock": 10, "icon": "bi-paint-bucket"}, {"id": 19, "code": "PT009", "category": "pinturas", "categoryLabel": "Pinturas", "subcategory": "Accesorios", "name": "Cinta de enmascarar 24mm x 50m", "brand": "3M", "unit": "Rollo", "buyPrice": 1200, "price": 2490, "stock": 60, "minStock": 20, "icon": "bi-paint-bucket"}, {"id": 20, "code": "HM001", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Manuales", "name": "Martillo carpintero 500g", "brand": "Stanley", "unit": "Unidad", "buyPrice": 4200, "price": 7990, "stock": 20, "minStock": 5, "icon": "bi-tools"}, {"id": 21, "code": "HM002", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Manuales", "name": "Alicate universal 8\"", "brand": "Stanley", "unit": "Unidad", "buyPrice": 3800, "price": 7290, "stock": 15, "minStock": 5, "icon": "bi-tools"}, {"id": 22, "code": "HM003", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Manuales", "name": "Destornillador plano 6x100mm", "brand": "Stanley", "unit": "Unidad", "buyPrice": 900, "price": 1990, "stock": 30, "minStock": 10, "icon": "bi-tools"}, {"id": 23, "code": "HM004", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Manuales", "name": "Destornillador Phillips PH2 6x100mm", "brand": "Stanley", "unit": "Unidad", "buyPrice": 900, "price": 1990, "stock": 30, "minStock": 10, "icon": "bi-tools"}, {"id": 24, "code": "HM005", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Manuales", "name": "Llave ajustable 10\"", "brand": "Bahco", "unit": "Unidad", "buyPrice": 4500, "price": 8490, "stock": 12, "minStock": 4, "icon": "bi-tools"}, {"id": 25, "code": "HM006", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Manuales", "name": "Juego llaves hexagonales métrico x9", "brand": "Stanley", "unit": "Set", "buyPrice": 2800, "price": 5490, "stock": 15, "minStock": 5, "icon": "bi-tools"}, {"id": 26, "code": "HM007", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Manuales", "name": "Serrucho 20\" 7 dientes por pulgada", "brand": "Stanley", "unit": "Unidad", "buyPrice": 4900, "price": 9490, "stock": 10, "minStock": 3, "icon": "bi-tools"}, {"id": 27, "code": "HM008", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Manuales", "name": "Nivel de burbuja 60 cm", "brand": "Stanley", "unit": "Unidad", "buyPrice": 5500, "price": 10490, "stock": 8, "minStock": 3, "icon": "bi-tools"}, {"id": 28, "code": "HM009", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Manuales", "name": "Metro de tela 5m", "brand": "Stanley", "unit": "Unidad", "buyPrice": 2200, "price": 4290, "stock": 25, "minStock": 8, "icon": "bi-tools"}, {"id": 29, "code": "HM010", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Manuales", "name": "Cinta métrica 8m autoblocante", "brand": "Stanley", "unit": "Unidad", "buyPrice": 3200, "price": 6490, "stock": 20, "minStock": 6, "icon": "bi-tools"}, {"id": 30, "code": "HE001", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Eléctricas", "name": "Taladro percutor 650W 13mm", "brand": "Makita", "unit": "Unidad", "buyPrice": 42000, "price": 79990, "stock": 8, "minStock": 2, "icon": "bi-tools"}, {"id": 31, "code": "HE002", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Eléctricas", "name": "Atornillador inalámbrico 12V (kit)", "brand": "Makita", "unit": "Unidad", "buyPrice": 55000, "price": 104990, "stock": 5, "minStock": 2, "icon": "bi-tools"}, {"id": 32, "code": "HE003", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Eléctricas", "name": "Amoladora angular 4.5\" 800W", "brand": "Makita", "unit": "Unidad", "buyPrice": 28000, "price": 54990, "stock": 8, "minStock": 2, "icon": "bi-tools"}, {"id": 33, "code": "HE004", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Eléctricas", "name": "Sierra circular 7-1/4\" 1200W", "brand": "Skil", "unit": "Unidad", "buyPrice": 38000, "price": 72990, "stock": 4, "minStock": 1, "icon": "bi-tools"}, {"id": 34, "code": "HE005", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Eléctricas", "name": "Lijadora orbital 180W", "brand": "Black+Decker", "unit": "Unidad", "buyPrice": 18000, "price": 34990, "stock": 6, "minStock": 2, "icon": "bi-tools"}, {"id": 35, "code": "HE006", "category": "herramientas", "categoryLabel": "Herramientas", "subcategory": "Eléctricas", "name": "Caladora 500W", "brand": "Skil", "unit": "Unidad", "buyPrice": 22000, "price": 42990, "stock": 4, "minStock": 1, "icon": "bi-tools"}, {"id": 36, "code": "GS001", "category": "gasfiteria", "categoryLabel": "Gasfitería", "subcategory": "Tuberías", "name": "Cañería PVC 1/2\" x 6m", "brand": "Tigre", "unit": "Unidad", "buyPrice": 2800, "price": 5490, "stock": 30, "minStock": 10, "icon": "bi-droplet-half"}, {"id": 37, "code": "GS002", "category": "gasfiteria", "categoryLabel": "Gasfitería", "subcategory": "Tuberías", "name": "Cañería PVC 3/4\" x 6m", "brand": "Tigre", "unit": "Unidad", "buyPrice": 3900, "price": 7490, "stock": 25, "minStock": 8, "icon": "bi-droplet-half"}, {"id": 38, "code": "GS003", "category": "gasfiteria", "categoryLabel": "Gasfitería", "subcategory": "Tuberías", "name": "Cañería cobre 1/2\" x 5m", "brand": "Codelco", "unit": "Unidad", "buyPrice": 9500, "price": 17990, "stock": 15, "minStock": 5, "icon": "bi-droplet-half"}, {"id": 39, "code": "GS004", "category": "gasfiteria", "categoryLabel": "Gasfitería", "subcategory": "Uniones", "name": "Codo PVC 1/2\" 90°", "brand": "Tigre", "unit": "Unidad", "buyPrice": 180, "price": 390, "stock": 100, "minStock": 30, "icon": "bi-droplet-half"}, {"id": 40, "code": "GS005", "category": "gasfiteria", "categoryLabel": "Gasfitería", "subcategory": "Uniones", "name": "Te PVC 1/2\"", "brand": "Tigre", "unit": "Unidad", "buyPrice": 220, "price": 450, "stock": 80, "minStock": 25, "icon": "bi-droplet-half"}, {"id": 41, "code": "GS006", "category": "gasfiteria", "categoryLabel": "Gasfitería", "subcategory": "Uniones", "name": "Unión doble PVC 1/2\"", "brand": "Tigre", "unit": "Unidad", "buyPrice": 150, "price": 320, "stock": 80, "minStock": 25, "icon": "bi-droplet-half"}, {"id": 42, "code": "GS007", "category": "gasfiteria", "categoryLabel": "Gasfitería", "subcategory": "Llaves", "name": "Llave de paso esfera 1/2\" latón", "brand": "Emmeti", "unit": "Unidad", "buyPrice": 1800, "price": 3490, "stock": 30, "minStock": 10, "icon": "bi-droplet-half"}, {"id": 43, "code": "GS008", "category": "gasfiteria", "categoryLabel": "Gasfitería", "subcategory": "Llaves", "name": "Llave de paso esfera 3/4\" latón", "brand": "Emmeti", "unit": "Unidad", "buyPrice": 2500, "price": 4990, "stock": 20, "minStock": 8, "icon": "bi-droplet-half"}, {"id": 44, "code": "GS009", "category": "gasfiteria", "categoryLabel": "Gasfitería", "subcategory": "Grifería", "name": "Grifería lavamanos monocomando cromo", "brand": "Corona", "unit": "Unidad", "buyPrice": 12000, "price": 22990, "stock": 10, "minStock": 3, "icon": "bi-droplet-half"}, {"id": 45, "code": "GS010", "category": "gasfiteria", "categoryLabel": "Gasfitería", "subcategory": "Grifería", "name": "Grifería cocina monocomando cuello alto", "brand": "Corona", "unit": "Unidad", "buyPrice": 15000, "price": 28990, "stock": 8, "minStock": 2, "icon": "bi-droplet-half"}, {"id": 46, "code": "GS011", "category": "gasfiteria", "categoryLabel": "Gasfitería", "subcategory": "Sellos", "name": "Teflón 3/4\" x 12m", "brand": "3M", "unit": "Rollo", "buyPrice": 350, "price": 790, "stock": 80, "minStock": 25, "icon": "bi-droplet-half"}, {"id": 47, "code": "GS012", "category": "gasfiteria", "categoryLabel": "Gasfitería", "subcategory": "Sellos", "name": "Silicona transparente 280ml", "brand": "Wacker", "unit": "Cartucho", "buyPrice": 2800, "price": 5490, "stock": 25, "minStock": 8, "icon": "bi-droplet-half"}, {"id": 48, "code": "EL001", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Conductores", "name": "Cable unipolar 1.5mm² (por metro)", "brand": "Condulac", "unit": "Metro", "buyPrice": 290, "price": 590, "stock": 100, "minStock": 30, "icon": "bi-lightning-charge"}, {"id": 49, "code": "EL002", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Conductores", "name": "Cable unipolar 2.5mm² (por metro)", "brand": "Condulac", "unit": "Metro", "buyPrice": 390, "price": 790, "stock": 100, "minStock": 30, "icon": "bi-lightning-charge"}, {"id": 50, "code": "EL003", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Conductores", "name": "Cable dúplex paralelo 2x1.5mm² (por metro)", "brand": "Condulac", "unit": "Metro", "buyPrice": 490, "price": 990, "stock": 80, "minStock": 25, "icon": "bi-lightning-charge"}, {"id": 51, "code": "EL004", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Enchufes", "name": "Enchufe empotrar 16A c/tierra (schuko)", "brand": "Bticino", "unit": "Unidad", "buyPrice": 1900, "price": 3690, "stock": 50, "minStock": 15, "icon": "bi-lightning-charge"}, {"id": 52, "code": "EL005", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Enchufes", "name": "Enchufe doble empotrar 16A c/tierra", "brand": "Bticino", "unit": "Unidad", "buyPrice": 2800, "price": 5490, "stock": 40, "minStock": 12, "icon": "bi-lightning-charge"}, {"id": 53, "code": "EL006", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Interruptores", "name": "Interruptor simple empotrar", "brand": "Bticino", "unit": "Unidad", "buyPrice": 1600, "price": 3190, "stock": 50, "minStock": 15, "icon": "bi-lightning-charge"}, {"id": 54, "code": "EL007", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Interruptores", "name": "Interruptor doble empotrar", "brand": "Bticino", "unit": "Unidad", "buyPrice": 2200, "price": 4290, "stock": 35, "minStock": 10, "icon": "bi-lightning-charge"}, {"id": 55, "code": "EL008", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Tableros", "name": "Tablero eléctrico 4 espacios DIN", "brand": "Legrand", "unit": "Unidad", "buyPrice": 12000, "price": 22990, "stock": 8, "minStock": 2, "icon": "bi-lightning-charge"}, {"id": 56, "code": "EL009", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Tableros", "name": "Disyuntor termomagnético 16A unipolar", "brand": "Schneider", "unit": "Unidad", "buyPrice": 3200, "price": 6490, "stock": 20, "minStock": 5, "icon": "bi-lightning-charge"}, {"id": 57, "code": "EL010", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Tableros", "name": "Disyuntor termomagnético 25A unipolar", "brand": "Schneider", "unit": "Unidad", "buyPrice": 3500, "price": 6990, "stock": 20, "minStock": 5, "icon": "bi-lightning-charge"}, {"id": 58, "code": "EL011", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Iluminación", "name": "Ampolleta LED 9W E27 luz fría", "brand": "Philips", "unit": "Unidad", "buyPrice": 1900, "price": 3990, "stock": 60, "minStock": 20, "icon": "bi-lightning-charge"}, {"id": 59, "code": "EL012", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Iluminación", "name": "Ampolleta LED 12W E27 luz cálida", "brand": "Philips", "unit": "Unidad", "buyPrice": 2200, "price": 4490, "stock": 50, "minStock": 15, "icon": "bi-lightning-charge"}, {"id": 60, "code": "EL013", "category": "electricidad", "categoryLabel": "Electricidad", "subcategory": "Iluminación", "name": "Panel LED empotrar 18W 22cm", "brand": "Ledvance", "unit": "Unidad", "buyPrice": 5800, "price": 11490, "stock": 20, "minStock": 6, "icon": "bi-lightning-charge"}, {"id": 61, "code": "TR001", "category": "tornilleria", "categoryLabel": "Tornillería", "subcategory": "Tornillos", "name": "Tornillo autoperf. 8x1\" caja 100 unid.", "brand": "Hilti", "unit": "Caja", "buyPrice": 1500, "price": 2990, "stock": 40, "minStock": 12, "icon": "bi-nut"}, {"id": 62, "code": "TR002", "category": "tornilleria", "categoryLabel": "Tornillería", "subcategory": "Tornillos", "name": "Tornillo madera 4x40mm caja 100 unid.", "brand": "Hilti", "unit": "Caja", "buyPrice": 1200, "price": 2490, "stock": 40, "minStock": 12, "icon": "bi-nut"}, {"id": 63, "code": "TR003", "category": "tornilleria", "categoryLabel": "Tornillería", "subcategory": "Tornillos", "name": "Tornillo volcanita 3.5x25mm caja 200 unid.", "brand": "Hilti", "unit": "Caja", "buyPrice": 1800, "price": 3490, "stock": 30, "minStock": 10, "icon": "bi-nut"}, {"id": 64, "code": "TR004", "category": "tornilleria", "categoryLabel": "Tornillería", "subcategory": "Tacos", "name": "Taco fisher S6 bolsa 100 unid.", "brand": "Fischer", "unit": "Bolsa", "buyPrice": 1600, "price": 3190, "stock": 35, "minStock": 10, "icon": "bi-nut"}, {"id": 65, "code": "TR005", "category": "tornilleria", "categoryLabel": "Tornillería", "subcategory": "Tacos", "name": "Taco fisher S8 bolsa 50 unid.", "brand": "Fischer", "unit": "Bolsa", "buyPrice": 1400, "price": 2890, "stock": 30, "minStock": 10, "icon": "bi-nut"}, {"id": 66, "code": "TR006", "category": "tornilleria", "categoryLabel": "Tornillería", "subcategory": "Pernos", "name": "Perno hex. 3/8\" x 2\" c/tuerca y golilla", "brand": "Granel", "unit": "Unidad", "buyPrice": 120, "price": 290, "stock": 200, "minStock": 50, "icon": "bi-nut"}, {"id": 67, "code": "TR007", "category": "tornilleria", "categoryLabel": "Tornillería", "subcategory": "Anclajes", "name": "Perno de anclaje 10x100mm", "brand": "Hilti", "unit": "Unidad", "buyPrice": 480, "price": 990, "stock": 60, "minStock": 15, "icon": "bi-nut"}, {"id": 68, "code": "TR008", "category": "tornilleria", "categoryLabel": "Tornillería", "subcategory": "Anclajes", "name": "Anclaje químico epoxi 300ml", "brand": "Fischer", "unit": "Cartucho", "buyPrice": 8500, "price": 15990, "stock": 8, "minStock": 2, "icon": "bi-nut"}, {"id": 69, "code": "MD001", "category": "madera", "categoryLabel": "Madera", "subcategory": "Pino cepillado", "name": "Pino cepillado 1x3\" x 3m", "brand": "Local", "unit": "Unidad", "buyPrice": 2100, "price": 4290, "stock": 40, "minStock": 12, "icon": "bi-tree"}, {"id": 70, "code": "MD002", "category": "madera", "categoryLabel": "Madera", "subcategory": "Pino cepillado", "name": "Pino cepillado 2x4\" x 3m", "brand": "Local", "unit": "Unidad", "buyPrice": 3800, "price": 7490, "stock": 30, "minStock": 10, "icon": "bi-tree"}, {"id": 71, "code": "MD003", "category": "madera", "categoryLabel": "Madera", "subcategory": "Tableros", "name": "Terciado estructural 18mm 1.22x2.44m", "brand": "Arauco", "unit": "Plancha", "buyPrice": 18000, "price": 34990, "stock": 20, "minStock": 5, "icon": "bi-tree"}, {"id": 72, "code": "MD004", "category": "madera", "categoryLabel": "Madera", "subcategory": "Tableros", "name": "MDF 15mm 1.22x2.44m", "brand": "Arauco", "unit": "Plancha", "buyPrice": 14000, "price": 27990, "stock": 15, "minStock": 4, "icon": "bi-tree"}, {"id": 73, "code": "MD005", "category": "madera", "categoryLabel": "Madera", "subcategory": "Tableros", "name": "OSB 9mm 1.22x2.44m", "brand": "Arauco", "unit": "Plancha", "buyPrice": 9500, "price": 18990, "stock": 18, "minStock": 5, "icon": "bi-tree"}, {"id": 74, "code": "MD006", "category": "madera", "categoryLabel": "Madera", "subcategory": "Tableros", "name": "Volcanita estándar 10mm 1.2x2.4m", "brand": "Volcán", "unit": "Plancha", "buyPrice": 4500, "price": 8990, "stock": 30, "minStock": 8, "icon": "bi-tree"}, {"id": 75, "code": "MD007", "category": "madera", "categoryLabel": "Madera", "subcategory": "Tableros", "name": "Volcanita resistente humedad 10mm", "brand": "Volcán", "unit": "Plancha", "buyPrice": 6200, "price": 11990, "stock": 15, "minStock": 4, "icon": "bi-tree"}, {"id": 76, "code": "SE001", "category": "seguridad", "categoryLabel": "Seguridad", "subcategory": "EPP", "name": "Casco seguridad blanco", "brand": "3M", "unit": "Unidad", "buyPrice": 3500, "price": 6990, "stock": 15, "minStock": 5, "icon": "bi-shield-check"}, {"id": 77, "code": "SE002", "category": "seguridad", "categoryLabel": "Seguridad", "subcategory": "EPP", "name": "Guantes de cuero talla L", "brand": "3M", "unit": "Par", "buyPrice": 1800, "price": 3690, "stock": 20, "minStock": 6, "icon": "bi-shield-check"}, {"id": 78, "code": "SE003", "category": "seguridad", "categoryLabel": "Seguridad", "subcategory": "EPP", "name": "Antiparras de seguridad clear", "brand": "3M", "unit": "Unidad", "buyPrice": 1200, "price": 2490, "stock": 25, "minStock": 8, "icon": "bi-shield-check"}, {"id": 79, "code": "SE004", "category": "seguridad", "categoryLabel": "Seguridad", "subcategory": "EPP", "name": "Mascarilla respirador N95 (caja x10)", "brand": "3M", "unit": "Caja", "buyPrice": 5500, "price": 10990, "stock": 10, "minStock": 3, "icon": "bi-shield-check"}, {"id": 80, "code": "SE005", "category": "seguridad", "categoryLabel": "Seguridad", "subcategory": "EPP", "name": "Arnés de seguridad 1 punto", "brand": "3M", "unit": "Unidad", "buyPrice": 18000, "price": 34990, "stock": 4, "minStock": 1, "icon": "bi-shield-check"}, {"id": 81, "code": "JA001", "category": "jardin", "categoryLabel": "Jardín", "subcategory": "Mangueras", "name": "Manguera riego 3/4\" x 25m", "brand": "Tigre", "unit": "Unidad", "buyPrice": 12000, "price": 22990, "stock": 6, "minStock": 2, "icon": "bi-flower1"}, {"id": 82, "code": "JA002", "category": "jardin", "categoryLabel": "Jardín", "subcategory": "Mangueras", "name": "Manguera expandible 30m", "brand": "Bestway", "unit": "Unidad", "buyPrice": 15000, "price": 28990, "stock": 5, "minStock": 2, "icon": "bi-flower1"}, {"id": 83, "code": "JA003", "category": "jardin", "categoryLabel": "Jardín", "subcategory": "Mangueras", "name": "Pistola de riego 8 modos", "brand": "Bestway", "unit": "Unidad", "buyPrice": 2800, "price": 5490, "stock": 10, "minStock": 3, "icon": "bi-flower1"}, {"id": 84, "code": "JA004", "category": "jardin", "categoryLabel": "Jardín", "subcategory": "Herramientas", "name": "Pala punta redonda #2 con mango", "brand": "Corona", "unit": "Unidad", "buyPrice": 5500, "price": 10990, "stock": 8, "minStock": 2, "icon": "bi-flower1"}, {"id": 85, "code": "JA005", "category": "jardin", "categoryLabel": "Jardín", "subcategory": "Herramientas", "name": "Rastrillo 16 dientes con mango", "brand": "Corona", "unit": "Unidad", "buyPrice": 4800, "price": 9490, "stock": 6, "minStock": 2, "icon": "bi-flower1"}];
+
+  function money(n) { return '$' + Number(n).toLocaleString('es-CL'); }
+
+  function stockInfo(p) {
+    if (p.stock <= 0) return { cls: 'out', text: 'Agotado' };
+    if (p.stock <= p.minStock) return { cls: 'low', text: 'Stock bajo' };
+    return { cls: 'ok', text: 'Disponible' };
+  }
+
+  function renderInventory() {
+    const cat = document.getElementById('invCatFilter').value;
+    const search = document.getElementById('invSearch').value.toLowerCase();
+    const onlyLow = document.getElementById('onlyLowStock').checked;
+
+    let list = INVENTORY.filter(p => {
+      if (cat && p.category !== cat) return false;
+      if (search && !(p.name.toLowerCase().includes(search) || String(p.code).toLowerCase().includes(search))) return false;
+      if (onlyLow && p.stock > p.minStock) return false;
+      return true;
+    });
+
+    document.getElementById('inventoryTable').innerHTML = list.map(p => {
+      const s = stockInfo(p);
+      return '<tr><td>' + p.code + '</td><td>' + p.name + '</td><td>' + p.categoryLabel + '</td><td>' + (p.brand || '-') + '</td><td>' + money(p.price) + '</td>' +
+        '<td>' + p.stock + ' ' + p.unit + '</td><td><span class="flm-stock-chip ' + s.cls + '">' + s.text + '</span></td></tr>';
+    }).join('');
+
+    document.getElementById('totalProducts').textContent = INVENTORY.length;
+    document.getElementById('lowStockCount').textContent = INVENTORY.filter(p => p.stock > 0 && p.stock <= p.minStock).length;
+    document.getElementById('outStockCount').textContent = INVENTORY.filter(p => p.stock <= 0).length;
+    const value = INVENTORY.reduce((s, p) => s + p.price * p.stock, 0);
+    document.getElementById('inventoryValue').textContent = '$' + (value / 1000000).toFixed(1) + 'M';
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    flmRequireAdmin();
+    document.getElementById('invCatFilter').addEventListener('change', renderInventory);
+    document.getElementById('invSearch').addEventListener('input', renderInventory);
+    document.getElementById('onlyLowStock').addEventListener('change', renderInventory);
+    renderInventory();
+  });
+</script>
+</body>
+</html>

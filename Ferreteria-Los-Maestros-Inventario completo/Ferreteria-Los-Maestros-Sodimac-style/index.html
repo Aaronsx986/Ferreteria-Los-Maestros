@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferretería Los Maestros - Tienda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+<header>
+  <div class="flm-topbar py-1 d-none d-md-block">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div><i class="bi bi-geo-alt"></i> Retiro en tienda Santiago Centro &nbsp;|&nbsp; <i class="bi bi-truck"></i> Despacho a todo Chile</div>
+      <div>
+        <a href="reparacion.html" class="me-3"><i class="bi bi-tools"></i> Servicio Técnico</a>
+        <a href="arriendo.html" class="me-3"><i class="bi bi-calendar2-check"></i> Arriendo de Herramientas</a>
+        <a href="tel:+56223456789"><i class="bi bi-telephone"></i> 600 123 4567</a>
+      </div>
+    </div>
+  </div>
+  <nav class="flm-navbar">
+    <div class="container d-flex align-items-center gap-3 flex-wrap">
+      <a href="index.html" class="flm-logo text-decoration-none">
+        <i class="bi bi-hammer"></i>
+        <span>Los Maestros<br><small>FERRETERÍA</small></span>
+      </a>
+      <form class="flm-search-form d-none d-md-flex flex-grow-1" onsubmit="return false;">
+        <input type="search" class="form-control" placeholder="Busca cemento, taladros, pintura, tornillos...">
+        <button class="btn" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+      <div class="ms-auto d-flex align-items-center gap-1">
+        <a href="historial.html" class="nav-link flm-nav-icon-btn px-2"><i class="bi bi-clock-history"></i><br>Historial</a>
+        <a href="login.html" class="nav-link flm-nav-icon-btn px-2"><i class="bi bi-person"></i><br><span id="flmNavUserName">Cuenta</span></a>
+        <a href="dashboard.html" class="nav-link flm-nav-icon-btn px-2 flm-admin-only d-none"><i class="bi bi-speedometer2"></i><br>Admin</a>
+        <a href="carrito.html" class="nav-link flm-nav-icon-btn px-2"><i class="bi bi-cart3"></i><br>Carrito<span id="flmCartBadge" class="badge-cart">0</span></a>
+      </div>
+    </div>
+    <div class="container d-md-none mt-2">
+      <form class="d-flex" onsubmit="return false;">
+        <input type="search" class="form-control me-1" placeholder="Buscar productos...">
+        <button class="btn btn-flm" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+    </div>
+  </nav>
+  <div class="flm-catnav">
+    <div class="container flm-catnav-scroll">
+      <ul class="nav flex-nowrap">
+<li class="nav-item"><a class="nav-link" href="catalogo.html?cat=construccion">Materiales de Construcción</a></li>
+<li class="nav-item"><a class="nav-link" href="catalogo.html?cat=pinturas">Pinturas y Recubrimientos</a></li>
+<li class="nav-item"><a class="nav-link" href="catalogo.html?cat=herramientas">Herramientas</a></li>
+<li class="nav-item"><a class="nav-link" href="catalogo.html?cat=gasfiteria">Gasfitería</a></li>
+<li class="nav-item"><a class="nav-link" href="catalogo.html?cat=electricidad">Electricidad</a></li>
+<li class="nav-item"><a class="nav-link" href="catalogo.html?cat=tornilleria">Tornillería y Fijaciones</a></li>
+<li class="nav-item"><a class="nav-link" href="catalogo.html?cat=madera">Madera y Tableros</a></li>
+<li class="nav-item"><a class="nav-link" href="catalogo.html?cat=seguridad">Seguridad y EPP</a></li>
+<li class="nav-item"><a class="nav-link" href="catalogo.html?cat=jardin">Jardín y Exterior</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+<main>
+  <!-- HERO -->
+  <div class="container my-4">
+    <div id="flmHeroCarousel" class="carousel slide flm-carousel" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="flm-hero w-100">
+            <div class="slide-inner col-lg-7">
+              <span class="badge-promo px-3 py-2 rounded-pill mb-3 d-inline-block">Precios de fábrica</span>
+              <h1 class="display-6">Materiales de construcción<br>al mejor precio</h1>
+              <p class="mb-4">Cemento, mortero, áridos y bloques con despacho a toda la Región Metropolitana.</p>
+              <a href="catalogo.html?cat=construccion" class="btn btn-flm btn-lg">Ver catálogo</a>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="flm-hero w-100">
+            <div class="slide-inner col-lg-7">
+              <span class="badge-promo px-3 py-2 rounded-pill mb-3 d-inline-block">Nuevo</span>
+              <h1 class="display-6">Herramientas eléctricas<br>Makita y Skil</h1>
+              <p class="mb-4">Taladros, amoladoras y sierras profesionales con garantía oficial.</p>
+              <a href="catalogo.html?cat=herramientas" class="btn btn-flm btn-lg">Comprar ahora</a>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="flm-hero w-100">
+            <div class="slide-inner col-lg-7">
+              <span class="badge-promo px-3 py-2 rounded-pill mb-3 d-inline-block">Servicio</span>
+              <h1 class="display-6">Arrienda o repara<br>tus herramientas</h1>
+              <p class="mb-4">Arriendo por día y servicio técnico especializado con garantía.</p>
+              <a href="arriendo.html" class="btn btn-flm btn-lg me-2">Arrendar</a>
+              <a href="reparacion.html" class="btn btn-outline-light btn-lg">Servicio técnico</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#flmHeroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#flmHeroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- BENEFICIOS -->
+  <div class="container mb-4">
+    <div class="row g-3 text-center">
+      <div class="col-6 col-md-3"><div class="flm-benefit"><i class="bi bi-truck"></i><div class="benefit-title">Despacho a domicilio</div><div class="benefit-desc">Cobertura Región Metropolitana</div></div></div>
+      <div class="col-6 col-md-3"><div class="flm-benefit"><i class="bi bi-shop"></i><div class="benefit-title">Retiro en tienda</div><div class="benefit-desc">Listo en 2 horas</div></div></div>
+      <div class="col-6 col-md-3"><div class="flm-benefit"><i class="bi bi-arrow-repeat"></i><div class="benefit-title">Cambios y devoluciones</div><div class="benefit-desc">Hasta 30 días</div></div></div>
+      <div class="col-6 col-md-3"><div class="flm-benefit"><i class="bi bi-headset"></i><div class="benefit-title">Asesoría experta</div><div class="benefit-desc">Te ayudamos a elegir</div></div></div>
+    </div>
+  </div>
+
+  <!-- CATEGORÍAS -->
+  <div class="container mb-5">
+    <h2 class="flm-section-title mb-3">Compra por categoría</h2>
+    <div class="row g-3">
+<div class="col-6 col-md-4 col-lg-2">
+  <a href="catalogo.html?cat=construccion" class="flm-cat-card">
+    <div class="cat-icon-wrap"><i class="bi bi-bricks"></i></div>
+    <div class="cat-name">Materiales de Construcción</div>
+  </a>
+</div>
+<div class="col-6 col-md-4 col-lg-2">
+  <a href="catalogo.html?cat=pinturas" class="flm-cat-card">
+    <div class="cat-icon-wrap"><i class="bi bi-paint-bucket"></i></div>
+    <div class="cat-name">Pinturas y Recubrimientos</div>
+  </a>
+</div>
+<div class="col-6 col-md-4 col-lg-2">
+  <a href="catalogo.html?cat=herramientas" class="flm-cat-card">
+    <div class="cat-icon-wrap"><i class="bi bi-tools"></i></div>
+    <div class="cat-name">Herramientas</div>
+  </a>
+</div>
+<div class="col-6 col-md-4 col-lg-2">
+  <a href="catalogo.html?cat=gasfiteria" class="flm-cat-card">
+    <div class="cat-icon-wrap"><i class="bi bi-droplet-half"></i></div>
+    <div class="cat-name">Gasfitería</div>
+  </a>
+</div>
+<div class="col-6 col-md-4 col-lg-2">
+  <a href="catalogo.html?cat=electricidad" class="flm-cat-card">
+    <div class="cat-icon-wrap"><i class="bi bi-lightning-charge"></i></div>
+    <div class="cat-name">Electricidad</div>
+  </a>
+</div>
+<div class="col-6 col-md-4 col-lg-2">
+  <a href="catalogo.html?cat=tornilleria" class="flm-cat-card">
+    <div class="cat-icon-wrap"><i class="bi bi-nut"></i></div>
+    <div class="cat-name">Tornillería y Fijaciones</div>
+  </a>
+</div>
+<div class="col-6 col-md-4 col-lg-2">
+  <a href="catalogo.html?cat=madera" class="flm-cat-card">
+    <div class="cat-icon-wrap"><i class="bi bi-tree"></i></div>
+    <div class="cat-name">Madera y Tableros</div>
+  </a>
+</div>
+<div class="col-6 col-md-4 col-lg-2">
+  <a href="catalogo.html?cat=seguridad" class="flm-cat-card">
+    <div class="cat-icon-wrap"><i class="bi bi-shield-check"></i></div>
+    <div class="cat-name">Seguridad y EPP</div>
+  </a>
+</div>
+<div class="col-6 col-md-4 col-lg-2">
+  <a href="catalogo.html?cat=jardin" class="flm-cat-card">
+    <div class="cat-icon-wrap"><i class="bi bi-flower1"></i></div>
+    <div class="cat-name">Jardín y Exterior</div>
+  </a>
+</div>
+    </div>
+  </div>
+
+  <!-- DESTACADOS -->
+  <div class="container mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="flm-section-title mb-0">Productos destacados</h2>
+      <a href="catalogo.html" class="fw-semibold text-flm-orange">Ver todo el catálogo <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="row g-3" id="featuredGrid">
+<div class="col-6 col-md-4 col-lg-3">
+  <div class="flm-product-card">
+    <div class="flm-product-thumb"><i class="bi bi-bricks"></i><span class="flm-product-badge">Polpaico</span>    </div>
+    <div class="flm-product-body">
+      <div class="flm-product-brand">Polpaico · MC001</div>
+      <div class="flm-product-name">Cemento Polpaico gris 25 kg</div>
+      <div class="d-flex align-items-baseline gap-1 mt-1">
+        <span class="flm-product-price">$5.990</span>
+        <span class="flm-product-unit">/ Saco</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+        <span class="flm-stock-chip ok">Stock disponible</span>
+      </div>
+      <button class="btn btn-flm w-100 mt-2 btn-sm" onclick="addToCart(1)"><i class="bi bi-cart-plus"></i> Agregar</button>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-md-4 col-lg-3">
+  <div class="flm-product-card">
+    <div class="flm-product-thumb"><i class="bi bi-bricks"></i><span class="flm-product-badge">Melón</span>    </div>
+    <div class="flm-product-body">
+      <div class="flm-product-brand">Melón · MC002</div>
+      <div class="flm-product-name">Cemento Melón blanco 25 kg</div>
+      <div class="d-flex align-items-baseline gap-1 mt-1">
+        <span class="flm-product-price">$7.490</span>
+        <span class="flm-product-unit">/ Saco</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+        <span class="flm-stock-chip ok">Stock disponible</span>
+      </div>
+      <button class="btn btn-flm w-100 mt-2 btn-sm" onclick="addToCart(2)"><i class="bi bi-cart-plus"></i> Agregar</button>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-md-4 col-lg-3">
+  <div class="flm-product-card">
+    <div class="flm-product-thumb"><i class="bi bi-tools"></i><span class="flm-product-badge">Stanley</span>    </div>
+    <div class="flm-product-body">
+      <div class="flm-product-brand">Stanley · HM001</div>
+      <div class="flm-product-name">Martillo carpintero 500g</div>
+      <div class="d-flex align-items-baseline gap-1 mt-1">
+        <span class="flm-product-price">$7.990</span>
+        <span class="flm-product-unit">/ Unidad</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+        <span class="flm-stock-chip ok">Stock disponible</span>
+      </div>
+      <button class="btn btn-flm w-100 mt-2 btn-sm" onclick="addToCart(20)"><i class="bi bi-cart-plus"></i> Agregar</button>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-md-4 col-lg-3">
+  <div class="flm-product-card">
+    <div class="flm-product-thumb"><i class="bi bi-tools"></i><span class="flm-product-badge">Makita</span>    </div>
+    <div class="flm-product-body">
+      <div class="flm-product-brand">Makita · HE001</div>
+      <div class="flm-product-name">Taladro percutor 650W 13mm</div>
+      <div class="d-flex align-items-baseline gap-1 mt-1">
+        <span class="flm-product-price">$79.990</span>
+        <span class="flm-product-unit">/ Unidad</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+        <span class="flm-stock-chip ok">Stock disponible</span>
+      </div>
+      <button class="btn btn-flm w-100 mt-2 btn-sm" onclick="addToCart(30)"><i class="bi bi-cart-plus"></i> Agregar</button>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-md-4 col-lg-3">
+  <div class="flm-product-card">
+    <div class="flm-product-thumb"><i class="bi bi-droplet-half"></i><span class="flm-product-badge">Tigre</span>    </div>
+    <div class="flm-product-body">
+      <div class="flm-product-brand">Tigre · GS004</div>
+      <div class="flm-product-name">Codo PVC 1/2" 90°</div>
+      <div class="d-flex align-items-baseline gap-1 mt-1">
+        <span class="flm-product-price">$390</span>
+        <span class="flm-product-unit">/ Unidad</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+        <span class="flm-stock-chip ok">Stock disponible</span>
+      </div>
+      <button class="btn btn-flm w-100 mt-2 btn-sm" onclick="addToCart(39)"><i class="bi bi-cart-plus"></i> Agregar</button>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-md-4 col-lg-3">
+  <div class="flm-product-card">
+    <div class="flm-product-thumb"><i class="bi bi-droplet-half"></i><span class="flm-product-badge">Wacker</span>    </div>
+    <div class="flm-product-body">
+      <div class="flm-product-brand">Wacker · GS012</div>
+      <div class="flm-product-name">Silicona transparente 280ml</div>
+      <div class="d-flex align-items-baseline gap-1 mt-1">
+        <span class="flm-product-price">$5.490</span>
+        <span class="flm-product-unit">/ Cartucho</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+        <span class="flm-stock-chip ok">Stock disponible</span>
+      </div>
+      <button class="btn btn-flm w-100 mt-2 btn-sm" onclick="addToCart(47)"><i class="bi bi-cart-plus"></i> Agregar</button>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-md-4 col-lg-3">
+  <div class="flm-product-card">
+    <div class="flm-product-thumb"><i class="bi bi-lightning-charge"></i><span class="flm-product-badge">Legrand</span>    </div>
+    <div class="flm-product-body">
+      <div class="flm-product-brand">Legrand · EL008</div>
+      <div class="flm-product-name">Tablero eléctrico 4 espacios DIN</div>
+      <div class="d-flex align-items-baseline gap-1 mt-1">
+        <span class="flm-product-price">$22.990</span>
+        <span class="flm-product-unit">/ Unidad</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+        <span class="flm-stock-chip ok">Stock disponible</span>
+      </div>
+      <button class="btn btn-flm w-100 mt-2 btn-sm" onclick="addToCart(55)"><i class="bi bi-cart-plus"></i> Agregar</button>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-md-4 col-lg-3">
+  <div class="flm-product-card">
+    <div class="flm-product-thumb"><i class="bi bi-lightning-charge"></i><span class="flm-product-badge">Ledvance</span>    </div>
+    <div class="flm-product-body">
+      <div class="flm-product-brand">Ledvance · EL013</div>
+      <div class="flm-product-name">Panel LED empotrar 18W 22cm</div>
+      <div class="d-flex align-items-baseline gap-1 mt-1">
+        <span class="flm-product-price">$11.490</span>
+        <span class="flm-product-unit">/ Unidad</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+        <span class="flm-stock-chip ok">Stock disponible</span>
+      </div>
+      <button class="btn btn-flm w-100 mt-2 btn-sm" onclick="addToCart(60)"><i class="bi bi-cart-plus"></i> Agregar</button>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+
+  <!-- BANNERS SECUNDARIOS -->
+  <div class="container mb-5">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="p-4 rounded text-white" style="background:linear-gradient(120deg,#1E2124,#3a3d40);">
+          <h4 class="fw-bold">Panel de Administración</h4>
+          <p class="mb-3 text-white-50">Gestiona ventas, inventario, proveedores y usuarios del sistema.</p>
+          <a href="dashboard.html" class="btn btn-outline-light btn-sm">Entrar al panel <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="p-4 rounded text-white" style="background:linear-gradient(120deg,var(--flm-orange),var(--flm-red));">
+          <h4 class="fw-bold">Mi historial</h4>
+          <p class="mb-3">Revisa tus compras, arriendos y reparaciones en un solo lugar.</p>
+          <a href="historial.html" class="btn btn-light btn-sm">Ver mi historial <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="flm-footer pt-5 pb-3 mt-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-6 col-md-3">
+        <h6>Ferretería Los Maestros</h6>
+        <a href="#" class="d-block">Quiénes somos</a>
+        <a href="#" class="d-block">Nuestras tiendas</a>
+        <a href="#" class="d-block">Trabaja con nosotros</a>
+        <a href="#" class="d-block">Sustentabilidad</a>
+      </div>
+      <div class="col-6 col-md-3">
+        <h6>Ayuda</h6>
+        <a href="#" class="d-block">Centro de ayuda</a>
+        <a href="#" class="d-block">Despacho y retiro</a>
+        <a href="#" class="d-block">Cambios y devoluciones</a>
+        <a href="reparacion.html" class="d-block">Servicio técnico</a>
+      </div>
+      <div class="col-6 col-md-3">
+        <h6>Categorías</h6>
+        <a href="catalogo.html?cat=construccion" class="d-block">Materiales de Construcción</a>
+        <a href="catalogo.html?cat=herramientas" class="d-block">Herramientas</a>
+        <a href="catalogo.html?cat=gasfiteria" class="d-block">Gasfitería</a>
+        <a href="catalogo.html?cat=electricidad" class="d-block">Electricidad</a>
+      </div>
+      <div class="col-6 col-md-3">
+        <h6>Síguenos</h6>
+        <div class="mb-3">
+          <a href="#" class="flm-social"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="flm-social"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="flm-social"><i class="bi bi-whatsapp"></i></a>
+        </div>
+        <h6>Newsletter</h6>
+        <form class="d-flex" onsubmit="return false;">
+          <input type="email" class="form-control form-control-sm me-1" placeholder="Tu correo">
+          <button class="btn btn-flm btn-sm">OK</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</footer>
+<div class="flm-footer-bottom py-3 text-center">
+  © 2026 Ferretería Los Maestros — Proyecto académico DSY1104. Todos los derechos reservados.
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/common.js"></script>
+
+<script>
+  const PRODUCTS_MINI = {"1": {"name": "Cemento Polpaico gris 25 kg", "price": 5990, "unit": "Saco", "icon": "bi-bricks"}, "2": {"name": "Cemento Melón blanco 25 kg", "price": 7490, "unit": "Saco", "icon": "bi-bricks"}, "3": {"name": "Mortero cola cerámica 25 kg", "price": 5200, "unit": "Saco", "icon": "bi-bricks"}, "4": {"name": "Mortero nivelador piso 25 kg", "price": 6490, "unit": "Saco", "icon": "bi-bricks"}, "5": {"name": "Arena fina construcción 25 kg", "price": 1800, "unit": "Saco", "icon": "bi-bricks"}, "6": {"name": "Ripio 25 kg", "price": 1500, "unit": "Saco", "icon": "bi-bricks"}, "7": {"name": "Ladrillo fiscal N°5", "price": 380, "unit": "Unidad", "icon": "bi-bricks"}, "8": {"name": "Ladrillo prensado 6x14x29 cm", "price": 550, "unit": "Unidad", "icon": "bi-bricks"}, "9": {"name": "Bloque de hormigón 19x19x39 cm", "price": 1200, "unit": "Unidad", "icon": "bi-bricks"}, "10": {"name": "Bloque liviano 10x20x40 cm", "price": 1690, "unit": "Unidad", "icon": "bi-bricks"}, "11": {"name": "Pintura látex interior 1 galón blanco", "price": 9990, "unit": "Galón", "icon": "bi-paint-bucket"}, "12": {"name": "Pintura látex interior 4 litros (varios col.)", "price": 12990, "unit": "Envase 4L", "icon": "bi-paint-bucket"}, "13": {"name": "Pintura látex exterior 1 galón blanco", "price": 13990, "unit": "Galón", "icon": "bi-paint-bucket"}, "14": {"name": "Esmalte sintético 1/4 litro (varios col.)", "price": 4290, "unit": "1/4 L", "icon": "bi-paint-bucket"}, "15": {"name": "Esmalte sintético 1 litro (varios col.)", "price": 9490, "unit": "1 litro", "icon": "bi-paint-bucket"}, "16": {"name": "Pintura antihumedad 1 galón blanco", "price": 17990, "unit": "Galón", "icon": "bi-paint-bucket"}, "17": {"name": "Rodillo lana 23 cm con mango", "price": 3990, "unit": "Unidad", "icon": "bi-paint-bucket"}, "18": {"name": "Brocha cerda natural 3\"", "price": 1690, "unit": "Unidad", "icon": "bi-paint-bucket"}, "19": {"name": "Cinta de enmascarar 24mm x 50m", "price": 2490, "unit": "Rollo", "icon": "bi-paint-bucket"}, "20": {"name": "Martillo carpintero 500g", "price": 7990, "unit": "Unidad", "icon": "bi-tools"}, "21": {"name": "Alicate universal 8\"", "price": 7290, "unit": "Unidad", "icon": "bi-tools"}, "22": {"name": "Destornillador plano 6x100mm", "price": 1990, "unit": "Unidad", "icon": "bi-tools"}, "23": {"name": "Destornillador Phillips PH2 6x100mm", "price": 1990, "unit": "Unidad", "icon": "bi-tools"}, "24": {"name": "Llave ajustable 10\"", "price": 8490, "unit": "Unidad", "icon": "bi-tools"}, "25": {"name": "Juego llaves hexagonales métrico x9", "price": 5490, "unit": "Set", "icon": "bi-tools"}, "26": {"name": "Serrucho 20\" 7 dientes por pulgada", "price": 9490, "unit": "Unidad", "icon": "bi-tools"}, "27": {"name": "Nivel de burbuja 60 cm", "price": 10490, "unit": "Unidad", "icon": "bi-tools"}, "28": {"name": "Metro de tela 5m", "price": 4290, "unit": "Unidad", "icon": "bi-tools"}, "29": {"name": "Cinta métrica 8m autoblocante", "price": 6490, "unit": "Unidad", "icon": "bi-tools"}, "30": {"name": "Taladro percutor 650W 13mm", "price": 79990, "unit": "Unidad", "icon": "bi-tools"}, "31": {"name": "Atornillador inalámbrico 12V (kit)", "price": 104990, "unit": "Unidad", "icon": "bi-tools"}, "32": {"name": "Amoladora angular 4.5\" 800W", "price": 54990, "unit": "Unidad", "icon": "bi-tools"}, "33": {"name": "Sierra circular 7-1/4\" 1200W", "price": 72990, "unit": "Unidad", "icon": "bi-tools"}, "34": {"name": "Lijadora orbital 180W", "price": 34990, "unit": "Unidad", "icon": "bi-tools"}, "35": {"name": "Caladora 500W", "price": 42990, "unit": "Unidad", "icon": "bi-tools"}, "36": {"name": "Cañería PVC 1/2\" x 6m", "price": 5490, "unit": "Unidad", "icon": "bi-droplet-half"}, "37": {"name": "Cañería PVC 3/4\" x 6m", "price": 7490, "unit": "Unidad", "icon": "bi-droplet-half"}, "38": {"name": "Cañería cobre 1/2\" x 5m", "price": 17990, "unit": "Unidad", "icon": "bi-droplet-half"}, "39": {"name": "Codo PVC 1/2\" 90°", "price": 390, "unit": "Unidad", "icon": "bi-droplet-half"}, "40": {"name": "Te PVC 1/2\"", "price": 450, "unit": "Unidad", "icon": "bi-droplet-half"}, "41": {"name": "Unión doble PVC 1/2\"", "price": 320, "unit": "Unidad", "icon": "bi-droplet-half"}, "42": {"name": "Llave de paso esfera 1/2\" latón", "price": 3490, "unit": "Unidad", "icon": "bi-droplet-half"}, "43": {"name": "Llave de paso esfera 3/4\" latón", "price": 4990, "unit": "Unidad", "icon": "bi-droplet-half"}, "44": {"name": "Grifería lavamanos monocomando cromo", "price": 22990, "unit": "Unidad", "icon": "bi-droplet-half"}, "45": {"name": "Grifería cocina monocomando cuello alto", "price": 28990, "unit": "Unidad", "icon": "bi-droplet-half"}, "46": {"name": "Teflón 3/4\" x 12m", "price": 790, "unit": "Rollo", "icon": "bi-droplet-half"}, "47": {"name": "Silicona transparente 280ml", "price": 5490, "unit": "Cartucho", "icon": "bi-droplet-half"}, "48": {"name": "Cable unipolar 1.5mm² (por metro)", "price": 590, "unit": "Metro", "icon": "bi-lightning-charge"}, "49": {"name": "Cable unipolar 2.5mm² (por metro)", "price": 790, "unit": "Metro", "icon": "bi-lightning-charge"}, "50": {"name": "Cable dúplex paralelo 2x1.5mm² (por metro)", "price": 990, "unit": "Metro", "icon": "bi-lightning-charge"}, "51": {"name": "Enchufe empotrar 16A c/tierra (schuko)", "price": 3690, "unit": "Unidad", "icon": "bi-lightning-charge"}, "52": {"name": "Enchufe doble empotrar 16A c/tierra", "price": 5490, "unit": "Unidad", "icon": "bi-lightning-charge"}, "53": {"name": "Interruptor simple empotrar", "price": 3190, "unit": "Unidad", "icon": "bi-lightning-charge"}, "54": {"name": "Interruptor doble empotrar", "price": 4290, "unit": "Unidad", "icon": "bi-lightning-charge"}, "55": {"name": "Tablero eléctrico 4 espacios DIN", "price": 22990, "unit": "Unidad", "icon": "bi-lightning-charge"}, "56": {"name": "Disyuntor termomagnético 16A unipolar", "price": 6490, "unit": "Unidad", "icon": "bi-lightning-charge"}, "57": {"name": "Disyuntor termomagnético 25A unipolar", "price": 6990, "unit": "Unidad", "icon": "bi-lightning-charge"}, "58": {"name": "Ampolleta LED 9W E27 luz fría", "price": 3990, "unit": "Unidad", "icon": "bi-lightning-charge"}, "59": {"name": "Ampolleta LED 12W E27 luz cálida", "price": 4490, "unit": "Unidad", "icon": "bi-lightning-charge"}, "60": {"name": "Panel LED empotrar 18W 22cm", "price": 11490, "unit": "Unidad", "icon": "bi-lightning-charge"}, "61": {"name": "Tornillo autoperf. 8x1\" caja 100 unid.", "price": 2990, "unit": "Caja", "icon": "bi-nut"}, "62": {"name": "Tornillo madera 4x40mm caja 100 unid.", "price": 2490, "unit": "Caja", "icon": "bi-nut"}, "63": {"name": "Tornillo volcanita 3.5x25mm caja 200 unid.", "price": 3490, "unit": "Caja", "icon": "bi-nut"}, "64": {"name": "Taco fisher S6 bolsa 100 unid.", "price": 3190, "unit": "Bolsa", "icon": "bi-nut"}, "65": {"name": "Taco fisher S8 bolsa 50 unid.", "price": 2890, "unit": "Bolsa", "icon": "bi-nut"}, "66": {"name": "Perno hex. 3/8\" x 2\" c/tuerca y golilla", "price": 290, "unit": "Unidad", "icon": "bi-nut"}, "67": {"name": "Perno de anclaje 10x100mm", "price": 990, "unit": "Unidad", "icon": "bi-nut"}, "68": {"name": "Anclaje químico epoxi 300ml", "price": 15990, "unit": "Cartucho", "icon": "bi-nut"}, "69": {"name": "Pino cepillado 1x3\" x 3m", "price": 4290, "unit": "Unidad", "icon": "bi-tree"}, "70": {"name": "Pino cepillado 2x4\" x 3m", "price": 7490, "unit": "Unidad", "icon": "bi-tree"}, "71": {"name": "Terciado estructural 18mm 1.22x2.44m", "price": 34990, "unit": "Plancha", "icon": "bi-tree"}, "72": {"name": "MDF 15mm 1.22x2.44m", "price": 27990, "unit": "Plancha", "icon": "bi-tree"}, "73": {"name": "OSB 9mm 1.22x2.44m", "price": 18990, "unit": "Plancha", "icon": "bi-tree"}, "74": {"name": "Volcanita estándar 10mm 1.2x2.4m", "price": 8990, "unit": "Plancha", "icon": "bi-tree"}, "75": {"name": "Volcanita resistente humedad 10mm", "price": 11990, "unit": "Plancha", "icon": "bi-tree"}, "76": {"name": "Casco seguridad blanco", "price": 6990, "unit": "Unidad", "icon": "bi-shield-check"}, "77": {"name": "Guantes de cuero talla L", "price": 3690, "unit": "Par", "icon": "bi-shield-check"}, "78": {"name": "Antiparras de seguridad clear", "price": 2490, "unit": "Unidad", "icon": "bi-shield-check"}, "79": {"name": "Mascarilla respirador N95 (caja x10)", "price": 10990, "unit": "Caja", "icon": "bi-shield-check"}, "80": {"name": "Arnés de seguridad 1 punto", "price": 34990, "unit": "Unidad", "icon": "bi-shield-check"}, "81": {"name": "Manguera riego 3/4\" x 25m", "price": 22990, "unit": "Unidad", "icon": "bi-flower1"}, "82": {"name": "Manguera expandible 30m", "price": 28990, "unit": "Unidad", "icon": "bi-flower1"}, "83": {"name": "Pistola de riego 8 modos", "price": 5490, "unit": "Unidad", "icon": "bi-flower1"}, "84": {"name": "Pala punta redonda #2 con mango", "price": 10990, "unit": "Unidad", "icon": "bi-flower1"}, "85": {"name": "Rastrillo 16 dientes con mango", "price": 9490, "unit": "Unidad", "icon": "bi-flower1"}};
+
+  function addToCart(productId) {
+    const p = PRODUCTS_MINI[productId];
+    if (!p) return;
+    let cart = JSON.parse(localStorage.getItem('flm_cart')) || [];
+    const existing = cart.find(i => i.id === productId);
+    if (existing) { existing.qty += 1; } else { cart.push({ id: productId, name: p.name, price: p.price, unit: p.unit, icon: p.icon, qty: 1 }); }
+    localStorage.setItem('flm_cart', JSON.stringify(cart));
+    flmPaintCartBadge();
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    flmRequireAuth();
+  });
+</script>
+</body>
+</html>

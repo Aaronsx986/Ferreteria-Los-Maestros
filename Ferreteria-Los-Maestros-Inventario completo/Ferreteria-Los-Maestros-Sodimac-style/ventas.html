@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferretería Los Maestros - Ventas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="d-flex flm-admin-shell">
+<div class="flm-sidebar d-flex flex-column">
+  <div class="sidebar-brand"><i class="bi bi-hammer text-flm-orange"></i> Los Maestros <span class="accent">Admin</span></div>
+  <ul class="nav flex-column py-2">
+<li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+<li class="nav-item"><a class="nav-link active" href="ventas.html"><i class="bi bi-cash-coin"></i> Ventas</a></li>
+<li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-boxes"></i> Inventario</a></li>
+<li class="nav-item"><a class="nav-link" href="proveedores.html"><i class="bi bi-truck"></i> Proveedores</a></li>
+<li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-people"></i> Usuarios</a></li>
+<li class="nav-item"><a class="nav-link" href="crear-usuario.html"><i class="bi bi-person-plus"></i> Crear Usuario</a></li>
+<li class="nav-item"><a class="nav-link" href="reportes.html"><i class="bi bi-graph-up-arrow"></i> Reportes</a></li>
+  </ul>
+  <hr class="mt-auto">
+  <ul class="nav flex-column pb-3">
+    <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-shop"></i> Volver a la tienda</a></li>
+    <li class="nav-item"><a class="nav-link" href="#" data-flm-logout><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+  </ul>
+</div>
+  <div class="flex-grow-1 d-flex flex-column">
+<div class="flm-admin-topbar d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center gap-2">
+    <button class="btn btn-sm btn-outline-secondary d-lg-none" data-flm-sidebar-toggle><i class="bi bi-list"></i></button>
+    <h5 class="mb-0 fw-bold">Gestión de Ventas</h5>
+  </div>
+  <div class="d-flex align-items-center gap-2">
+    <span class="text-muted small">Hola, <strong id="flmNavUserName">—</strong></span>
+    <a href="index.html" class="btn btn-sm btn-outline-flm"><i class="bi bi-shop"></i> Tienda</a>
+  </div>
+</div>
+    <div class="flm-admin-content bg-flm-gray flex-grow-1">
+<div class="row g-3 mb-4">
+<div class="col-6 col-lg-3">
+  <div class="flm-stat-card ">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <div class="stat-value" id="todaySales">$0</div>
+        <div class="stat-label">Ventas del día</div>
+      </div>
+      <i class="bi bi-cash"></i>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-lg-3">
+  <div class="flm-stat-card ">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <div class="stat-value" id="monthSalesV">$0</div>
+        <div class="stat-label">Ventas del mes</div>
+      </div>
+      <i class="bi bi-graph-up"></i>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-lg-3">
+  <div class="flm-stat-card ">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <div class="stat-value" id="totalSalesCount">0</div>
+        <div class="stat-label">Total ventas</div>
+      </div>
+      <i class="bi bi-receipt"></i>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-lg-3">
+  <div class="flm-stat-card ">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <div class="stat-value" id="avgTicket">$0</div>
+        <div class="stat-label">Ticket promedio</div>
+      </div>
+      <i class="bi bi-ticket-perforated"></i>
+    </div>
+  </div>
+</div>
+</div>
+<div class="flm-filter-box mb-3 d-flex flex-wrap gap-2">
+  <select class="form-select form-select-sm" id="statusFilter" style="width:auto;">
+    <option value="">Todos los estados</option>
+    <option value="entregado">Entregado</option>
+    <option value="pendiente">Pendiente</option>
+    <option value="cancelado">Cancelado</option>
+  </select>
+  <input type="text" class="form-control form-control-sm" id="searchFilter" placeholder="Buscar cliente o producto..." style="width:220px;">
+</div>
+<div class="flm-card p-3 mb-3">
+  <h6 class="fw-bold mb-3">Últimas ventas</h6>
+  <div class="table-responsive"><table class="table flm-table align-middle mb-0">
+    <thead><tr><th>ID Venta</th><th>Cliente</th><th>Producto(s)</th><th>Fecha</th><th>Total</th><th>Estado</th><th></th></tr></thead>
+    <tbody id="salesTable"></tbody>
+  </table></div>
+</div>
+<div class="flm-card p-4 text-center">
+  <button class="btn btn-flm" onclick="newSale()"><i class="bi bi-plus-circle"></i> Nueva venta manual</button>
+</div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/common.js"></script>
+
+<script>
+  const salesData = [
+    { id: 'VTA-1001', customer: 'Carlos Ruiz', products: 'Cemento Polpaico 25kg x10', date: '2026-08-28', total: 450000, status: 'entregado' },
+    { id: 'VTA-1002', customer: 'Ana Torres', products: 'Taladro Percutor Bosch', date: '2026-08-28', total: 89990, status: 'pendiente' },
+    { id: 'VTA-1003', customer: 'Miguel Sánchez', products: 'Pintura Látex + Rodillos', date: '2026-08-27', total: 70000, status: 'entregado' },
+    { id: 'VTA-1004', customer: 'Laura Mendoza', products: 'Pack Tornillería surtida', date: '2026-08-27', total: 32000, status: 'entregado' },
+    { id: 'VTA-1005', customer: 'Roberto Castro', products: 'Kit de Herramientas Manuales', date: '2026-08-26', total: 65000, status: 'cancelado' }
+  ];
+
+  function money(n) { return '$' + Number(n).toLocaleString('es-CL'); }
+  function fdate(d) { return new Date(d).toLocaleDateString('es-CL'); }
+  function statusBadge(s) {
+    const map = { entregado: 'success', pendiente: 'warning', cancelado: 'danger' };
+    return '<span class="badge text-bg-' + (map[s] || 'secondary') + '">' + s + '</span>';
+  }
+
+  function loadSales() {
+    const statusF = document.getElementById('statusFilter').value;
+    const searchF = document.getElementById('searchFilter').value.toLowerCase();
+    let list = salesData.filter(s =>
+      (!statusF || s.status === statusF) &&
+      (!searchF || s.customer.toLowerCase().includes(searchF) || s.products.toLowerCase().includes(searchF))
+    );
+    document.getElementById('salesTable').innerHTML = list.map(s =>
+      '<tr><td>' + s.id + '</td><td>' + s.customer + '</td><td>' + s.products + '</td><td>' + fdate(s.date) + '</td><td>' + money(s.total) + '</td><td>' + statusBadge(s.status) + '</td>' +
+      '<td><button class="btn btn-sm btn-outline-flm" onclick="viewSale(\'' + s.id + '\')">Ver</button></td></tr>'
+    ).join('');
+
+    document.getElementById('totalSalesCount').textContent = salesData.length;
+    const total = salesData.reduce((s, v) => s + v.total, 0);
+    document.getElementById('monthSalesV').textContent = money(total);
+    document.getElementById('todaySales').textContent = money(salesData[0].total + salesData[1].total);
+    document.getElementById('avgTicket').textContent = money(Math.round(total / salesData.length));
+  }
+
+  function viewSale(id) { alert('Detalle de venta: ' + id + '\n\nEsta funcionalidad estará disponible próximamente.'); }
+  function newSale() { alert('Abriendo interfaz para nueva venta manual...\n\nEsta funcionalidad estará disponible próximamente.'); }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    flmRequireAdmin();
+    document.getElementById('statusFilter').addEventListener('change', loadSales);
+    document.getElementById('searchFilter').addEventListener('input', loadSales);
+    loadSales();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferretería Los Maestros - Proveedores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="d-flex flm-admin-shell">
+<div class="flm-sidebar d-flex flex-column">
+  <div class="sidebar-brand"><i class="bi bi-hammer text-flm-orange"></i> Los Maestros <span class="accent">Admin</span></div>
+  <ul class="nav flex-column py-2">
+<li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+<li class="nav-item"><a class="nav-link" href="ventas.html"><i class="bi bi-cash-coin"></i> Ventas</a></li>
+<li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-boxes"></i> Inventario</a></li>
+<li class="nav-item"><a class="nav-link active" href="proveedores.html"><i class="bi bi-truck"></i> Proveedores</a></li>
+<li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-people"></i> Usuarios</a></li>
+<li class="nav-item"><a class="nav-link" href="crear-usuario.html"><i class="bi bi-person-plus"></i> Crear Usuario</a></li>
+<li class="nav-item"><a class="nav-link" href="reportes.html"><i class="bi bi-graph-up-arrow"></i> Reportes</a></li>
+  </ul>
+  <hr class="mt-auto">
+  <ul class="nav flex-column pb-3">
+    <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-shop"></i> Volver a la tienda</a></li>
+    <li class="nav-item"><a class="nav-link" href="#" data-flm-logout><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+  </ul>
+</div>
+  <div class="flex-grow-1 d-flex flex-column">
+<div class="flm-admin-topbar d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center gap-2">
+    <button class="btn btn-sm btn-outline-secondary d-lg-none" data-flm-sidebar-toggle><i class="bi bi-list"></i></button>
+    <h5 class="mb-0 fw-bold">Gestión de Proveedores</h5>
+  </div>
+  <div class="d-flex align-items-center gap-2">
+    <span class="text-muted small">Hola, <strong id="flmNavUserName">—</strong></span>
+    <a href="index.html" class="btn btn-sm btn-outline-flm"><i class="bi bi-shop"></i> Tienda</a>
+  </div>
+</div>
+    <div class="flm-admin-content bg-flm-gray flex-grow-1">
+<div class="row g-3 mb-4">
+<div class="col-6 col-lg-3">
+  <div class="flm-stat-card ">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <div class="stat-value" id="totalSuppliers">7</div>
+        <div class="stat-label">Proveedores totales</div>
+      </div>
+      <i class="bi bi-truck"></i>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-lg-3">
+  <div class="flm-stat-card ">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <div class="stat-value" id="activeSuppliers">0</div>
+        <div class="stat-label">Activos</div>
+      </div>
+      <i class="bi bi-check-circle"></i>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-lg-3">
+  <div class="flm-stat-card ">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <div class="stat-value" id="pendingSuppliers">0</div>
+        <div class="stat-label">Pendientes</div>
+      </div>
+      <i class="bi bi-hourglass-split"></i>
+    </div>
+  </div>
+</div>
+<div class="col-6 col-lg-3">
+  <div class="flm-stat-card ">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <div class="stat-value" id="avgRating">0.0</div>
+        <div class="stat-label">Rating promedio</div>
+      </div>
+      <i class="bi bi-star"></i>
+    </div>
+  </div>
+</div>
+</div>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <input type="text" class="form-control form-control-sm" id="provSearch" placeholder="Buscar proveedor..." style="width:260px;">
+  <button class="btn btn-flm btn-sm" onclick="alert('Formulario para agregar nuevo proveedor (próximamente).')"><i class="bi bi-plus-circle"></i> Nuevo proveedor</button>
+</div>
+<div class="row g-3" id="suppliersGrid"></div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/common.js"></script>
+
+<script>
+  const SUPPLIERS = [{"id": 1, "name": "Cementos Polpaico S.A.", "contact": {"name": "Rodrigo Álvarez", "email": "ventas@polpaico.cl", "phone": "+56 2 2345 6789", "position": "Jefe de Ventas Zona Centro"}, "address": {"street": "Av. Industrial 890", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile"}, "products": ["cementos", "morteros", "aridos"], "paymentTerms": "30 días", "deliveryTime": "2-4 días hábiles", "rating": 4.8, "status": "active", "since": "2022-03-10", "lastOrder": "2026-08-20", "notes": "Proveedor histórico, despacho directo a bodega central"}, {"id": 2, "name": "Distribuidora Stanley-Bahco Chile", "contact": {"name": "Marcela Torres", "email": "mtorres@stanleybahco.cl", "phone": "+56 2 2765 4321", "position": "Ejecutiva de Cuentas"}, "address": {"street": "Camino a Melipilla 5400", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile"}, "products": ["herramientas-manuales", "herramientas-electricas"], "paymentTerms": "45 días", "deliveryTime": "3-5 días hábiles", "rating": 4.6, "status": "active", "since": "2021-07-22", "lastOrder": "2026-08-25", "notes": "Buenos precios en volumen, exige orden de compra formal"}, {"id": 3, "name": "Makita Herramientas Ltda.", "contact": {"name": "Felipe Rojas", "email": "frojas@makita.cl", "phone": "+56 2 2988 1122", "position": "Gerente Comercial"}, "address": {"street": "Av. Américo Vespucio 1230", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile"}, "products": ["herramientas-electricas"], "paymentTerms": "30 días", "deliveryTime": "5-7 días hábiles", "rating": 4.9, "status": "active", "since": "2023-01-15", "lastOrder": "2026-08-18", "notes": "Garantía extendida en herramientas eléctricas profesionales"}, {"id": 4, "name": "Tigre Chile - Gasfitería y Tuberías", "contact": {"name": "Ignacio Muñoz", "email": "imunoz@tigre.cl", "phone": "+56 2 2456 7890", "position": "Supervisor de Distribución"}, "address": {"street": "Ruta 68 Km 12", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile"}, "products": ["gasfiteria"], "paymentTerms": "30 días", "deliveryTime": "3-4 días hábiles", "rating": 4.5, "status": "active", "since": "2022-09-05", "lastOrder": "2026-08-22", "notes": "Stock permanente de cañerías PVC y accesorios"}, {"id": 5, "name": "Fischer Chile - Fijaciones", "contact": {"name": "Daniela Soto", "email": "dsoto@fischer.cl", "phone": "+56 2 2321 0098", "position": "Ejecutiva Comercial"}, "address": {"street": "Panamericana Norte 8900", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile"}, "products": ["tornilleria"], "paymentTerms": "60 días", "deliveryTime": "4-6 días hábiles", "rating": 4.4, "status": "active", "since": "2023-05-30", "lastOrder": "2026-08-10", "notes": "Pedido mínimo por caja, buen respaldo técnico"}, {"id": 6, "name": "Volcán S.A. - Yeso y Volcanita", "contact": {"name": "Patricio Ibáñez", "email": "pibanez@volcan.cl", "phone": "+56 2 2654 3210", "position": "Jefe Zonal Ventas"}, "address": {"street": "Av. Santa Rosa 4500", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile"}, "products": ["construccion", "madera"], "paymentTerms": "30 días", "deliveryTime": "2-3 días hábiles", "rating": 4.7, "status": "active", "since": "2021-11-18", "lastOrder": "2026-08-27", "notes": "Despacho propio, planchas de volcanita y bloques livianos"}, {"id": 7, "name": "3M Chile - Seguridad Industrial", "contact": {"name": "Camila Vergara", "email": "cvergara@3m.cl", "phone": "+56 2 2799 4455", "position": "Ejecutiva EPP y Pinturas"}, "address": {"street": "Av. Presidente Eduardo Frei 4750", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile"}, "products": ["seguridad", "pinturas"], "paymentTerms": "30 días", "deliveryTime": "3-5 días hábiles", "rating": 4.8, "status": "pending", "since": "2024-02-14", "lastOrder": "2026-07-30", "notes": "Renovación de contrato marco en trámite"}];
+
+  function statusBadge(s) {
+    const map = { active: ['success', 'Activo'], pending: ['warning', 'Pendiente'], inactive: ['secondary', 'Inactivo'] };
+    const [cls, label] = map[s] || ['secondary', s];
+    return '<span class="badge text-bg-' + cls + '">' + label + '</span>';
+  }
+
+  function starRating(r) {
+    let html = '<span class="flm-rating">';
+    for (let i = 1; i <= 5; i++) html += '<i class="bi ' + (i <= Math.round(r) ? 'bi-star-fill' : 'bi-star') + '"></i>';
+    return html + '</span> <small class="text-muted">' + r + '</small>';
+  }
+
+  function supplierCard(s) {
+    return '<div class="col-md-6 col-xl-4">' +
+      '<div class="flm-card p-3 h-100">' +
+        '<div class="d-flex justify-content-between align-items-start mb-2">' +
+          '<h6 class="fw-bold mb-0">' + s.name + '</h6>' + statusBadge(s.status) +
+        '</div>' +
+        '<div class="small text-muted mb-2">' + starRating(s.rating) + '</div>' +
+        '<div class="small mb-1"><i class="bi bi-person"></i> ' + s.contact.name + ' — ' + s.contact.position + '</div>' +
+        '<div class="small mb-1"><i class="bi bi-envelope"></i> ' + s.contact.email + '</div>' +
+        '<div class="small mb-1"><i class="bi bi-telephone"></i> ' + s.contact.phone + '</div>' +
+        '<div class="small mb-1"><i class="bi bi-geo-alt"></i> ' + s.address.city + ', ' + s.address.region + '</div>' +
+        '<div class="small mb-2"><i class="bi bi-truck"></i> Entrega: ' + s.deliveryTime + ' · Pago: ' + s.paymentTerms + '</div>' +
+        '<div class="d-flex flex-wrap gap-1">' + s.products.map(p => '<span class="badge text-bg-light border">' + p + '</span>').join('') + '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderSuppliers() {
+    const q = document.getElementById('provSearch').value.toLowerCase();
+    const list = SUPPLIERS.filter(s => !q || s.name.toLowerCase().includes(q) || s.products.join(' ').toLowerCase().includes(q));
+    document.getElementById('suppliersGrid').innerHTML = list.map(supplierCard).join('');
+    document.getElementById('totalSuppliers').textContent = SUPPLIERS.length;
+    document.getElementById('activeSuppliers').textContent = SUPPLIERS.filter(s => s.status === 'active').length;
+    document.getElementById('pendingSuppliers').textContent = SUPPLIERS.filter(s => s.status === 'pending').length;
+    const avg = SUPPLIERS.reduce((sum, s) => sum + s.rating, 0) / SUPPLIERS.length;
+    document.getElementById('avgRating').textContent = avg.toFixed(1);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    flmRequireAdmin();
+    document.getElementById('provSearch').addEventListener('input', renderSuppliers);
+    renderSuppliers();
+  });
+</script>
+</body>
+</html>
