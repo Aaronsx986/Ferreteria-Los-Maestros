@@ -76,14 +76,7 @@ function flmToggleSidebar() {
   if (sb) sb.classList.toggle('show');
 }
 
-/* ---------- Buscador del header (barra de búsqueda global) ----------
-   El formulario de búsqueda del header aparece en todas las páginas de
-   cliente (index, catálogo, arriendo, carrito, historial, reparación),
-   pero antes tenía onsubmit="return false" y ningún JS asociado, por lo
-   que nunca hacía nada. Ahora, al enviar el formulario, redirige a
-   catalogo.html?q=<texto> y catalogo.html usa ese parámetro para
-   precargar su propio filtro de búsqueda (ver DOMContentLoaded de
-   catalogo.html). */
+/* ---------- Buscador del header (barra de búsqueda global) ---------- */
 function flmGoToSearch(query) {
   const q = (query || '').trim();
   if (!q) return;
