@@ -1,8 +1,18 @@
 :root {
   --orange: #EE6C0C;
+  --orange-dark: #C6560A;
+  --red: #D5001C;
+  --yellow: #FFC72C;
   --dark: #1E2124;
+  --dark-2: #2C2F33;
   --gray-bg: #F4F5F6;
+  --gray-border: #E2E4E7;
   --text: #26292C;
+  --text-muted: #6B7076;
+  --green-ok: #1E8E3E;
+  --radius: 8px;
+  --shadow: 0 2px 10px rgba(0,0,0,.08);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,.15);
 }
 
 * { box-sizing: border-box; }
@@ -23,6 +33,37 @@ body {
 .header {
   background: var(--dark);
   color: #fff;
+}
+
+.flm-topbar {
+  background: var(--dark);
+  color: #cfd2d6;
+  font-size: .8rem;
+}
+.flm-topbar a { color: #cfd2d6; }
+.flm-topbar a:hover { color: #fff; }
+
+.flm-navbar {
+background: #fff;
+box-shadow: var(--flm-shadow);
+padding: .75rem 0;
+}
+
+.flm-navbar .flm-logo {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--orange);
+  letter-spacing: -.5px;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.flm-navbar .flm-logo small {
+  display: block;
+  font-size: .6rem;
+  font-weight: 600;
+  color: var(--flm-text-muted);
+  letter-spacing: 1px;
 }
 
 .header-inner {
@@ -46,6 +87,26 @@ body {
   text-decoration: none;
   margin-left: 20px;
 }
+
+.flm-catnav {
+  background: var(--orange);
+}
+.flm-catnav .nav-link {
+  color: #fff;
+  font-weight: 600;
+  font-size: .85rem;
+  padding: .65rem .9rem;
+  white-space: nowrap;
+}
+.flm-catnav .nav-link:hover,
+.flm-catnav .nav-link.active {
+  background: rgba(0,0,0,.15);
+}
+.flm-catnav-scroll {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.flm-catnav-scroll::-webkit-scrollbar { height: 4px; }
 
 .nav a:hover { color: var(--orange); }
 
