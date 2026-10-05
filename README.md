@@ -8,6 +8,11 @@ npm install
 npm run dev
 ```
 
+## Instalar dependecia de bootstrap
+```
+npm install react-bootstrap bootstrap
+```
+
 ## Estructura
 - `src/components/` → Header, Footer, ProductCard (3 componentes)
 - `src/pages/` → Home y Catalogo (2 páginas, enlazadas desde el Header)
