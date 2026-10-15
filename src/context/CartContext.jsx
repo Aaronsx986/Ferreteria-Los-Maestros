@@ -1,39 +1,41 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import productsData from '../data/products.json'
+import { useShop } from './ShopContext.jsx'
+import { load, save } from '../utils.js'
 
 const CartContext = createContext(null)
 const CART_KEY = 'flm_cart'
 
 export function CartProvider({ children }) {
-  const [items, setItems] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem(CART_KEY)) || []
-    } catch {
-      return []
-    }
-  })
+  const { products } = useShop()
+  const [items, setItems] = useState(() => load(CART_KEY, []))
 
-  // Persiste el carrito cada vez que cambia, así sobrevive a un refresh
-  useEffect(() => {
-    localStorage.setItem(CART_KEY, JSON.stringify(items))
-  }, [items])
+  // Persiste el carrito, así sobrevive a un refresh
+  useEffect(() => save(CART_KEY, items), [items])
 
+  const stockOf = (id) => products.find((p) => p.id === id)?.stock ?? 0
+
+  // Agrega respetando el stock disponible. Devuelve true si se agregó algo.
   function addToCart(productId, qty = 1) {
+    const max = stockOf(productId)
+    const inCart = items.find((it) => it.id === productId)?.qty || 0
+    if (max <= 0 || inCart >= max) return false
+    const toAdd = Math.min(qty, max - inCart)
     setItems((prev) => {
       const existing = prev.find((it) => it.id === productId)
       if (existing) {
-        return prev.map((it) =>
-          it.id === productId ? { ...it, qty: it.qty + qty } : it
-        )
+        return prev.map((it) => (it.id === productId ? { ...it, qty: it.qty + toAdd } : it))
       }
-      return [...prev, { id: productId, qty }]
+      return [...prev, { id: productId, qty: toAdd }]
     })
+    return true
   }
 
   function updateQty(productId, qty) {
+    const max = stockOf(productId)
+    const safe = Math.min(Math.max(0, Math.floor(qty) || 0), max)
     setItems((prev) =>
       prev
-        .map((it) => (it.id === productId ? { ...it, qty } : it))
+        .map((it) => (it.id === productId ? { ...it, qty: safe } : it))
         .filter((it) => it.qty > 0)
     )
   }
@@ -46,21 +48,22 @@ export function CartProvider({ children }) {
     setItems([])
   }
 
-  // El carrito solo guarda {id, qty}; acá se cruza con products.json
-  // para tener nombre, precio, etc. a la hora de mostrarlo
+  const qtyInCart = (productId) => items.find((it) => it.id === productId)?.qty || 0
+
+  // El carrito solo guarda {id, qty}; acá se cruza con el catálogo vigente
   const detailedItems = items
     .map((it) => {
-      const product = productsData.products.find((p) => p.id === it.id)
+      const product = products.find((p) => p.id === it.id)
       return product ? { ...product, qty: it.qty } : null
     })
     .filter(Boolean)
 
-  const count = items.reduce((sum, it) => sum + it.qty, 0)
+  const count = detailedItems.reduce((sum, it) => sum + it.qty, 0)
   const total = detailedItems.reduce((sum, it) => sum + it.price * it.qty, 0)
 
   return (
     <CartContext.Provider
-      value={{ items: detailedItems, count, total, addToCart, updateQty, removeFromCart, clearCart }}
+      value={{ items: detailedItems, count, total, addToCart, updateQty, removeFromCart, clearCart, qtyInCart }}
     >
       {children}
     </CartContext.Provider>

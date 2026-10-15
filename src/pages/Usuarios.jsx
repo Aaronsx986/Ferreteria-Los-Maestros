@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import AdminSidebar from '../components/AdminSidebar.jsx'
-import usersData from '../data/users.json'
+import { useAuth } from '../context/AuthContext.jsx'
 
 function Usuarios() {
+  const { users } = useAuth()
   const [q, setQ] = useState('')
 
-  const filtered = usersData.users.filter((u) =>
+  const filtered = users.filter((u) =>
     q ? u.name.toLowerCase().includes(q.toLowerCase()) || u.username.toLowerCase().includes(q.toLowerCase()) : true
   )
 

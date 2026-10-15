@@ -14,7 +14,7 @@
       "stock": 80,
       "minStock": 20,
       "icon": "bi-bricks",
-      "imagen": "img/Cemento Polpaico gris 25 kg.jpg"
+      "imagen": "/img/cemento-polpaico-gris-25-kg.jpg"
     },
     {
       "id": 2,
@@ -30,7 +30,7 @@
       "stock": 40,
       "minStock": 10,
       "icon": "bi-bricks",
-      "imagen": "img/emento Melón blanco 25 kg.jpg"
+      "imagen": "/img/emento-melon-blanco-25-kg.jpg"
     },
     {
       "id": 3,
@@ -46,7 +46,7 @@
       "stock": 50,
       "minStock": 15,
       "icon": "bi-bricks",
-      "imagen": "img/Mortero cola cerámica 25 kg.jpg"
+      "imagen": "/img/mortero-cola-ceramica-25-kg.jpg"
     },
     {
       "id": 4,
@@ -62,7 +62,7 @@
       "stock": 30,
       "minStock": 10,
       "icon": "bi-bricks",
-      "imagen": "img/Mortero nivelador piso 25 kg.jpg"
+      "imagen": "/img/mortero-nivelador-piso-25-kg.jpg"
     },
     {
       "id": 5,
@@ -78,7 +78,7 @@
       "stock": 60,
       "minStock": 20,
       "icon": "bi-bricks",
-      "imagen": "img/Arena fina construcción 25 kg.jpg"
+      "imagen": "/img/arena-fina-construccion-25-kg.jpg"
     },
     {
       "id": 6,
@@ -94,7 +94,7 @@
       "stock": 60,
       "minStock": 20,
       "icon": "bi-bricks",
-      "imagen": "img/Ripio 25 kg.jpg"
+      "imagen": "/img/ripio-25-kg.jpg"
     },
     {
       "id": 7,
@@ -110,7 +110,7 @@
       "stock": 500,
       "minStock": 100,
       "icon": "bi-bricks",
-      "imagen": "img/Ladrillo fiscal N°5.jpg"
+      "imagen": "/img/ladrillo-fiscal-n-5.jpg"
     },
     {
       "id": 8,
@@ -126,7 +126,7 @@
       "stock": 300,
       "minStock": 80,
       "icon": "bi-bricks",
-      "imagen": "img/Ladrillo prensado 6x14x29 cm.jpg"
+      "imagen": "/img/ladrillo-prensado-6x14x29-cm.jpg"
     },
     {
       "id": 9,
@@ -142,7 +142,7 @@
       "stock": 200,
       "minStock": 50,
       "icon": "bi-bricks",
-      "imagen": "img/Bloque de hormigón 19x19x39 cm.jpg"
+      "imagen": "/img/bloque-de-hormigon-19x19x39-cm.jpg"
     },
     {
       "id": 10,
@@ -158,7 +158,7 @@
       "stock": 100,
       "minStock": 30,
       "icon": "bi-bricks",
-      "imagen": "img/Bloque liviano 10x20x40 cm.jpg"
+      "imagen": "/img/bloque-liviano-10x20x40-cm.jpg"
     },
     {
       "id": 11,
@@ -174,7 +174,7 @@
       "stock": 40,
       "minStock": 10,
       "icon": "bi-paint-bucket",
-      "imagen": "img/Pintura látex interior 1 galón blanco.jpg"
+      "imagen": "/img/pintura-latex-interior-1-galon-blanco.jpg"
     },
     {
       "id": 12,
@@ -190,7 +190,7 @@
       "stock": 30,
       "minStock": 8,
       "icon": "bi-paint-bucket",
-      "imagen": "img/Pintura látex interior 4 litros (varios col.).jpeg"
+      "imagen": "/img/pintura-latex-interior-4-litros-varios-col.jpeg"
     },
     {
       "id": 13,
@@ -206,7 +206,7 @@
       "stock": 25,
       "minStock": 8,
       "icon": "bi-paint-bucket",
-      "imagen": "img/Pintura látex exterior 1 galón blanco.jpg"
+      "imagen": "/img/pintura-latex-exterior-1-galon-blanco.jpg"
     },
     {
       "id": 14,
@@ -222,7 +222,7 @@
       "stock": 50,
       "minStock": 15,
       "icon": "bi-paint-bucket",
-      "imagen": "img/Esmalte sintético cuarto litro colores.png"
+      "imagen": "/img/esmalte-sintetico-cuarto-litro-colores.png"
     },
     {
       "id": 15,
@@ -238,7 +238,7 @@
       "stock": 30,
       "minStock": 10,
       "icon": "bi-paint-bucket",
-      "imagen": "img/Esmalte sintético 1 litro.jpg"
+      "imagen": "/img/esmalte-sintetico-1-litro.jpg"
     },
     {
       "id": 16,
@@ -254,7 +254,7 @@
       "stock": 15,
       "minStock": 5,
       "icon": "bi-paint-bucket",
-      "imagen": "img/Pintura antihumedad 1 galón blanco.jpg"
+      "imagen": "/img/pintura-antihumedad-1-galon-blanco.jpg"
     },
     {
       "id": 17,
@@ -270,7 +270,7 @@
       "stock": 30,
       "minStock": 10,
       "icon": "bi-paint-bucket",
-      "imagen": "img/Rodillo lana 23 cm con mango.jpg"
+      "imagen": "/img/rodillo-lana-23-cm-con-mango.jpg"
     },
     {
       "id": 18,
@@ -286,7 +286,7 @@
       "stock": 40,
       "minStock": 10,
       "icon": "bi-paint-bucket",
-      "imagen": "img/Brocha cerda natural 3.jpg"
+      "imagen": "/img/brocha-cerda-natural-3.jpg"
     },
     {
       "id": 19,
@@ -302,7 +302,7 @@
       "stock": 60,
       "minStock": 20,
       "icon": "bi-paint-bucket",
-      "imagen": "img/Cinta de enmascarar 24mm x 50m.jpg"
+      "imagen": "/img/cinta-de-enmascarar-24mm-x-50m.jpg"
     },
     {
       "id": 20,
@@ -318,7 +318,7 @@
       "stock": 20,
       "minStock": 5,
       "icon": "bi-tools",
-      "imagen": "img/Martillo carpintero 500g.jpg"
+      "imagen": "/img/martillo-carpintero-500g.jpg"
     },
     {
       "id": 21,
@@ -334,7 +334,7 @@
       "stock": 15,
       "minStock": 5,
       "icon": "bi-tools",
-      "imagen": "img/Alicate universal 8.jpg"
+      "imagen": "/img/alicate-universal-8.jpg"
     },
     {
       "id": 22,
@@ -350,7 +350,7 @@
       "stock": 30,
       "minStock": 10,
       "icon": "bi-tools",
-      "imagen": "img/Destornillador plano 6x100mm.jpg"
+      "imagen": "/img/destornillador-plano-6x100mm.jpg"
     },
     {
       "id": 23,
@@ -366,7 +366,7 @@
       "stock": 30,
       "minStock": 10,
       "icon": "bi-tools",
-      "imagen": "img/Destornillador Phillips PH2 6x100mm.jpg"
+      "imagen": "/img/destornillador-phillips-ph2-6x100mm.jpg"
     },
     {
       "id": 24,
@@ -382,7 +382,7 @@
       "stock": 12,
       "minStock": 4,
       "icon": "bi-tools",
-      "imagen": "img/Llave ajustable 10.jpg"
+      "imagen": "/img/llave-ajustable-10.jpg"
     },
     {
       "id": 25,
@@ -398,7 +398,7 @@
       "stock": 15,
       "minStock": 5,
       "icon": "bi-tools",
-      "imagen": "img/Juego llaves hexagonales métrico x9.jpg"
+      "imagen": "/img/juego-llaves-hexagonales-metrico-x9.jpg"
     },
     {
       "id": 26,
@@ -414,7 +414,7 @@
       "stock": 10,
       "minStock": 3,
       "icon": "bi-tools",
-      "imagen": "img/Serrucho 20 7 dientes por pulgada.jpg"
+      "imagen": "/img/serrucho-20-7-dientes-por-pulgada.jpg"
     },
     {
       "id": 27,
@@ -430,7 +430,7 @@
       "stock": 8,
       "minStock": 3,
       "icon": "bi-tools",
-      "imagen": "img/Nivel de burbuja 60 cm.jpg"
+      "imagen": "/img/nivel-de-burbuja-60-cm.jpg"
     },
     {
       "id": 28,
@@ -446,7 +446,7 @@
       "stock": 25,
       "minStock": 8,
       "icon": "bi-tools",
-      "imagen": "img/Metro de tela 5m.jpg"
+      "imagen": "/img/metro-de-tela-5m.jpg"
     },
     {
       "id": 29,
@@ -462,7 +462,7 @@
       "stock": 20,
       "minStock": 6,
       "icon": "bi-tools",
-      "imagen": "img/Cinta métrica 8m autoblocante.jpg"
+      "imagen": "/img/cinta-metrica-8m-autoblocante.jpg"
     },
     {
       "id": 30,
@@ -478,7 +478,7 @@
       "stock": 8,
       "minStock": 2,
       "icon": "bi-tools",
-      "imagen": "img/Taladro percutor 650W 13mm.jpg"
+      "imagen": "/img/taladro-percutor-650w-13mm.jpg"
     },
     {
       "id": 31,
@@ -494,7 +494,7 @@
       "stock": 5,
       "minStock": 2,
       "icon": "bi-tools",
-      "imagen": "img/Atornillador inalámbrico 12V (kit).webp"
+      "imagen": "/img/atornillador-inalambrico-12v-kit.webp"
     },
     {
       "id": 32,
@@ -510,7 +510,7 @@
       "stock": 8,
       "minStock": 2,
       "icon": "bi-tools",
-      "imagen": "img/Amoladora angular 4.5 800W.jpg"
+      "imagen": "/img/amoladora-angular-4-5-800w.jpg"
     },
     {
       "id": 33,
@@ -526,7 +526,7 @@
       "stock": 4,
       "minStock": 1,
       "icon": "bi-tools",
-      "imagen": "img/Sierra circular 7-1 4 1200W.jpg"
+      "imagen": "/img/sierra-circular-7-1-4-1200w.jpg"
     },
     {
       "id": 34,
@@ -542,7 +542,7 @@
       "stock": 6,
       "minStock": 2,
       "icon": "bi-tools",
-      "imagen": "img/Lijadora orbital 180W.jpg"
+      "imagen": "/img/lijadora-orbital-180w.jpg"
     },
     {
       "id": 35,
@@ -558,7 +558,7 @@
       "stock": 4,
       "minStock": 1,
       "icon": "bi-tools",
-      "imagen": "img/Caladora 500W.webp"
+      "imagen": "/img/caladora-500w.webp"
     },
     {
       "id": 36,
@@ -574,7 +574,7 @@
       "stock": 30,
       "minStock": 10,
       "icon": "bi-droplet-half",
-      "imagen": "img/Cañería PVC 1 2 x 6m.jpg"
+      "imagen": "/img/caneria-pvc-1-2-x-6m.jpg"
     },
     {
       "id": 37,
@@ -590,7 +590,7 @@
       "stock": 25,
       "minStock": 8,
       "icon": "bi-droplet-half",
-      "imagen": "img/Cañería PVC 3 4 x 6m.jpg"
+      "imagen": "/img/caneria-pvc-3-4-x-6m.jpg"
     },
     {
       "id": 38,
@@ -606,7 +606,7 @@
       "stock": 15,
       "minStock": 5,
       "icon": "bi-droplet-half",
-      "imagen": "img/Cañería cobre 1 2 x 5m.jpg"
+      "imagen": "/img/caneria-cobre-1-2-x-5m.jpg"
     },
     {
       "id": 39,
@@ -622,7 +622,7 @@
       "stock": 100,
       "minStock": 30,
       "icon": "bi-droplet-half",
-      "imagen": "img/Codo PVC 1 2 90.jpg"
+      "imagen": "/img/codo-pvc-1-2-90.jpg"
     },
     {
       "id": 40,
@@ -638,7 +638,7 @@
       "stock": 80,
       "minStock": 25,
       "icon": "bi-droplet-half",
-      "imagen": "img/Te PVC 12.jpg"
+      "imagen": "/img/te-pvc-12.jpg"
     },
     {
       "id": 41,
@@ -654,7 +654,7 @@
       "stock": 80,
       "minStock": 25,
       "icon": "bi-droplet-half",
-      "imagen": "img/Unión doble PVC 1 2.jpg"
+      "imagen": "/img/union-doble-pvc-1-2.jpg"
     },
     {
       "id": 42,
@@ -670,7 +670,7 @@
       "stock": 30,
       "minStock": 10,
       "icon": "bi-droplet-half",
-      "imagen": "img/GS007 - Llave de paso esfera 1 2 latón (Emmeti).jpg"
+      "imagen": "/img/gs007-llave-de-paso-esfera-1-2-laton-emmeti.jpg"
     },
     {
       "id": 43,
@@ -686,7 +686,7 @@
       "stock": 20,
       "minStock": 8,
       "icon": "bi-droplet-half",
-      "imagen": "img/GS008 - Llave de paso esfera 3 4 latón (Emmeti).jpg"
+      "imagen": "/img/gs008-llave-de-paso-esfera-3-4-laton-emmeti.jpg"
     },
     {
       "id": 44,
@@ -702,7 +702,7 @@
       "stock": 10,
       "minStock": 3,
       "icon": "bi-droplet-half",
-      "imagen": "img/GS009 - Grifería lavamanos monocomando cromo (Corona).jpg"
+      "imagen": "/img/gs009-griferia-lavamanos-monocomando-cromo-corona.jpg"
     },
     {
       "id": 45,
@@ -718,7 +718,7 @@
       "stock": 8,
       "minStock": 2,
       "icon": "bi-droplet-half",
-      "imagen": "img/GS010 - Grifería cocina monocomando cuello alto (Corona).jpg"
+      "imagen": "/img/gs010-griferia-cocina-monocomando-cuello-alto-corona.jpg"
     },
     {
       "id": 46,
@@ -734,7 +734,7 @@
       "stock": 80,
       "minStock": 25,
       "icon": "bi-droplet-half",
-      "imagen": "img/GS011 - Teflón 3 4 x 12m (3M).jpg"
+      "imagen": "/img/gs011-teflon-3-4-x-12m-3m.jpg"
     },
     {
       "id": 47,
@@ -750,7 +750,7 @@
       "stock": 25,
       "minStock": 8,
       "icon": "bi-droplet-half",
-      "imagen": "img/GS012 - Silicona transparente 280ml (Wacker).jpg"
+      "imagen": "/img/gs012-silicona-transparente-280ml-wacker.jpg"
     },
     {
       "id": 48,
@@ -766,7 +766,7 @@
       "stock": 100,
       "minStock": 30,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL001 - Cable unipolar 1.5mm² (Condulac).jpg"
+      "imagen": "/img/el001-cable-unipolar-1-5mm-condulac.jpg"
     },
     {
       "id": 49,
@@ -782,7 +782,7 @@
       "stock": 100,
       "minStock": 30,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL002 - Cable unipolar 2.5mm² (Condulac).jpg"
+      "imagen": "/img/el002-cable-unipolar-2-5mm-condulac.jpg"
     },
     {
       "id": 50,
@@ -798,7 +798,7 @@
       "stock": 80,
       "minStock": 25,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL003 - Cable dúplex paralelo 2x1.5mm² (Condulac).jpg"
+      "imagen": "/img/el003-cable-duplex-paralelo-2x1-5mm-condulac.jpg"
     },
     {
       "id": 51,
@@ -814,7 +814,7 @@
       "stock": 50,
       "minStock": 15,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL004 - Enchufe empotrar 16A c tierra (schuko) (Bticino).jpg"
+      "imagen": "/img/el004-enchufe-empotrar-16a-c-tierra-schuko-bticino.jpg"
     },
     {
       "id": 52,
@@ -830,7 +830,7 @@
       "stock": 40,
       "minStock": 12,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL005 - Enchufe doble empotrar 16A c tierra (Bticino).jpg"
+      "imagen": "/img/el005-enchufe-doble-empotrar-16a-c-tierra-bticino.jpg"
     },
     {
       "id": 53,
@@ -846,7 +846,7 @@
       "stock": 50,
       "minStock": 15,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL006 - Interruptor simple empotrar (Bticino).jpg"
+      "imagen": "/img/el006-interruptor-simple-empotrar-bticino.jpg"
     },
     {
       "id": 54,
@@ -862,7 +862,7 @@
       "stock": 35,
       "minStock": 10,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL007 - Interruptor doble empotrar (Bticino).jpg"
+      "imagen": "/img/el007-interruptor-doble-empotrar-bticino.jpg"
     },
     {
       "id": 55,
@@ -878,7 +878,7 @@
       "stock": 8,
       "minStock": 2,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL008 - Tablero eléctrico 4 espacios DIN (Legrand).jpg"
+      "imagen": "/img/el008-tablero-electrico-4-espacios-din-legrand.jpg"
     },
     {
       "id": 56,
@@ -894,7 +894,7 @@
       "stock": 20,
       "minStock": 5,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL009 - Disyuntor termomagnético 16A unipolar (Schneider).jpg"
+      "imagen": "/img/el009-disyuntor-termomagnetico-16a-unipolar-schneider.jpg"
     },
     {
       "id": 57,
@@ -910,7 +910,7 @@
       "stock": 20,
       "minStock": 5,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL010 - Disyuntor termomagnético 25A unipolar (Schneider).jpg"
+      "imagen": "/img/el010-disyuntor-termomagnetico-25a-unipolar-schneider.jpg"
     },
     {
       "id": 58,
@@ -926,7 +926,7 @@
       "stock": 60,
       "minStock": 20,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL011 - Ampolleta LED 9W E27 luz fría (Philips).jpg"
+      "imagen": "/img/el011-ampolleta-led-9w-e27-luz-fria-philips.jpg"
     },
     {
       "id": 59,
@@ -942,7 +942,7 @@
       "stock": 50,
       "minStock": 15,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL012 - Ampolleta LED 12W E27 luz cálida (Philips).jpg"
+      "imagen": "/img/el012-ampolleta-led-12w-e27-luz-calida-philips.jpg"
     },
     {
       "id": 60,
@@ -958,7 +958,7 @@
       "stock": 20,
       "minStock": 6,
       "icon": "bi-lightning-charge",
-      "imagen": "img/EL013 - Panel LED empotrar 18W 22cm (Ledvance).jpg"
+      "imagen": "/img/el013-panel-led-empotrar-18w-22cm-ledvance.jpg"
     },
     {
       "id": 61,
@@ -974,7 +974,7 @@
       "stock": 40,
       "minStock": 12,
       "icon": "bi-nut",
-      "imagen": "img/TR001 - Tornillo autoperforante 8x1 (caja 100 unid.).jpg"
+      "imagen": "/img/tr001-tornillo-autoperforante-8x1-caja-100-unid.jpg"
     },
     {
       "id": 62,
@@ -990,7 +990,7 @@
       "stock": 40,
       "minStock": 12,
       "icon": "bi-nut",
-      "imagen": "img/TR002 - Tornillo madera 4x40mm (caja 100 unid.).jpg"
+      "imagen": "/img/tr002-tornillo-madera-4x40mm-caja-100-unid.jpg"
     },
     {
       "id": 63,
@@ -1006,7 +1006,7 @@
       "stock": 30,
       "minStock": 10,
       "icon": "bi-nut",
-      "imagen": "img/TR003 - Tornillo volcanita 3.5x25mm (caja 200 unid.).jpg"
+      "imagen": "/img/tr003-tornillo-volcanita-3-5x25mm-caja-200-unid.jpg"
     },
     {
       "id": 64,
@@ -1022,7 +1022,7 @@
       "stock": 35,
       "minStock": 10,
       "icon": "bi-nut",
-      "imagen": "img/TR004 - Taco fisher S6 bolsa 100 unid. (Fischer).jpg"
+      "imagen": "/img/tr004-taco-fisher-s6-bolsa-100-unid-fischer.jpg"
     },
     {
       "id": 65,
@@ -1038,7 +1038,7 @@
       "stock": 30,
       "minStock": 10,
       "icon": "bi-nut",
-      "imagen": "img/TR005 - Taco fisher S8 bolsa 50 unid. (Fischer).jpg"
+      "imagen": "/img/tr005-taco-fisher-s8-bolsa-50-unid-fischer.jpg"
     },
     {
       "id": 66,
@@ -1054,7 +1054,7 @@
       "stock": 200,
       "minStock": 50,
       "icon": "bi-nut",
-      "imagen": "img/TR006 - Perno hex. 3 8 x 2 c tuerca y golilla.jpg"
+      "imagen": "/img/tr006-perno-hex-3-8-x-2-c-tuerca-y-golilla.jpg"
     },
     {
       "id": 67,
@@ -1070,7 +1070,7 @@
       "stock": 60,
       "minStock": 15,
       "icon": "bi-nut",
-      "imagen": "img/TR007 - Perno de anclaje 10x100mm (Hilti).jpg"
+      "imagen": "/img/tr007-perno-de-anclaje-10x100mm-hilti.jpg"
     },
     {
       "id": 68,
@@ -1086,7 +1086,7 @@
       "stock": 8,
       "minStock": 2,
       "icon": "bi-nut",
-      "imagen": "img/TR008 - Anclaje químico epoxi 300ml (Fischer).jpg"
+      "imagen": "/img/tr008-anclaje-quimico-epoxi-300ml-fischer.jpg"
     },
     {
       "id": 69,
@@ -1102,7 +1102,7 @@
       "stock": 40,
       "minStock": 12,
       "icon": "bi-tree",
-      "imagen": "img/MD001 - Pino cepillado 1x3 x 3m (Local).jpg"
+      "imagen": "/img/md001-pino-cepillado-1x3-x-3m-local.jpg"
     },
     {
       "id": 70,
@@ -1118,7 +1118,7 @@
       "stock": 30,
       "minStock": 10,
       "icon": "bi-tree",
-      "imagen": "img/MD002 - Pino cepillado 2x4 x 3m (Local).jpg"
+      "imagen": "/img/md002-pino-cepillado-2x4-x-3m-local.jpg"
     },
     {
       "id": 71,
@@ -1134,7 +1134,7 @@
       "stock": 20,
       "minStock": 5,
       "icon": "bi-tree",
-      "imagen": "img/MD003 - Terciado estructural 18mm 1.22x2.44m (Arauco).jpg"
+      "imagen": "/img/md003-terciado-estructural-18mm-1-22x2-44m-arauco.jpg"
     },
     {
       "id": 72,
@@ -1150,7 +1150,7 @@
       "stock": 15,
       "minStock": 4,
       "icon": "bi-tree",
-      "imagen": "img/MD004 - MDF 15mm 1.22x2.44m (Arauco).jpg"
+      "imagen": "/img/md004-mdf-15mm-1-22x2-44m-arauco.jpg"
     },
     {
       "id": 73,
@@ -1166,7 +1166,7 @@
       "stock": 18,
       "minStock": 5,
       "icon": "bi-tree",
-      "imagen": "img/MD005 - OSB 9mm 1.22x2.44m (Arauco).jpg"
+      "imagen": "/img/md005-osb-9mm-1-22x2-44m-arauco.jpg"
     },
     {
       "id": 74,
@@ -1182,7 +1182,7 @@
       "stock": 30,
       "minStock": 8,
       "icon": "bi-tree",
-      "imagen": "img/MD006 - Volcanita estándar 10mm 1.2x2.4m (Volcán).jpg"
+      "imagen": "/img/md006-volcanita-estandar-10mm-1-2x2-4m-volcan.jpg"
     },
     {
       "id": 75,
@@ -1198,7 +1198,7 @@
       "stock": 15,
       "minStock": 4,
       "icon": "bi-tree",
-      "imagen": "img/MD007 - Volcanita resistente humedad 10mm (Volcán).jpg"
+      "imagen": "/img/md007-volcanita-resistente-humedad-10mm-volcan.jpg"
     },
     {
       "id": 76,
@@ -1214,7 +1214,7 @@
       "stock": 15,
       "minStock": 5,
       "icon": "bi-shield-check",
-      "imagen": "img/SE001 - Casco seguridad blanco (3M).jpg"
+      "imagen": "/img/se001-casco-seguridad-blanco-3m.jpg"
     },
     {
       "id": 77,
@@ -1230,7 +1230,7 @@
       "stock": 20,
       "minStock": 6,
       "icon": "bi-shield-check",
-      "imagen": "img/SE002 - Guantes de cuero talla L (3M).jpg"
+      "imagen": "/img/se002-guantes-de-cuero-talla-l-3m.jpg"
     },
     {
       "id": 78,
@@ -1246,7 +1246,7 @@
       "stock": 25,
       "minStock": 8,
       "icon": "bi-shield-check",
-      "imagen": "img/SE003 - Antiparras de seguridad clear (3M).jpg"
+      "imagen": "/img/se003-antiparras-de-seguridad-clear-3m.jpg"
     },
     {
       "id": 79,
@@ -1262,7 +1262,7 @@
       "stock": 10,
       "minStock": 3,
       "icon": "bi-shield-check",
-      "imagen": "img/SE004 - Mascarilla respirador N95 (caja x10) (3M).jpg"
+      "imagen": "/img/se004-mascarilla-respirador-n95-caja-x10-3m.jpg"
     },
     {
       "id": 80,
@@ -1278,7 +1278,7 @@
       "stock": 4,
       "minStock": 1,
       "icon": "bi-shield-check",
-      "imagen": "img/SE005 - Arnés de seguridad 1 punto (3M).jpg"
+      "imagen": "/img/se005-arnes-de-seguridad-1-punto-3m.jpg"
     },
     {
       "id": 81,
@@ -1294,7 +1294,7 @@
       "stock": 6,
       "minStock": 2,
       "icon": "bi-flower1",
-      "imagen": "img/JA001 - Manguera riego 3 4 x 25m (Tigre).jpg"
+      "imagen": "/img/ja001-manguera-riego-3-4-x-25m-tigre.jpg"
     },
     {
       "id": 82,
@@ -1310,7 +1310,7 @@
       "stock": 5,
       "minStock": 2,
       "icon": "bi-flower1",
-      "imagen": "img/JA002 - Manguera expandible 30m (Bestway).jpg"
+      "imagen": "/img/ja002-manguera-expandible-30m-bestway.jpg"
     },
     {
       "id": 83,
@@ -1326,7 +1326,7 @@
       "stock": 10,
       "minStock": 3,
       "icon": "bi-flower1",
-      "imagen": "img/JA003 - Pistola de riego 8 modos (Bestway).jpg"
+      "imagen": "/img/ja003-pistola-de-riego-8-modos-bestway.jpg"
     },
     {
       "id": 84,
@@ -1342,7 +1342,7 @@
       "stock": 8,
       "minStock": 2,
       "icon": "bi-flower1",
-      "imagen": "img/JA004 - Pala punta redonda %232 con mango (Corona).jpg"
+      "imagen": "/img/ja004-pala-punta-redonda-2-con-mango-corona.jpg"
     },
     {
       "id": 85,
@@ -1358,7 +1358,7 @@
       "stock": 6,
       "minStock": 2,
       "icon": "bi-flower1",
-      "imagen": "img/JA005 - Rastrillo 16 dientes con mango (Corona).png"
+      "imagen": "/img/ja005-rastrillo-16-dientes-con-mango-corona.png"
     }
   ]
 }

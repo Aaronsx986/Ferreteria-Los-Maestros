@@ -1,56 +1,30 @@
 # Ferretería Los Maestros — React + Bootstrap
 
-Aplicación web de la ferretería, construida en React (Vite) con React Router y Bootstrap / React-Bootstrap.
+Visual del proyecto *header* (Topbar, Navbar, barra de categorías, tarjetas con fotos) + funcionamiento del proyecto *main*.
 
-## Instalación y ejecución
-
+## Ejecutar
 ```bash
 npm install
 npm run dev
 ```
 
 ## Usuarios de prueba
+| Usuario | Contraseña | Rol |
+|---|---|---|
+| admin | admin123 | admin |
+| usuario | user123 | cliente |
 
-No hay backend: la sesión se valida contra `src/data/users.json` y se guarda en `localStorage`.
+Además puedes crear cuentas en `/crear-usuario` (se guardan en el navegador y quedan como clientes).
 
-| Usuario | Contraseña | Rol    |
-|---------|-----------|--------|
-| admin   | admin123  | admin  |
-| usuario | user123   | user   |
+## Qué funciona
+- **Búsqueda**: buscador del header y del catálogo (sin distinguir tildes; busca por nombre, código, marca y categoría).
+- **Filtros** (en la URL, se pueden compartir): categoría, subcategoría, marca, rango de precio, solo con stock y orden.
+- **Carrito** persistente, limitado al stock disponible.
+- **Compra**: descuenta stock y guarda la orden → aparece en **Mi historial** (con detalle de productos).
+- **Arriendo y servicio técnico**: se guardan y aparecen en el historial del usuario.
+- **Admin**: Dashboard, Ventas, Reportes, Inventario y Usuarios leen las ventas/stock reales.
 
-## Estructura
+Todo se guarda en `localStorage` (no hay backend). Para reiniciar datos: borrar localStorage del sitio.
 
-```
-src/
-  components/   Header, Footer, ProductCard, AdminSidebar, ProtectedRoute
-  context/      AuthContext (sesión), CartContext (carrito)
-  data/         products.json, users.json, suppliers.json
-  pages/        una página por ruta (ver tabla abajo)
-  App.jsx       definición de rutas
-  main.jsx      punto de entrada, providers y estilos globales
-public/img/     imágenes de productos
-```
-
-## Páginas y rutas
-
-| Ruta            | Página        | Acceso          |
-|-----------------|---------------|-----------------|
-| `/`              | Home          | Público         |
-| `/catalogo`      | Catalogo      | Público         |
-| `/login`         | Login         | Público         |
-| `/crear-usuario` | CrearUsuario  | Público         |
-| `/carrito`       | Carrito       | Con sesión      |
-| `/arriendo`      | Arriendo      | Con sesión      |
-| `/reparacion`    | Reparacion    | Con sesión      |
-| `/historial`     | Historial     | Con sesión      |
-| `/dashboard`     | Dashboard     | Solo admin      |
-| `/inventario`    | Inventario    | Solo admin      |
-| `/usuarios`      | Usuarios      | Solo admin      |
-| `/proveedores`   | Proveedores   | Solo admin      |
-| `/ventas`        | Ventas        | Solo admin      |
-| `/reportes`      | Reportes      | Solo admin      |
-
-## Notas
-
-- `Ventas.jsx` y `Reportes.jsx` usan datos de ejemplo (no hay backend de ventas todavía).
-- Algunas imágenes en `public/img/` tienen nombres con caracteres corruptos (vienen así del zip original). `ProductCard.jsx` usa por ahora los íconos de Bootstrap Icons que trae `products.json`, en vez de las fotos.
+## Imágenes
+Están en `public/img/` con nombres limpios y `products.json` apunta a ellas (`/img/...`).

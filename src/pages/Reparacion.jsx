@@ -1,6 +1,11 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext.jsx'
+import { useShop } from '../context/ShopContext.jsx'
 
 function Reparacion() {
+  const { user } = useAuth()
+  const { addService } = useShop()
   const [form, setForm] = useState({
     tipo: '', marca: '', urgencia: 'normal', fecha: '', hora: '', descripcion: '',
   })
@@ -12,6 +17,8 @@ function Reparacion() {
 
   function handleSubmit(e) {
     e.preventDefault()
+    addService({ user, ...form })
+    setForm({ tipo: '', marca: '', urgencia: 'normal', fecha: '', hora: '', descripcion: '' })
     setSent(true)
   }
 
@@ -19,7 +26,7 @@ function Reparacion() {
     <div className="container py-4" style={{ maxWidth: 700 }}>
       <h1 className="h3 mb-4">Servicio técnico de herramientas</h1>
 
-      {sent && <div className="alert alert-success">¡Solicitud de servicio enviada! Te contactaremos para coordinar.</div>}
+      {sent && <div className="alert alert-success">¡Solicitud de servicio enviada! Te contactaremos para coordinar. <Link to="/historial">Ver en mi historial</Link></div>}
 
       <form onSubmit={handleSubmit}>
         <div className="row">
@@ -54,7 +61,7 @@ function Reparacion() {
         <div className="row">
           <div className="col-md-6 mb-3">
             <label className="form-label small fw-semibold">Fecha preferida</label>
-            <input type="date" className="form-control" name="fecha" value={form.fecha} onChange={handleChange} required />
+            <input type="date" min={new Date().toISOString().slice(0, 10)} className="form-control" name="fecha" value={form.fecha} onChange={handleChange} required />
           </div>
           <div className="col-md-6 mb-3">
             <label className="form-label small fw-semibold">Hora preferida</label>

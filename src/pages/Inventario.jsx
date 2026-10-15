@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import AdminSidebar from '../components/AdminSidebar.jsx'
-import productsData from '../data/products.json'
+import { useShop } from '../context/ShopContext.jsx'
+import { norm } from '../utils.js'
 
 function Inventario() {
+  const { products } = useShop()
   const [q, setQ] = useState('')
   const [onlyLow, setOnlyLow] = useState(false)
 
-  const filtered = productsData.products.filter((p) => {
-    const matchesQ = q ? (p.name.toLowerCase().includes(q.toLowerCase()) || p.code.toLowerCase().includes(q.toLowerCase())) : true
+  const filtered = products.filter((p) => {
+    const matchesQ = q ? (norm(p.name).includes(norm(q)) || norm(p.code).includes(norm(q))) : true
     const matchesLow = onlyLow ? p.stock <= p.minStock : true
     return matchesQ && matchesLow
   })
@@ -50,7 +52,9 @@ function Inventario() {
                       <td>${p.price.toLocaleString('es-CL')}</td>
                       <td>{p.stock}</td>
                       <td>
-                        {low
+                        {p.stock <= 0
+                          ? <span className="badge bg-dark">Agotado</span>
+                          : low
                           ? <span className="badge bg-danger">Stock bajo</span>
                           : <span className="badge bg-success">OK</span>}
                       </td>
