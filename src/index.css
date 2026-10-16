@@ -1,0 +1,204 @@
+/* ===== Tema Ferretería Los Maestros (basado en el diseño "header") ===== */
+:root {
+  --orange: #EE6C0C;
+  --orange-dark: #C6560A;
+  --red: #D5001C;
+  --yellow: #FFC72C;
+  --dark: #1E2124;
+  --dark-2: #2C2F33;
+  --gray-bg: #F4F5F6;
+  --gray-border: #E2E4E7;
+  --text: #26292C;
+  --text-muted: #6B7076;
+  --green-ok: #1E8E3E;
+  --radius: 8px;
+  --shadow: 0 2px 10px rgba(0,0,0,.08);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,.15);
+
+  /* Alias usados por las páginas funcionales */
+  --flm-orange: var(--orange);
+  --flm-dark: var(--dark);
+
+  /* Bootstrap en clave naranja */
+  --bs-primary: #EE6C0C;
+  --bs-primary-rgb: 238, 108, 12;
+  --bs-link-color: #C6560A;
+  --bs-link-color-rgb: 198, 86, 10;
+  --bs-link-hover-color: #9c4207;
+  --bs-link-hover-color-rgb: 156, 66, 7;
+  --bs-body-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --bs-body-color: #26292C;
+  --bs-focus-ring-color: rgba(238, 108, 12, .25);
+}
+
+body {
+  margin: 0;
+  background: var(--gray-bg);
+  color: var(--text);
+}
+
+.form-control:focus, .form-select:focus, .form-check-input:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 .2rem rgba(238, 108, 12, .2);
+}
+.form-check-input:checked { background-color: var(--orange); border-color: var(--orange); }
+
+.btn-primary {
+  --bs-btn-bg: var(--orange);
+  --bs-btn-border-color: var(--orange);
+  --bs-btn-hover-bg: var(--orange-dark);
+  --bs-btn-hover-border-color: var(--orange-dark);
+  --bs-btn-active-bg: var(--orange-dark);
+  --bs-btn-active-border-color: var(--orange-dark);
+  --bs-btn-disabled-bg: #9aa0a6;
+  --bs-btn-disabled-border-color: #9aa0a6;
+  --bs-btn-focus-shadow-rgb: 238, 108, 12;
+  font-weight: 600;
+}
+.nav-pills { --bs-nav-pills-link-active-bg: var(--orange); }
+
+/* ===== Topbar ===== */
+.flm-topbar { background: var(--dark); color: #cfd2d6; font-size: .8rem; }
+.flm-topbar a { color: #cfd2d6; }
+.flm-topbar a:hover { color: #fff; }
+
+/* ===== Navbar ===== */
+.flm-navbar {
+  background: #fff;
+  box-shadow: var(--shadow);
+  padding: .75rem 0;
+  position: relative;
+  z-index: 20;
+}
+.flm-logo {
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  color: var(--orange);
+  letter-spacing: -.5px;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.flm-logo:hover { color: var(--orange-dark); }
+.flm-logo small {
+  display: block;
+  font-size: .6rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.flm-search-form { align-items: stretch; max-width: 640px; }
+.flm-search-form .form-control {
+  border: 2px solid var(--orange);
+  border-right: 0;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+.flm-search-btn {
+  background: var(--orange);
+  color: #fff;
+  border: 2px solid var(--orange);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 0 1.1rem;
+}
+.flm-search-btn:hover { background: var(--orange-dark); border-color: var(--orange-dark); color: #fff; }
+
+.flm-nav-icon-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: .25rem .6rem;
+  color: var(--text);
+  font-size: .72rem;
+  font-weight: 600;
+  line-height: 1.15;
+  background: none;
+  border: 0;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--radius);
+}
+.flm-nav-icon-btn i { font-size: 1.35rem; line-height: 1; }
+.flm-nav-icon-btn:hover, .flm-nav-icon-btn.show { color: var(--orange); }
+.flm-acct-toggle::after { display: none; }
+.badge-cart {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--red);
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+}
+
+/* ===== Barra de categorías ===== */
+.flm-catnav { background: var(--orange); }
+.flm-catnav .nav-link {
+  color: #fff;
+  font-weight: 600;
+  font-size: .85rem;
+  padding: .65rem .9rem;
+  white-space: nowrap;
+}
+.flm-catnav .nav-link:hover,
+.flm-catnav .nav-link.active { background: rgba(0,0,0,.15); color: #fff; }
+.flm-catnav-scroll { overflow-x: auto; scrollbar-width: thin; }
+.flm-catnav-scroll::-webkit-scrollbar { height: 4px; }
+
+/* ===== Inicio ===== */
+.flm-hero { text-align: center; padding: 50px 20px 30px; }
+.flm-hero h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -.5px; }
+.flm-hero p { color: var(--text-muted); }
+.flm-hero .btn { padding: 10px 24px; }
+
+/* ===== Grilla y tarjetas de producto ===== */
+.flm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 20px 0 40px;
+}
+.flm-product-card { position: relative; border: 1px solid var(--gray-border); transition: box-shadow .15s, transform .15s; }
+.flm-offer-badge { position: absolute; top: 10px; left: 10px; z-index: 2; font-size: .8rem; }
+.flm-product-card:hover { box-shadow: var(--shadow-lg) !important; transform: translateY(-2px); }
+.flm-product-img { height: 200px; object-fit: contain; padding: 10px; background: #fff; }
+.flm-product-img-fallback {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 4rem; color: var(--orange);
+}
+
+/* ===== Detalle de producto ===== */
+.flm-detail-img { width: 100%; max-height: 380px; object-fit: contain; background: #fff; border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 16px; }
+.flm-detail-img-fallback { display: flex; align-items: center; justify-content: center; height: 320px; font-size: 6rem; color: var(--orange); }
+
+/* ===== Filtros del catálogo ===== */
+.flm-filters {
+  background: #fff;
+  border: 1px solid var(--gray-border);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: var(--dark);
+  color: #ccc;
+  padding: 28px 0 16px;
+  margin-top: 40px;
+  font-size: .85rem;
+}
+.footer a { color: #ccc; text-decoration: none; }
+.footer a:hover { color: var(--orange); }
+
+/* ===== Varios ===== */
+.flm-thumb { width: 44px; height: 44px; object-fit: contain; background: #fff; border: 1px solid var(--gray-border); border-radius: 6px; }

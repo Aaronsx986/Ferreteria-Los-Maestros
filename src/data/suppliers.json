@@ -1,0 +1,102 @@
+{
+  "suppliers": [
+    {
+      "id": 1,
+      "name": "Cementos Polpaico S.A.",
+      "contact": { "name": "Rodrigo Álvarez", "email": "ventas@polpaico.cl", "phone": "+56 2 2345 6789", "position": "Jefe de Ventas Zona Centro" },
+      "address": { "street": "Av. Industrial 890", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile" },
+      "products": ["cementos", "morteros", "aridos"],
+      "paymentTerms": "30 días",
+      "deliveryTime": "2-4 días hábiles",
+      "rating": 4.8,
+      "status": "active",
+      "since": "2022-03-10",
+      "lastOrder": "2026-08-20",
+      "notes": "Proveedor histórico, despacho directo a bodega central"
+    },
+    {
+      "id": 2,
+      "name": "Distribuidora Stanley-Bahco Chile",
+      "contact": { "name": "Marcela Torres", "email": "mtorres@stanleybahco.cl", "phone": "+56 2 2765 4321", "position": "Ejecutiva de Cuentas" },
+      "address": { "street": "Camino a Melipilla 5400", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile" },
+      "products": ["herramientas-manuales", "herramientas-electricas"],
+      "paymentTerms": "45 días",
+      "deliveryTime": "3-5 días hábiles",
+      "rating": 4.6,
+      "status": "active",
+      "since": "2021-07-22",
+      "lastOrder": "2026-08-25",
+      "notes": "Buenos precios en volumen, exige orden de compra formal"
+    },
+    {
+      "id": 3,
+      "name": "Makita Herramientas Ltda.",
+      "contact": { "name": "Felipe Rojas", "email": "frojas@makita.cl", "phone": "+56 2 2988 1122", "position": "Gerente Comercial" },
+      "address": { "street": "Av. Américo Vespucio 1230", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile" },
+      "products": ["herramientas-electricas"],
+      "paymentTerms": "30 días",
+      "deliveryTime": "5-7 días hábiles",
+      "rating": 4.9,
+      "status": "active",
+      "since": "2023-01-15",
+      "lastOrder": "2026-08-18",
+      "notes": "Garantía extendida en herramientas eléctricas profesionales"
+    },
+    {
+      "id": 4,
+      "name": "Tigre Chile - Gasfitería y Tuberías",
+      "contact": { "name": "Ignacio Muñoz", "email": "imunoz@tigre.cl", "phone": "+56 2 2456 7890", "position": "Supervisor de Distribución" },
+      "address": { "street": "Ruta 68 Km 12", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile" },
+      "products": ["gasfiteria"],
+      "paymentTerms": "30 días",
+      "deliveryTime": "3-4 días hábiles",
+      "rating": 4.5,
+      "status": "active",
+      "since": "2022-09-05",
+      "lastOrder": "2026-08-22",
+      "notes": "Stock permanente de cañerías PVC y accesorios"
+    },
+    {
+      "id": 5,
+      "name": "Fischer Chile - Fijaciones",
+      "contact": { "name": "Daniela Soto", "email": "dsoto@fischer.cl", "phone": "+56 2 2321 0098", "position": "Ejecutiva Comercial" },
+      "address": { "street": "Panamericana Norte 8900", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile" },
+      "products": ["tornilleria"],
+      "paymentTerms": "60 días",
+      "deliveryTime": "4-6 días hábiles",
+      "rating": 4.4,
+      "status": "active",
+      "since": "2023-05-30",
+      "lastOrder": "2026-08-10",
+      "notes": "Pedido mínimo por caja, buen respaldo técnico"
+    },
+    {
+      "id": 6,
+      "name": "Volcán S.A. - Yeso y Volcanita",
+      "contact": { "name": "Patricio Ibáñez", "email": "pibanez@volcan.cl", "phone": "+56 2 2654 3210", "position": "Jefe Zonal Ventas" },
+      "address": { "street": "Av. Santa Rosa 4500", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile" },
+      "products": ["construccion", "madera"],
+      "paymentTerms": "30 días",
+      "deliveryTime": "2-3 días hábiles",
+      "rating": 4.7,
+      "status": "active",
+      "since": "2021-11-18",
+      "lastOrder": "2026-08-27",
+      "notes": "Despacho propio, planchas de volcanita y bloques livianos"
+    },
+    {
+      "id": 7,
+      "name": "3M Chile - Seguridad Industrial",
+      "contact": { "name": "Camila Vergara", "email": "cvergara@3m.cl", "phone": "+56 2 2799 4455", "position": "Ejecutiva EPP y Pinturas" },
+      "address": { "street": "Av. Presidente Eduardo Frei 4750", "city": "Santiago", "region": "Región Metropolitana", "country": "Chile" },
+      "products": ["seguridad", "pinturas"],
+      "paymentTerms": "30 días",
+      "deliveryTime": "3-5 días hábiles",
+      "rating": 4.8,
+      "status": "pending",
+      "since": "2024-02-14",
+      "lastOrder": "2026-07-30",
+      "notes": "Renovación de contrato marco en trámite"
+    }
+  ]
+}
