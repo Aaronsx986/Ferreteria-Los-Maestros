@@ -8,7 +8,6 @@ const EMPTY = {
   paymentTerms: '30 días', deliveryTime: '', rating: '4', status: 'active',
 }
 
-// supplier = null -> proveedor nuevo; supplier = {...} -> edición
 function SupplierFormModal({ supplier, suppliers, onSave, onClose }) {
   const editing = Boolean(supplier)
   const [form, setForm] = useState(() =>

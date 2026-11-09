@@ -32,13 +32,15 @@ function initialForm(user) {
 function Checkout() {
   const { user } = useAuth()
   const { items, total, clearCart } = useCart()
-  const { placeOrder } = useShop()
+  const { comprar } = useShop()
   const navigate = useNavigate()
   const { state } = useLocation()
   // Al reintentar un pago fallido se recuperan los datos ya escritos (menos la tarjeta)
   const [form, setForm] = useState(() => ({ ...initialForm(user), ...state?.form }))
   const [errors, setErrors] = useState({})
   const terminado = useRef(false)
+  // Mientras se registra la compra en el backend, el botón queda deshabilitado (evita doble cobro)
+  const [enviando, setEnviando] = useState(false)
 
   // Sin productos no hay nada que pagar (salvo que la compra recién se haya completado)
   if (items.length === 0 && !terminado.current) return <Navigate to="/carrito" replace />
@@ -55,8 +57,9 @@ function Checkout() {
     })
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
+    if (enviando) return
     const found = validateCheckout(form)
     setErrors(found)
     if (Object.keys(found).length > 0) return
@@ -66,14 +69,19 @@ function Checkout() {
     const pago = procesarPago({ metodo: form.payment, monto: total, tarjeta })
     if (!pago.ok) return fallar(pago.motivo, datos)
 
-    const result = placeOrder({
+    // Registra la venta en el backend (micro de ventas): descuenta el stock real del carrito completo
+    setEnviando(true)
+    const result = await comprar({
       user,
       items,
       payment: form.payment,
       delivery: form.delivery,
       shipping: datos,
     })
-    if (!result.ok) return fallar(result.message, datos)
+    if (!result.ok) {
+      setEnviando(false)
+      return fallar(result.message, datos)
+    }
 
     terminado.current = true
     clearCart()
@@ -169,8 +177,10 @@ function Checkout() {
                 <span className="fs-4 fw-bold">{clp(total)}</span>
               </div>
 
-              <button type="submit" className="btn btn-primary w-100 mt-3">
-                <i className="bi bi-lock me-1"></i> Pagar ahora {clp(total)}
+              <button type="submit" className="btn btn-primary w-100 mt-3" disabled={enviando}>
+                {enviando
+                  ? <><span className="spinner-border spinner-border-sm me-1" aria-hidden="true"></span> Procesando compra...</>
+                  : <><i className="bi bi-lock me-1"></i> Pagar ahora {clp(total)}</>}
               </button>
               <Link to="/carrito" className="btn btn-link btn-sm w-100 mt-1">Volver al carrito</Link>
             </div>

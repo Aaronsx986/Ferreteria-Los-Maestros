@@ -1,7 +1,5 @@
 import { clp } from '../utils.js'
 
-// Datos del cliente, dirección y detalle de productos.
-// Lo comparten las pantallas de compra exitosa y de pago fallido (mismo diseño, distinto encabezado).
 function Dato({ label, value, className = 'col-md-4' }) {
   return (
     <div className={`${className} mb-2`}>

@@ -5,7 +5,7 @@ import { validateUser } from '../validations.js'
 
 const EMPTY = { name: '', username: '', email: '', phone: '', password: '', role: 'user', status: 'active' }
 
-// user = null -> usuario nuevo; user = {...} -> edición. "isSelf" bloquea rol y estado del admin logueado.
+
 function UserFormModal({ user, users, isSelf = false, onSave, onClose }) {
   const editing = Boolean(user)
   const [form, setForm] = useState(() =>

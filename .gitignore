@@ -1,0 +1,19 @@
+# Dependencias y builds
+node_modules/
+dist/
+build/
+target/
+
+# Variables de entorno con secretos (los .env.example SÍ se suben)
+.env
+.env.local
+
+# Editor / sistema operativo
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Archivos sueltos
+*.zip
+*.log

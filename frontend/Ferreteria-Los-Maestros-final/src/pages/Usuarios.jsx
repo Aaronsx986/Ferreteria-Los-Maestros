@@ -16,8 +16,8 @@ function Usuarios() {
     q ? u.name.toLowerCase().includes(q.toLowerCase()) || u.username.toLowerCase().includes(q.toLowerCase()) : true
   )
 
-  function handleSave(data) {
-    const result = form.username ? updateUser(form.username, data) : addUser(data)
+  async function handleSave(data) {
+    const result = form.username ? await updateUser(form.username, data) : await addUser(data)
     if (!result.ok) {
       setError(result.message)
     } else {
@@ -27,13 +27,13 @@ function Usuarios() {
     setForm(null)
   }
 
-  function handleDelete() {
-    const result = deleteUser(toDelete.username)
+  async function handleDelete() {
+    const result = await deleteUser(toDelete.username)
     if (!result.ok) {
       setError(result.message)
     } else {
       setError('')
-      setMessage(`Usuario "${toDelete.username}" eliminado.`)
+      setMessage(`Usuario "${toDelete.username}" desactivado.`)
     }
     setToDelete(null)
   }

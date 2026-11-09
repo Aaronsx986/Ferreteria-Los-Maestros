@@ -1,7 +1,9 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import suppliersData from '../data/suppliers.json'
-import { categoryLabel } from '../data/categories.js'
+import { categoryLabel, normalizeCategory } from '../data/categories.js'
 import { load, save } from '../utils.js'
+import { API_URL } from '../config.js'
+import { authHeaders } from '../services/api.js'
 
 const ShopContext = createContext(null)
 
@@ -42,15 +44,15 @@ export function ShopProvider({ children }) {
 
   // 3. CONEXIÓN A POSTGRESQL (GET)
   useEffect(() => {
-    fetch('http://localhost:8080/api/productos')
+    fetch(`${API_URL}/api/productos`)
       .then((res) => res.json())
       .then((data) => {
         const productosBackend = data.map((dbItem) => ({
           id: dbItem.idCodigo,
           code: dbItem.idCodigo,
           name: dbItem.nombreProducto,
-          category: dbItem.categoria,
-          categoryLabel: categoryLabel(dbItem.categoria) || dbItem.categoria,
+          category: normalizeCategory(dbItem.categoria),
+          categoryLabel: categoryLabel(normalizeCategory(dbItem.categoria)) || dbItem.categoria,
           subcategory: dbItem.subcategoria,
           brand: dbItem.marca,
           price: dbItem.pVentaClp,
@@ -88,9 +90,9 @@ export function ShopProvider({ children }) {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/productos', {
+      const response = await fetch(`${API_URL}/api/productos`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify(newProduct)
       })
       if (response.ok) {
@@ -126,9 +128,9 @@ export function ShopProvider({ children }) {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/api/productos/${id}`, {
+      const response = await fetch(`${API_URL}/api/productos/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify(dbFormat)
       })
       if (response.ok) {
@@ -141,8 +143,9 @@ export function ShopProvider({ children }) {
 
   async function deleteProduct(id) {
     try {
-      const response = await fetch(`http://localhost:8080/api/productos/${id}`, {
-        method: 'DELETE'
+      const response = await fetch(`${API_URL}/api/productos/${id}`, {
+        method: 'DELETE',
+        headers: authHeaders(),
       })
       if (response.ok || response.status === 204) {
         setCatalog((prev) => prev.filter((p) => p.id !== id))
@@ -201,6 +204,74 @@ export function ShopProvider({ children }) {
     return { ok: true, order }
   }
 
+  // ===== COMPRA REAL (micro de ventas, vía gateway) =====
+  // Ventas le pide a productos que descuente el stock de TODO el carrito en una sola operación.
+  // Requiere sesión: el token JWT identifica al comprador (ventas no recibe el usuario en el body).
+  // Si el backend acepta la compra, se guarda la orden en el navegador (historial y comprobante)
+  // con los precios que registró el backend y se refleja el stock descontado en el catálogo.
+  async function comprar({ user, items, payment, delivery, shipping = null }) {
+    if (!user) return { ok: false, message: 'Debes iniciar sesión para comprar.' }
+    if (!items.length) return { ok: false, message: 'Tu carrito está vacío.' }
+
+    // Idempotency-Key: si la compra se reintenta con la misma clave, el backend no cobra ni descuenta dos veces.
+    // crypto.randomUUID solo existe en https o localhost; en http (sitio de S3) se usa la alternativa.
+    const idempotencyKey = typeof crypto !== 'undefined' && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(16).slice(2)}`
+
+    let venta
+    try {
+      const response = await fetch(`${API_URL}/api/ventas`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Idempotency-Key': idempotencyKey, ...authHeaders() },
+        body: JSON.stringify({
+          items: items.map((it) => ({ idProducto: it.id, cantidad: it.qty })),
+          metodoPago: payment,
+          tipoEntrega: delivery,
+        }),
+      })
+      const data = await response.json().catch(() => null)
+      if (response.status === 401) {
+        return { ok: false, message: 'Tu sesión expiró. Cierra sesión e ingresa nuevamente para comprar.' }
+      }
+      if (!response.ok) {
+        // El backend responde { mensaje: "Stock insuficiente de ..." } u otro motivo
+        return { ok: false, message: data?.mensaje || 'No se pudo registrar la compra. Intenta nuevamente.' }
+      }
+      venta = data
+    } catch (error) {
+      console.error('Error conectando con el micro de ventas:', error)
+      return { ok: false, message: 'No hay conexión con el servidor de ventas. Intenta nuevamente.' }
+    }
+
+    // Precios y nombres definitivos: los que registró el backend
+    const lineas = new Map((venta.detalles || []).map((d) => [d.idProducto, d]))
+    const order = {
+      id: nextId('C', 1001, orders),
+      ventaId: venta.idVenta,
+      username: user.username,
+      customer: user.name || user.username,
+      fecha: venta.fecha || new Date().toISOString(),
+      items: items.map((it) => {
+        const d = lineas.get(it.id)
+        return {
+          id: it.id, code: it.code, name: d?.nombreProducto || it.name,
+          price: d?.precioUnitario ?? it.price, qty: it.qty, imagen: it.imagen,
+        }
+      }),
+      total: venta.total,
+      payment, delivery, shipping,
+      estado: delivery === 'despacho' ? 'En preparación' : 'Listo para retiro',
+    }
+    setOrders((prev) => [order, ...prev])
+    // Reflejar en pantalla el stock que descontó el backend
+    setCatalog((prev) => prev.map((p) => {
+      const d = lineas.get(p.id)
+      return d ? { ...p, stock: p.stock - d.cantidad } : p
+    }))
+    return { ok: true, order }
+  }
+
   function addRental({ user, tool, inicio, termino, dias, pago, deposito, costo, comentarios }) {
     const rental = {
       id: nextId('A', 201, rentals), username: user.username, customer: user.name || user.username,
@@ -227,7 +298,7 @@ export function ShopProvider({ children }) {
         products, suppliers, orders, rentals, services,
         addProduct, updateProduct, deleteProduct,
         addSupplier, updateSupplier, deleteSupplier,
-        placeOrder, addRental, addService,
+        placeOrder, comprar, addRental, addService,
         loadingProducts
       }}
     >

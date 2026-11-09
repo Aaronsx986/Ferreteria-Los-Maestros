@@ -11,9 +11,9 @@ function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    const result = login(username, password)
+    const result = await login(username, password)
     if (result.ok) {
       navigate(from, { replace: true })
     } else {

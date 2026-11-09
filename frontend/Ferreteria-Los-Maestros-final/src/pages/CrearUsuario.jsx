@@ -15,9 +15,9 @@ function CrearUsuario() {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    const result = register(form)
+    const result = await register(form)
     if (!result.ok) {
       setError(result.message)
       return

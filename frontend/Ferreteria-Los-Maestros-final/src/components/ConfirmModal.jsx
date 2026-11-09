@@ -1,6 +1,6 @@
 import Modal from 'react-bootstrap/Modal'
 
-// Ventana de confirmación para acciones destructivas (eliminar)
+
 function ConfirmModal({ title, message, confirmLabel = 'Eliminar', onConfirm, onCancel }) {
   return (
     <Modal show onHide={onCancel} centered animation={false}>

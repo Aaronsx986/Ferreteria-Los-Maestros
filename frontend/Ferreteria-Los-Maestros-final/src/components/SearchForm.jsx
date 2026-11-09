@@ -1,4 +1,4 @@
-// Formulario de búsqueda reutilizado en escritorio y móvil
+
 function SearchForm({ value, onChange, onSubmit, className = '', placeholder }) {
   return (
     <form className={`flm-search-form ${className}`} onSubmit={onSubmit} role="search">

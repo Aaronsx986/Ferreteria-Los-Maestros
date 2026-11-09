@@ -13,7 +13,6 @@ function Navbar() {
   const urlQ = params.get('q') || ''
   const [q, setQ] = useState(urlQ)
 
-  // Mantiene el buscador sincronizado con la URL (p. ej. al limpiar filtros)
   useEffect(() => setQ(urlQ), [urlQ])
 
   function handleSearch(e) {
