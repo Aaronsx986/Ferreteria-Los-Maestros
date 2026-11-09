@@ -1,0 +1,113 @@
+DOCUMENTACION DEL MICROSERVICIO DE VENTAS
+Proyecto: Ferretería Los Maestros
+
+1. Objetivo
+   - Hice un microservicio que registra las ventas de la ferretería cada vez que se hace una compra desde la página.
+   - Tiene su propia base de datos, que sirve solo de auditoría: guarda las compras y nada más.
+   - Solo se comunica con el microservicio de catálogo: le pregunta si hay stock y, cuando la compra se hace, le avisa para que descuente ese stock.
+   - No maneja usuarios, productos ni pagos. Eso lo ven otros microservicios y la página.
+
+2. Dónde quedó en el proyecto
+   - Backend/ventas: el microservicio, al lado de Backend/LosMaestros (el catálogo).
+   - bd/registro_ventas.sql: el script de la base de datos de ventas, al lado de bd/productos.sql.
+   - frontend/Ferreteria-Los-Maestros-final/src/pages/Checkout.jsx: el único archivo de la página que modifiqué.
+
+3. Tecnologías
+   - Java 21 y Maven.
+   - Spring Boot 4.1.2 y Spring Cloud 2025.1.4, las mismas versiones del catálogo.
+   - Dependencias: Web MVC, Data JPA, Validation, Security, PostgreSQL, Lombok y DevTools.
+   - Base de datos PostgreSQL 18, la última versión estable.
+   - Puerto 8081 (el catálogo usa el 8080).
+
+4. Estructura del microservicio (Backend/ventas)
+   - controller/VentaController: recibe la compra en POST /api/ventas.
+   - service/VentaService: tiene la lógica. Consulta el stock al catálogo, guarda la venta y avisa al catálogo para que descuente el stock.
+   - repository/VentaRepository: guarda en la base de datos.
+   - entity/Venta: es la tabla venta.
+   - dto/VentaRequest: los datos que envía la página.
+   - dto/ProductoCatalogoResponse: los datos que se leen del catálogo (stock y precio de venta).
+   - config/SecurityConfig: la seguridad.
+   - resources/application.properties: la configuración (base de datos, dirección del catálogo y credencial de seguridad).
+   - pom.xml: las dependencias de Maven.
+
+5. Base de datos
+   - Se llama dbregistroventas (PostgreSQL 18) y tiene una sola tabla, venta.
+   - id_venta: id de la compra, se genera solo.
+   - id_usuario: usuario que compró.
+   - fecha: fecha y hora de la compra.
+   - id_producto: producto comprado (el idCodigo del catálogo).
+   - cantidad: cantidad comprada.
+   - precio_unitario: precio del producto al momento de comprar.
+   - total: precio unitario por cantidad.
+   - metodo_pago: forma de pago.
+   - tipo_entrega: retiro o despacho.
+   - El script bd/registro_ventas.sql crea la base y la tabla. Se ejecuta en dos pasos: primero el CREATE DATABASE conectado a la base postgres, y después el CREATE TABLE conectado a dbregistroventas.
+   - La tabla también se crea sola al arrancar el microservicio (ddl-auto=update). Lo único obligatorio es que la base de datos exista.
+   - La conexión es a localhost:5432, usuario postgres y clave admin por defecto (se cambia con la variable DB_PASSWORD).
+
+6. Cómo funciona una venta
+   - Paso 1: cuando se hace la compra, la página envía un POST /api/ventas por cada producto del carrito.
+   - Paso 2: se validan los datos. Todos son obligatorios y la cantidad debe ser mayor a 0.
+   - Paso 3: se consulta el producto al catálogo y se leen su stock y su precio de venta.
+   - Paso 4: si la cantidad pedida es mayor al stock, devuelve 409 "Stock insuficiente" y no se guarda nada.
+   - Paso 5: si alcanza el stock, se arma la venta con el usuario, la fecha actual, el producto, la cantidad, el precio del catálogo, el total y los datos de pago y entrega. El precio sale del catálogo, no de lo que envía la página.
+   - Paso 6: se guarda la venta en la base de datos.
+   - Paso 7: se le avisa al catálogo la cantidad comprada para que la reste de su stock.
+   - Paso 8: si ese aviso falla, devuelve 503 y la venta se deshace (@Transactional), así no queda una venta sin descuento de stock.
+   - Paso 9: si todo sale bien, devuelve la venta guardada con código 201.
+   - Errores posibles: 400 datos inválidos, 401 sin usuario y clave, 404 el producto no existe o el catálogo no responde, 409 sin stock suficiente y 503 no se pudo actualizar el stock.
+
+7. Comunicación con el catálogo
+   - Mi microservicio solo se comunica con el catálogo, y lo hace con dos llamadas.
+   - Consulta de stock: GET {catalogo.url}/api/productos/{idCodigo}. De la respuesta uso solo stock y pVentaClp, lo demás lo ignora.
+   - Aviso de compra: PUT {catalogo.url}{ruta}/{idCodigo} con el cuerpo {"cantidad": n}.
+   - Las dos rutas se escriben en VentaService, en las constantes CONSULTA_PRODUCTO y DESCONTAR_STOCK. Cada una tiene su comentario: "colocar consultas hacia el ms de catalogo" y "colocar consulta para descontar stock en el ms de catalogo".
+   - Esas dos rutas las completo yo. CONSULTA_PRODUCTO es "/api/productos", que ya existe en el catálogo.
+   - DESCONTAR_STOCK la escribo cuando el catálogo me entregue la ruta para descontar stock, porque todavía no existe (propuesta: /api/productos/descontar-stock).
+   - Mientras las dos estén vacías, no se guarda ninguna venta.
+   - La dirección del catálogo está en application.properties: catalogo.url=http://localhost:8080.
+
+8. Seguridad
+   - Uso Spring Security con HTTP Basic y sin sesiones. Cada petición debe venir con usuario y clave.
+   - Todas las rutas del microservicio exigen estar autenticado.
+   - La credencial es del servicio: usuario ventas y clave ventas123 por defecto. Se cambia en application.properties o con la variable VENTAS_PASSWORD.
+   - No es un usuario de la tienda. Los usuarios los maneja el microservicio de usuarios, y el id_usuario que guardo es el que envía la página.
+   - CORS permite solo http://localhost:5173 (la página). Está en el @CrossOrigin del controller y en el .cors de SecurityConfig.
+   - La protección CSRF está desactivada porque no hay cookies ni sesiones.
+   - Los datos que llegan se validan con Validation.
+   - El precio y el total los calcula el microservicio, el cliente no puede modificarlos.
+
+9. Cambio en la página
+   - Archivo: frontend/Ferreteria-Los-Maestros-final/src/pages/Checkout.jsx.
+   - Lugar: dentro de handleSubmit, justo después de if (!result.ok) return fallar(...) y antes de terminado.current = true.
+   - Qué hace: por cada producto de la orden (result.order.items) envía un fetch POST a http://localhost:8081/api/ventas con la credencial del servicio.
+   - Datos que envía: idUsuario (user.username), idProducto (it.id, que es el idCodigo del catálogo), cantidad (it.qty), metodoPago (form.payment) y tipoEntrega (form.delivery).
+   - Limitación: si el microservicio rechaza una compra (por ejemplo por stock), la página igual muestra la compra exitosa y el error solo se ve en la consola del navegador.
+   - Limitación: la clave del servicio queda escrita en el código de la página. Sirve para el trabajo, pero no para producción.
+
+10. Cómo ejecutarlo
+   - Crear la base de datos dbregistroventas en PostgreSQL con bd/registro_ventas.sql.
+   - Revisar el usuario y la clave de PostgreSQL en application.properties.
+   - Escribir las dos rutas del catálogo en VentaService.
+   - Levantar el catálogo (puerto 8080) desde Backend/LosMaestros.
+   - Levantar el microservicio de ventas (puerto 8081) desde Backend/ventas con ./mvnw spring-boot:run (en Windows, mvnw.cmd spring-boot:run).
+   - Levantar la página y hacer una compra.
+
+11. Cómo comprobar que funciona
+   - En la consola del microservicio de ventas aparece el INSERT en la tabla venta (show-sql está activado).
+   - En PostgreSQL ejecuto SELECT * FROM venta; y debe aparecer la compra.
+   - También se puede probar sin la página con un POST a http://localhost:8081/api/ventas, usuario ventas y su clave, y este cuerpo:
+       {
+         "idUsuario": "usuario",
+         "idProducto": "(un idCodigo del catálogo)",
+         "cantidad": 1,
+         "metodoPago": "debito",
+         "tipoEntrega": "retiro"
+       }
+
+12. Pendiente y limitaciones
+   - Completar las dos rutas del catálogo en VentaService.
+   - El catálogo todavía tiene que crear la ruta que descuente el stock.(eso depende de Vicente)
+   - Probar todo con el catálogo, el microservicio de ventas y la página levantados.
+   - Cada venta guarda un solo producto, por eso la página envía una venta por cada producto del carrito.
+   - Si más adelante el microservicio de usuarios entrega un token al iniciar sesión, la credencial fija se cambia por la validación de ese token en SecurityConfig.
