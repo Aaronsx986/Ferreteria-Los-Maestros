@@ -1,0 +1,140 @@
+# Backend Los Maestros: docker compose up --build (levantar) · docker compose down (apagar)
+# Solo el gateway publica puerto; los servicios se comunican por nombre (ej. http://productos:8081).
+
+services:
+  # ---------- Base de datos del micro de usuarios ----------
+  db-usuarios:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: dbusuarios
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Falta DB_PASSWORD en el archivo .env}
+    volumes:
+      - pg-usuarios:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dbusuarios"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    # Para pgAdmin desde tu PC, descomenta (5435 para no chocar con otras bases):
+    # ports:
+    #   - "5435:5432"
+
+  # ---------- Micro de usuarios: login y emisión del JWT ----------
+  usuarios:
+    build: ./usuarios
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-usuarios:5432/dbusuarios
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      JWT_ISSUER: ${JWT_ISSUER:-losmaestros-usuarios}
+      # La llave RSA que firma los tokens se guarda en un volumen: sobrevive a reinicios
+      KEYS_DIRECTORY: /app/data/keys
+    volumes:
+      - usuarios-keys:/app/data/keys
+    depends_on:
+      db-usuarios:
+        condition: service_healthy
+    # Sin "ports": solo el gateway (y los otros micros, para /api/auth/jwks) lo alcanzan
+
+  # ---------- Base de datos del micro de productos ----------
+  db-productos:
+    image: postgres:18                     # misma versión mayor que el PostgreSQL local
+    environment:
+      POSTGRES_DB: dblosmaestros
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Falta DB_PASSWORD en el archivo .env}
+    volumes:
+      # En postgres 18+ el volumen va en /var/lib/postgresql
+      - pg-productos:/var/lib/postgresql
+      # Carga inicial del catálogo (solo la primera vez). Ver db/productos/LEEME.md
+      - ./db/productos:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dblosmaestros"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    # Para pgAdmin desde tu PC, descomenta (5433 para no chocar con tu PostgreSQL local):
+    # ports:
+    #   - "5433:5432"
+
+  # ---------- Micro de productos (catálogo) ----------
+  productos:
+    build: ./LosMaestros
+    environment:
+      # Tienen prioridad sobre application.properties
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-productos:5432/dblosmaestros
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      # JWT: llaves públicas e issuer del micro de usuarios (application.properties lee estas variables)
+      AUTH_JWKS_URL: ${AUTH_JWKS_URL:-http://usuarios:8082/api/auth/jwks}
+      JWT_ISSUER: ${JWT_ISSUER:-losmaestros-usuarios}
+      # Clave para el endpoint interno /internal/stock/descontar (la misma que usa ventas)
+      INTERNAL_API_KEY: ${INTERNAL_API_KEY:?Falta INTERNAL_API_KEY en el archivo .env}
+    depends_on:
+      db-productos:
+        condition: service_healthy         # espera a que la BD esté LISTA, no solo encendida
+    # Sin "ports": solo el gateway lo alcanza
+
+  # ---------- Base de datos del micro de ventas ----------
+  db-ventas:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: dbregistroventas
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Falta DB_PASSWORD en el archivo .env}
+    volumes:
+      - pg-ventas:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dbregistroventas"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    # Para pgAdmin desde tu PC, descomenta (5434 para no chocar con otras bases):
+    # ports:
+    #   - "5434:5432"
+
+  # ---------- Micro de ventas ----------
+  ventas:
+    build: ./ventas
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-ventas:5432/dbregistroventas
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      # Ventas llama DIRECTO a productos por la red interna (no por el gateway)
+      CATALOGO_URL: http://productos:8081
+      # JWT: llaves públicas e issuer del micro de usuarios
+      AUTH_JWKS_URL: ${AUTH_JWKS_URL:-http://usuarios:8082/api/auth/jwks}
+      JWT_ISSUER: ${JWT_ISSUER:-losmaestros-usuarios}
+      INTERNAL_API_KEY: ${INTERNAL_API_KEY:?Falta INTERNAL_API_KEY en el archivo .env}
+    depends_on:
+      db-ventas:
+        condition: service_healthy
+      productos:
+        condition: service_started
+    # Sin "ports": solo el gateway lo alcanza
+
+  # ---------- API Gateway: única puerta de entrada ----------
+  gateway:
+    build: ./gateway
+    environment:
+      USUARIOS_URL: http://usuarios:8082
+      PRODUCTOS_URL: http://productos:8081
+      VENTAS_URL: http://ventas:8083
+      # Orígenes del frontend permitidos por CORS (separados por coma). En AWS agrega la URL del bucket.
+      FRONTEND_ORIGINS: ${FRONTEND_ORIGINS:-http://localhost:*}
+    ports:
+      - "8080:8080"                        # PUERTO_EN_TU_PC:PUERTO_DEL_CONTENEDOR
+    depends_on:
+      - usuarios
+      - productos
+      - ventas
+
+volumes:
+  pg-usuarios:
+  usuarios-keys:
+  pg-productos:
+  pg-ventas:

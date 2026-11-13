@@ -1,0 +1,7 @@
+target
+.git
+.vscode
+.mvn
+HELP.md
+*.zip
+data

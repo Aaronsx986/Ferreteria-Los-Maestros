@@ -1,0 +1,13 @@
+# Secretos y llaves (nunca se suben)
+.env
+data/
+
+# Compilación
+target/
+
+# Editor / sistema operativo
+.idea/
+.vscode/
+*.iml
+.DS_Store
+*.log

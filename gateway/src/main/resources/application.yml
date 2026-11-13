@@ -1,0 +1,75 @@
+server:
+  port: 8080
+
+# Rutas del API Gateway.
+# /api/v1/** es la ruta versionada (recomendada): se reenvía al micro quitando el "/v1".
+# /api/** (sin versión) se mantiene por compatibilidad.
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: productos-v1
+              uri: ${PRODUCTOS_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/v1/productos/**
+              filters:
+                - RewritePath=/api/v1/(?<segmento>.*), /api/$\{segmento}
+            - id: usuarios-v1
+              uri: ${USUARIOS_URL:http://localhost:8082}
+              predicates:
+                - Path=/api/v1/auth/**,/api/v1/usuarios/**
+              filters:
+                - RewritePath=/api/v1/(?<segmento>.*), /api/$\{segmento}
+            - id: ventas-v1
+              uri: ${VENTAS_URL:http://localhost:8083}
+              predicates:
+                - Path=/api/v1/ventas/**
+              filters:
+                - RewritePath=/api/v1/(?<segmento>.*), /api/$\{segmento}
+            - id: productos
+              uri: ${PRODUCTOS_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/productos/**
+            - id: usuarios
+              uri: ${USUARIOS_URL:http://localhost:8082}
+              predicates:
+                - Path=/api/auth/**,/api/usuarios/**
+            - id: ventas
+              uri: ${VENTAS_URL:http://localhost:8083}
+              predicates:
+                - Path=/api/ventas/**
+            # Documentación OpenAPI de cada micro (la usa el Swagger del gateway)
+            - id: docs-productos
+              uri: ${PRODUCTOS_URL:http://localhost:8081}
+              predicates:
+                - Path=/docs/productos
+              filters:
+                - RewritePath=/docs/productos, /v3/api-docs
+            - id: docs-usuarios
+              uri: ${USUARIOS_URL:http://localhost:8082}
+              predicates:
+                - Path=/docs/usuarios
+              filters:
+                - RewritePath=/docs/usuarios, /v3/api-docs
+            - id: docs-ventas
+              uri: ${VENTAS_URL:http://localhost:8083}
+              predicates:
+                - Path=/docs/ventas
+              filters:
+                - RewritePath=/docs/ventas, /v3/api-docs
+
+# Swagger único: http://localhost:8080/swagger-ui.html (elige el micro arriba a la derecha)
+springdoc:
+  swagger-ui:
+    urls:
+      - name: productos
+        url: /docs/productos
+      - name: usuarios
+        url: /docs/usuarios
+      - name: ventas
+        url: /docs/ventas
+    urls-primary-name: productos
